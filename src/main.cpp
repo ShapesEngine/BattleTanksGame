@@ -6,6 +6,38 @@
 int windowWidth = 640;
 int windowHeight = 480;
 
+const char* vShader = ( 
+    R"(
+        #version 460
+        
+        layout( location = 0 ) in vec3 pos;        
+        layout( location = 1 ) in vec3 col;
+
+        out vec3 aCol;
+
+        void main( void )
+        {
+            aCol = col;
+            gl_Position = vec4( pos, 1.f );
+        }
+    )" 
+);
+
+const char* fShader = (
+	R"(
+        #version 460
+        
+        in vec3 aCol;
+
+        out vec4 fragCol;
+
+        void main( void )
+        {
+            fragCol = vec4( aCol, 1.f );
+        }
+    )"
+);
+
 void glfwWindowSizeCallback( GLFWwindow* window, int width, int height )
 {
     windowWidth = width;
@@ -21,6 +53,18 @@ void glfwKeyCallback( GLFWwindow* window, int key, int scancode, int action, int
 
 int main(void)
 {
+    GLfloat vPos[] = {
+        0.f, 0.5f, 0.f,
+        -0.5f, -0.5f, 0.f,
+        0.5f, -0.5f, 0.f
+    };
+
+    GLfloat vCol[] = {
+        1.f, 0.f, 0.f,
+        0.f, 1.f, 0.f,
+        0.f, 0.f, 1.f
+    };
+
     /* Initialize the library */
     if ( !glfwInit() )
 	{
@@ -54,15 +98,81 @@ int main(void)
 	}
 	
     std::cout << "Renderer: " << glGetString( GL_RENDERER ) << "\n";
-    std::cout << "OpenGL Version: " << glGetString( GL_VERSION ) << "\n";	
+    std::cout << "OpenGL Version: " << glGetString( GL_VERSION ) << "\n";	        
+
+    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vs, 1, &vShader, nullptr);   
+
+	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fs, 1, &fShader, nullptr);
+
+	int  success;
+	char infoLog[512];
+
+    glCompileShader(vs);
+    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
+
+    if (!success)
+    {
+        glGetShaderInfoLog(vs, 512, NULL, infoLog);
+        std::cout << "ERROR COMPILING VERTEX SHADER: " << infoLog << "\n";
+    }
+
+    glCompileShader(fs);
+
+	glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
+
+	if (!success)
+	{
+        glGetShaderInfoLog(fs, 512, NULL, infoLog);
+		std::cout << "ERROR COMPILING FRAGMENT SHADER: " << infoLog << "\n";
+	}
 	
-	glClearColor( 0, 1, 0, 1 );
 	
+
+    GLuint shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vs);
+    glAttachShader(shaderProgram, fs);
+    glLinkProgram(shaderProgram);
+
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+
+
+    GLuint posVBO, colVBO;
+
+    glGenBuffers( 1, &posVBO );
+    glBindBuffer( GL_ARRAY_BUFFER, posVBO );
+    glBufferData( GL_ARRAY_BUFFER, sizeof( vPos ), vPos, GL_STATIC_DRAW );
+
+	glGenBuffers( 1, &colVBO );
+	glBindBuffer( GL_ARRAY_BUFFER, colVBO );
+	glBufferData( GL_ARRAY_BUFFER, sizeof( vCol ), vCol, GL_STATIC_DRAW );
+
+    GLuint VAO;
+    glGenVertexArrays( 1, &VAO );
+    glBindVertexArray( VAO );
+
+    glEnableVertexAttribArray( 0 );
+    glBindBuffer( GL_ARRAY_BUFFER, posVBO );
+    glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, nullptr );
+
+	glEnableVertexAttribArray( 1 );
+	glBindBuffer(GL_ARRAY_BUFFER, colVBO );
+	glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, nullptr );
+
+
+	glClearColor( 0.f, 0.f, 0.f, 1.f );
+    glUseProgram( shaderProgram );
+
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( window ) )
     {
         /* Render here */
         glClear( GL_COLOR_BUFFER_BIT );
+        
+        glBindVertexArray( VAO );
+        glDrawArrays( GL_TRIANGLES, 0, 3);
 
         /* Swap front and back buffers */
         glfwSwapBuffers( window );
