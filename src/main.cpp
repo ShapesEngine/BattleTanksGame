@@ -3,10 +3,12 @@
 
 #include <iostream>
 
+#include "Renderer/ShaderProgram.h"
+
 int windowWidth = 640;
 int windowHeight = 480;
 
-const char* vShader = ( 
+std::string vShader = ( 
     R"(
         #version 460
         
@@ -23,7 +25,7 @@ const char* vShader = (
     )" 
 );
 
-const char* fShader = (
+std::string fShader = (
 	R"(
         #version 460
         
@@ -98,46 +100,9 @@ int main(void)
 	}
 	
     std::cout << "Renderer: " << glGetString( GL_RENDERER ) << "\n";
-    std::cout << "OpenGL Version: " << glGetString( GL_VERSION ) << "\n";	        
-
-    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vShader, nullptr);   
-
-	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fs, 1, &fShader, nullptr);
-
-	int  success;
-	char infoLog[512];
-
-    glCompileShader(vs);
-    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
-
-    if (!success)
-    {
-        glGetShaderInfoLog(vs, 512, NULL, infoLog);
-        std::cout << "ERROR COMPILING VERTEX SHADER: " << infoLog << "\n";
-    }
-
-    glCompileShader(fs);
-
-	glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
-
-	if (!success)
-	{
-        glGetShaderInfoLog(fs, 512, NULL, infoLog);
-		std::cout << "ERROR COMPILING FRAGMENT SHADER: " << infoLog << "\n";
-	}
-	
-	
-
-    GLuint shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vs);
-    glAttachShader(shaderProgram, fs);
-    glLinkProgram(shaderProgram);
-
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-
+    std::cout << "OpenGL Version: " << glGetString( GL_VERSION ) << "\n";
+    
+    Renderer::ShaderProgram shaderProgram( vShader, fShader );
 
     GLuint posVBO, colVBO;
 
@@ -163,7 +128,7 @@ int main(void)
 
 
 	glClearColor( 0.f, 0.f, 0.f, 1.f );
-    glUseProgram( shaderProgram );
+    shaderProgram.Use();
 
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( window ) )
@@ -181,6 +146,7 @@ int main(void)
         glfwPollEvents();
     }
 
+    Renderer::ShaderProgram::Disuse();
     glfwTerminate();
     return 0;
 }
