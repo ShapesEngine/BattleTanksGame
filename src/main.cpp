@@ -66,10 +66,7 @@ int main( int argc, char** argv )
 	{
 		std::cout << "Can't initialize GLAD!" << "\n";
 		return -1;
-	}
-	
-    std::cout << "Renderer: " << glGetString( GL_RENDERER ) << "\n";
-    std::cout << "OpenGL Version: " << glGetString( GL_VERSION ) << "\n";
+	}    
     
     // Getting executable location
     // ---------------------------
@@ -104,6 +101,9 @@ int main( int argc, char** argv )
 
 	glClearColor( 0.f, 0.f, 0.f, 1.f );
     pBasicShaderProgram->Use();
+
+	std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
+	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << "\n";
 
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( window ) )

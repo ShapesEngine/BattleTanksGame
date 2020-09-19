@@ -11,7 +11,6 @@ ResourceManager::ResourceManager( const std::string& executablePath )
 	// ----------------------------------------
 	size_t foundSlash = executablePath.find_last_of( "/\\" );
 	path = executablePath.substr( 0, foundSlash );
-	std::string pr = executablePath.substr( executablePath.find_last_of("/\\") + 1, executablePath.length() );
 }
 
 std::optional<std::string> ResourceManager::GetFileString( const std::string& relativeFilePath ) const
@@ -20,9 +19,8 @@ std::optional<std::string> ResourceManager::GetFileString( const std::string& re
 	file.open( path + "/" + relativeFilePath, std::ios::in | std::ios::binary );
 	if( !file.is_open() )
 	{
-		std::cerr << "ERROR::FILE_LOADING:\n";
-		std::cerr << "Failed to open file: " << relativeFilePath.substr( relativeFilePath.find_last_of( "/\\" ) + 1, relativeFilePath.length() ) 
-				  << "\n";
+		std::cerr << "ERROR::FILE_LOADING!\n";
+		std::cerr << "Failed to open file: " << GetFileName( relativeFilePath ).value_or( relativeFilePath ) << "\n";
 		return std::nullopt;
 	}
 	
@@ -53,9 +51,8 @@ std::shared_ptr<Renderer::ShaderProgram> ResourceManager::LoadShaders( const std
 		return program;
 
 	std::cerr << "ERROR::SHADER NOT LOADED!\n";
-	std::cerr << "INFO::VERTEX: " << vertexPath << std::endl 
-			  << "INFO::FRAGMENT: " << fragmentPath << std::endl;
-				
+	std::cerr << "INFO::VERTEX: " << GetFileName( vertexPath ).value_or( vertexPath ) << std::endl 
+			  << "INFO::FRAGMENT: " << GetFileName( fragmentPath ).value_or( fragmentPath ) << std::endl;				
 	
 	return nullptr;
 }

@@ -25,7 +25,8 @@ public:
 	std::shared_ptr<Renderer::ShaderProgram> GetShaderProgram(const std::string& shaderName);
 
 private:
-	std::optional<std::string> GetFileString( const std::string& relativeFilePath ) const;	
+	std::optional<std::string> GetFileString( const std::string& relativeFilePath ) const;
+	inline std::optional<std::string> GetFileName( const std::string& filePath ) const { return filePath.substr( filePath.find_last_of( "/\\" ) + 1, filePath.length() ); }
 
 private:
 	typedef std::map<const std::string, std::shared_ptr<Renderer::ShaderProgram>> ShaderProgramMap;

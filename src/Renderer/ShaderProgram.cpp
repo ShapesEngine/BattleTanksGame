@@ -62,7 +62,8 @@ namespace Renderer
 			std::string shaderTypeStr = ( shaderType == GL_VERTEX_SHADER ? "VERTEX SHADER" : 
 										( shaderType == GL_FRAGMENT_SHADER ? "FRAGMENT SHADER" : "GEOMETRY SHADER" ) );
 			std::cerr << shaderTypeStr << "::COMPILATION ERROR!\n";
-			std::cerr << "INFO::SHADER COMPILATION: \n" << infoLog << std::endl;
+			std::cerr << "INFO::SHADER COMPILATION: \n" << infoLog;
+			std::cerr << "-------------------------" << "\n\n";
 			status = Status::COMPILATION_ERROR;
 		}
 		return status = Status::OK;
@@ -81,7 +82,8 @@ namespace Renderer
 		{
 			GLchar infoLog[1024];
 			glGetProgramInfoLog( ID, 1024, nullptr, infoLog );
-			std::cerr << "SHADER PROGRAM::LINKING ERROR:\n" << infoLog << std::endl;
+			std::cerr << "SHADER PROGRAM::LINKING ERROR:\n" << infoLog;
+			std::cerr << "-------------------------" << "\n\n"; 
 			status = Status::LINKING_ERROR;
 		}
 		else
