@@ -62,7 +62,7 @@ namespace Renderer
 			std::string shaderTypeStr = ( shaderType == GL_VERTEX_SHADER ? "VERTEX SHADER" : 
 										( shaderType == GL_FRAGMENT_SHADER ? "FRAGMENT SHADER" : "GEOMETRY SHADER" ) );
 			std::cerr << shaderTypeStr << "::COMPILATION ERROR!\n";
-			std::cerr << "INFO:\n" << infoLog << std::endl;
+			std::cerr << "INFO::SHADER COMPILATION: \n" << infoLog << std::endl;
 			status = Status::COMPILATION_ERROR;
 		}
 		return status = Status::OK;

@@ -4,41 +4,10 @@
 #include <iostream>
 
 #include "Renderer/ShaderProgram.h"
+#include "Resources/ResourceManager.h"
 
 int windowWidth = 640;
 int windowHeight = 480;
-
-std::string vShader = ( 
-    R"(
-        #version 460
-        
-        layout( location = 0 ) in vec3 pos;        
-        layout( location = 1 ) in vec3 col;
-
-        out vec3 aCol;
-
-        void main( void )
-        {
-            aCol = col;
-            gl_Position = vec4( pos, 1.f );
-        }
-    )" 
-);
-
-std::string fShader = (
-	R"(
-        #version 460
-        
-        in vec3 aCol;
-
-        out vec4 fragCol;
-
-        void main( void )
-        {
-            fragCol = vec4( aCol, 1.f );
-        }
-    )"
-);
 
 void glfwWindowSizeCallback( GLFWwindow* window, int width, int height )
 {
@@ -53,7 +22,7 @@ void glfwKeyCallback( GLFWwindow* window, int key, int scancode, int action, int
         glfwSetWindowShouldClose( window, GL_TRUE );
 }
 
-int main(void)
+int main( int argc, char** argv )
 {
     GLfloat vPos[] = {
         0.f, 0.5f, 0.f,
@@ -102,7 +71,13 @@ int main(void)
     std::cout << "Renderer: " << glGetString( GL_RENDERER ) << "\n";
     std::cout << "OpenGL Version: " << glGetString( GL_VERSION ) << "\n";
     
-    Renderer::ShaderProgram shaderProgram( vShader, fShader );
+    // Getting executable location
+    // ---------------------------
+    ResourceManager* pRes = new ResourceManager( *argv );
+    auto pBasicShaderProgram = pRes->LoadShaders( "Basic", "res/shaders/basic.vert", "res/shaders/basic.frag" );
+
+    if( !pBasicShaderProgram )
+        return -1;
 
     GLuint posVBO, colVBO;
 
@@ -128,7 +103,7 @@ int main(void)
 
 
 	glClearColor( 0.f, 0.f, 0.f, 1.f );
-    shaderProgram.Use();
+    pBasicShaderProgram->Use();
 
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( window ) )
@@ -147,6 +122,8 @@ int main(void)
     }
 
     Renderer::ShaderProgram::Disuse();
+    delete pRes;
     glfwTerminate();
+
     return 0;
 }

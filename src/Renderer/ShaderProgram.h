@@ -8,6 +8,8 @@ namespace Renderer
 	class ShaderProgram
 	{
 	private:
+		// Status is only in-class accessible enum, outside of 
+		// this class the enum is converted to boolean value
 		enum class Status : GLuint
 		{
 			OK,
@@ -31,8 +33,8 @@ namespace Renderer
 		Status LinkProgram(const GLuint& vertexShaderID, const GLuint& fragmentShaderID);
 
 
-	public:
-		inline Status GetStatus() const { return status; }
+	public:		
+		inline bool GetStatus() const { return status == Status::OK; }
 		inline void Use() const { glUseProgram( ID ); }
 		inline static void Disuse() { glUseProgram( 0 ); }
 
