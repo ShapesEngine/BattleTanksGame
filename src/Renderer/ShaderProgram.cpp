@@ -80,7 +80,7 @@ namespace Renderer
 		if ( !success )
 		{
 			GLchar infoLog[1024];
-			glGetShaderInfoLog( ID, 1024, nullptr, infoLog );
+			glGetProgramInfoLog( ID, 1024, nullptr, infoLog );
 			std::cerr << "SHADER PROGRAM::LINKING ERROR:\n" << infoLog << std::endl;
 			status = Status::LINKING_ERROR;
 		}
