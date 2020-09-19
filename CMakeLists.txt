@@ -8,6 +8,8 @@ add_executable( ${PROJECT_NAME}
 				src/main.cpp
 				src/Renderer/ShaderProgram.cpp
 				src/Renderer/ShaderProgram.h )
+
+set_property ( DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME} )
 				
 target_compile_features( ${PROJECT_NAME} PUBLIC cxx_std_17 ) 
 
