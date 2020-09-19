@@ -19,11 +19,5 @@ You may enable or disable some build options by `-Dkey=value`.
 ### Simple
     cmake --build .
 
-### Debug
-    cmake --build . --config Debug
-	
-### Release
-    cmake --build . --config Release
-
-
-
+### Debug or Release
+    cmake --build . --config Debug|Release
