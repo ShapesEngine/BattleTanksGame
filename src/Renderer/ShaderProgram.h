@@ -9,7 +9,7 @@ namespace Renderer
 	{
 	private:
 		// Status is only in-class accessible enum, outside of 
-		// this class the enum is converted to boolean value
+		// this class the enum is treated as boolean value
 		enum class Status : GLuint
 		{
 			OK,

@@ -122,6 +122,10 @@ int main( int argc, char** argv )
     }
 
     Renderer::ShaderProgram::Disuse();
+
+    // delete resource manager before destroying context, 
+    // otherwise it may lead to crash of the application
+    // -------------------------------------------------
     delete pRes;
     glfwTerminate();
 
