@@ -1,6 +1,12 @@
 #include "ResourceManager.h"
 #include "../Renderer/ShaderProgram.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+// if you'd like to use other texture image extensions
+// make sure that you define appropriate key
+#define STBI_ONLY_PNG
+#include "stb_image.h"
+
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -64,4 +70,25 @@ std::shared_ptr<Renderer::ShaderProgram> ResourceManager::GetShaderProgram( cons
 		std::cerr << "ERROR::GETTING SHADER: " << shaderName << "\n";
 
 	return shaderProgram;
+}
+
+void ResourceManager::LoadTexture(const std::string& textureName, const std::string& texturePath)
+{
+	int width;
+	int height;
+	int nrChannels;
+
+	// flip the texture vertically, as the loaded 
+	// texture will have inverted values
+	// ------------------------------------------
+	stbi_set_flip_vertically_on_load( true );
+	unsigned char* pixels = stbi_load( ( path + "/" + texturePath ).c_str(), &width, &height, &nrChannels, 0 );
+	if( !pixels )
+	{
+		std::cerr << "ERROR::TEXTURE NOT LOADED!\n";
+		std::cerr << "INFO::TEXTURE: " << GetFileName(texturePath).value_or( textureName );
+		return;
+	}
+
+	stbi_image_free( pixels );
 }
