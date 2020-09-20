@@ -1,5 +1,6 @@
 #include "ResourceManager.h"
 #include "../Renderer/ShaderProgram.h"
+#include "../Renderer/Texture2D.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 // if you'd like to use other texture image extensions
@@ -72,7 +73,7 @@ std::shared_ptr<Renderer::ShaderProgram> ResourceManager::GetShaderProgram( cons
 	return shaderProgram;
 }
 
-void ResourceManager::LoadTexture(const std::string& textureName, const std::string& texturePath)
+std::shared_ptr<Renderer::Texture2D> ResourceManager::LoadTexture(const std::string& textureName, const std::string& texturePath)
 {
 	int width;
 	int height;
@@ -87,8 +88,19 @@ void ResourceManager::LoadTexture(const std::string& textureName, const std::str
 	{
 		std::cerr << "ERROR::TEXTURE NOT LOADED!\n";
 		std::cerr << "INFO::TEXTURE: " << GetFileName(texturePath).value_or( textureName );
-		return;
+		return nullptr;
 	}
 
+	auto texture = textures[textureName] = std::make_shared<Renderer::Texture2D>( width, height, pixels, nrChannels );
 	stbi_image_free( pixels );
+	return texture;
+}
+
+std::shared_ptr<Renderer::Texture2D> ResourceManager::GetTexture( const std::string& textureName )
+{
+	auto texture = textures.find( textureName )->second;
+	if ( !texture )
+		std::cerr << "ERROR::GETTING SHADER: " << textureName << "\n";
+
+	return texture;
 }
