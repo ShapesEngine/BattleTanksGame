@@ -1,5 +1,5 @@
 # BattleTanksGame
-Remake of a 2D retro Battle City game made with OpenGL
+Remake of a 2D retro Battle Tanks game made with OpenGL
 
 # How to build  
 ### CMake as most universal way
