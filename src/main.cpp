@@ -95,7 +95,7 @@ int main( int argc, char** argv )
 	glBindBuffer( GL_ARRAY_BUFFER, colVBO );
 	glBufferData( GL_ARRAY_BUFFER, sizeof( vCol ), vCol, GL_STATIC_DRAW );
 
-	glGenBuffers( 2, &tCoordVBO );
+	glGenBuffers( 1, &tCoordVBO );
     glBindBuffer( GL_ARRAY_BUFFER, tCoordVBO );
 	glBufferData( GL_ARRAY_BUFFER, sizeof( tCoord ), tCoord, GL_STATIC_DRAW );
 
