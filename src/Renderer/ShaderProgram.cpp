@@ -31,6 +31,11 @@ namespace Renderer
 		return *this;
 	}
 
+	void ShaderProgram::SetInt( const std::string& name, const GLint value )
+	{
+		glUniform1i( glGetUniformLocation( ID, name.c_str() ), value );
+	}
+
 	ShaderProgram::ShaderProgram(ShaderProgram&& shaderProgram) noexcept
 	{
 		ID = shaderProgram.ID;

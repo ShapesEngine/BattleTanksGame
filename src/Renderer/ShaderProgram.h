@@ -27,6 +27,8 @@ namespace Renderer
 		ShaderProgram& operator=(const ShaderProgram&) = delete;
 		ShaderProgram& operator=(ShaderProgram&& shaderProgram) noexcept;
 
+		void SetInt( const std::string& name, const GLint value );
+
 	private:
 		Status CreateShader( const std::string& source, const GLenum shaderType, GLuint& shaderID );
 		Status CompileShader( const GLenum shaderType, GLuint shaderID );

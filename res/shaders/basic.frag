@@ -1,10 +1,13 @@
 #version 460
         
 in vec3 aCol;
+in vec2 texCoord;
+
+uniform sampler2D tex;
 
 out vec4 fragCol;
 
 void main( void )
 {
-    fragCol = vec4( aCol, 1.f );
+    fragCol = texture( tex, texCoord ); //vec4( aCol, 1.f ) * ;
 }

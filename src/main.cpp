@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Renderer/ShaderProgram.h"
+#include "Renderer/Texture2D.h"
 #include "Resources/ResourceManager.h"
 
 int windowWidth = 640;
@@ -35,6 +36,12 @@ int main( int argc, char** argv )
         0.f, 1.f, 0.f,
         0.f, 0.f, 1.f
     };
+
+	GLfloat tCoord[] = {
+		0.5f, 1.f, 
+		1.f, 0.f, 
+		0.f, 0.f
+	};
 
     /* Initialize the library */
     if ( !glfwInit() )
@@ -76,9 +83,9 @@ int main( int argc, char** argv )
     if( !pBasicShaderProgram )
         return -1;
 
-    pRes->LoadTexture( "map_16x16", "res/textures/map_16x16.png" );
+    auto tex = pRes->LoadTexture( "map_16x16", "res/textures/map_16x16.png" );
 
-    GLuint posVBO, colVBO;
+    GLuint posVBO, colVBO, tCoordVBO;
 
     glGenBuffers( 1, &posVBO );
     glBindBuffer( GL_ARRAY_BUFFER, posVBO );
@@ -87,6 +94,10 @@ int main( int argc, char** argv )
 	glGenBuffers( 1, &colVBO );
 	glBindBuffer( GL_ARRAY_BUFFER, colVBO );
 	glBufferData( GL_ARRAY_BUFFER, sizeof( vCol ), vCol, GL_STATIC_DRAW );
+
+	glGenBuffers( 2, &tCoordVBO );
+    glBindBuffer( GL_ARRAY_BUFFER, tCoordVBO );
+	glBufferData( GL_ARRAY_BUFFER, sizeof( tCoord ), tCoord, GL_STATIC_DRAW );
 
     GLuint VAO;
     glGenVertexArrays( 1, &VAO );
@@ -100,9 +111,14 @@ int main( int argc, char** argv )
 	glBindBuffer(GL_ARRAY_BUFFER, colVBO );
 	glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, nullptr );
 
-	glClearColor( 0.f, 0.f, 0.f, 1.f );
-    pBasicShaderProgram->Use();
+	glEnableVertexAttribArray( 2 );
+	glBindBuffer( GL_ARRAY_BUFFER, tCoordVBO );
+	glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 0, nullptr );
 
+	glClearColor( 1.f, 0.f, 1.f, 1.f );
+    pBasicShaderProgram->Use();
+    pBasicShaderProgram->SetInt( "tex", 0 );
+    tex->Bind();
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << "\n";
 
@@ -121,7 +137,7 @@ int main( int argc, char** argv )
         /* Poll for and process events */
         glfwPollEvents();
     }
-
+    Renderer::Texture2D::Unbind();
     Renderer::ShaderProgram::Disuse();
 
     // delete resource manager before destroying context, 
