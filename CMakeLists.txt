@@ -13,6 +13,8 @@ add_executable( ${PROJECT_NAME}
 				src/Resources/ResourceManager.cpp 
 				src/Resources/ResourceManager.h 
 				src/Resources/stb_image.h 
+				src/Utils/ShaderHelper.cpp
+				src/Utils/ShaderHelper.h				
 			  )
 
 set_property ( DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME} )
@@ -29,6 +31,8 @@ target_link_libraries( ${PROJECT_NAME} glfw )
 
 add_subdirectory( external/glad )
 target_link_libraries( ${PROJECT_NAME} glad )
+
+include_directories( external/glm )
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/ )
 

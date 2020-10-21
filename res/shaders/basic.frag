@@ -9,5 +9,5 @@ out vec4 fragCol;
 
 void main( void )
 {
-    fragCol = texture( tex, texCoord ); //vec4( aCol, 1.f ) * ;
+    fragCol = texture( tex, texCoord );
 }

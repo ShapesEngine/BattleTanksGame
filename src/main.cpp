@@ -1,20 +1,21 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/vec2.hpp>
 
 #include <iostream>
 
 #include "Renderer/ShaderProgram.h"
 #include "Renderer/Texture2D.h"
 #include "Resources/ResourceManager.h"
+#include "Utils/ShaderHelper.h"
 
-int windowWidth = 640;
-int windowHeight = 480;
+glm::vec2 windowSize = { 640,480 };
 
 void glfwWindowSizeCallback( GLFWwindow* window, int width, int height )
 {
-    windowWidth = width;
-    windowHeight = height;
-    glViewport( 0, 0, windowWidth, windowHeight );
+    windowSize.x = width;
+    windowSize.y = height;
+    glViewport( 0, 0, windowSize.x, windowSize.y );
 }
 
 void glfwKeyCallback( GLFWwindow* window, int key, int scancode, int action, int mode )
@@ -55,7 +56,7 @@ int main( int argc, char** argv )
     glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
 
     /* Create a windowed mode window and its OpenGL context */
-    GLFWwindow* window = glfwCreateWindow( windowWidth, windowHeight, "Battle Tanks", nullptr, nullptr );
+    GLFWwindow* window = glfwCreateWindow( windowSize.x, windowSize.y, "Battle Tanks", nullptr, nullptr );
 	if ( !window )
     {
         std::cout << "glfwCreateWindow failed!\n" << std::endl;
@@ -117,7 +118,7 @@ int main( int argc, char** argv )
 
 	glClearColor( 1.f, 0.f, 1.f, 1.f );
     pBasicShaderProgram->Use();
-    pBasicShaderProgram->SetInt( "tex", 0 );
+    Utils::ShaderHelper::SetInt( pBasicShaderProgram->GetID(), "tex", 0 );
     tex->Bind();
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << "\n";

@@ -27,18 +27,16 @@ namespace Renderer
 		ShaderProgram& operator=(const ShaderProgram&) = delete;
 		ShaderProgram& operator=(ShaderProgram&& shaderProgram) noexcept;
 
-		void SetInt( const std::string& name, const GLint value );
-
 	private:
 		Status CreateShader( const std::string& source, const GLenum shaderType, GLuint& shaderID );
 		Status CompileShader( const GLenum shaderType, GLuint shaderID );
 		Status LinkProgram(const GLuint& vertexShaderID, const GLuint& fragmentShaderID);
 
-
 	public:		
 		inline bool GetStatus() const { return status == Status::OK; }
 		inline void Use() const { glUseProgram( ID ); }
 		inline static void Disuse() { glUseProgram( 0 ); }
+		inline GLuint GetID() const { return ID; }
 
 	private:
 		Status status = Status::OK;
