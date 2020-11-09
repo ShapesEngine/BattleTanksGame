@@ -9,8 +9,8 @@
 
 namespace Renderer
 {
-	Sprite::Sprite( const std::shared_ptr<Texture2D> pTexture,
-					const std::shared_ptr<ShaderProgram> pShaderProgram,
+	Sprite::Sprite( std::shared_ptr<Texture2D> pTexture,
+					std::shared_ptr<ShaderProgram> pShaderProgram,
 					const glm::vec2& position,
 					const glm::vec2& size,
 					float rotation ) :

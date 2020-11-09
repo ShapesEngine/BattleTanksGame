@@ -58,19 +58,19 @@ int main( int argc, char** argv )
     glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
 
     /* Create a windowed mode window and its OpenGL context */
-    GLFWwindow* window = glfwCreateWindow( windowSize.x, windowSize.y, "Battle Tanks", nullptr, nullptr );
-	if ( !window )
+    GLFWwindow* pWindow = glfwCreateWindow( windowSize.x, windowSize.y, "Battle Tanks", nullptr, nullptr );
+	if ( !pWindow )
     {
         std::cout << "glfwCreateWindow failed!\n" << std::endl;
         glfwTerminate();
         return -1;
     }
 
-    glfwSetWindowSizeCallback( window, glfwWindowSizeCallback );
-    glfwSetKeyCallback( window, glfwKeyCallback );
+    glfwSetWindowSizeCallback( pWindow, glfwWindowSizeCallback );
+    glfwSetKeyCallback( pWindow, glfwKeyCallback );
 
     /* Make the window's context current */
-    glfwMakeContextCurrent( window );
+    glfwMakeContextCurrent( pWindow );
 	
 	if ( !gladLoadGL() )
 	{
@@ -128,36 +128,38 @@ int main( int argc, char** argv )
 
 	glClearColor( 1.f, 0.f, 1.f, 1.f );
 
-    pBasicShaderProgram->Use();
-    Utils::ShaderHelper::SetInt( pBasicShaderProgram->GetID(), "tex", 0 );
+    pBasicShaderProgram->Use();    
 
-	pSpriteShaderProgram->Use();
-	Utils::ShaderHelper::SetInt( pSpriteShaderProgram->GetID(), "tex", 0 );
-
-    glBindVertexArray( VAO );
-    pTex->Bind();
-
-	std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
-	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << "\n";
-
-    glm::mat4 modelMatrix_1 = glm::mat4( 1.f );
-    modelMatrix_1 = glm::translate( modelMatrix_1, glm::vec3( 100.f, 200.f, 0.f ) );
+	glm::mat4 modelMatrix_1 = glm::mat4( 1.f );
+	modelMatrix_1 = glm::translate( modelMatrix_1, glm::vec3( 100.f, 200.f, 0.f ) );
 
 	glm::mat4 modelMatrix_2 = glm::mat4( 1.f );
 	modelMatrix_2 = glm::translate( modelMatrix_2, glm::vec3( 590, 400.f, 0.f ) );
 
     glm::mat4 orthoProjectionMatrix = glm::ortho( 0.f, (float)windowSize.x, 0.f, (float)windowSize.y, -100.f, 100.f );
 
+    Utils::ShaderHelper::SetInt( pBasicShaderProgram->GetID(), "tex", 0 );
     Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "projection", orthoProjectionMatrix );
+
+	pSpriteShaderProgram->Use();
+
+	Utils::ShaderHelper::SetInt( pSpriteShaderProgram->GetID(), "tex", 0 );
+    Utils::ShaderHelper::SetMat4( pSpriteShaderProgram->GetID(), "projection", orthoProjectionMatrix );
     
-    //Utils::ShaderHelper::SetMat4( pSpriteShaderProgram->GetID(), "projection", orthoProjectionMatrix );
+
+	std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
+	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << "\n";   
 
     /* Loop until the user closes the window */
-    while( !glfwWindowShouldClose( window ) )
+    while( !glfwWindowShouldClose( pWindow ) )
     {
         /* Render here */
         glClear( GL_COLOR_BUFFER_BIT );
         
+        pBasicShaderProgram->Use();
+		glBindVertexArray( VAO );
+		pTex->Bind();        
+
         // wont bind projection as it will remain same
         Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "model", modelMatrix_1 );        
         glDrawArrays( GL_TRIANGLES, 0, 3);
@@ -165,10 +167,10 @@ int main( int argc, char** argv )
 		Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "model", modelMatrix_2 );        
 		glDrawArrays( GL_TRIANGLES, 0, 3 );
 
-        //pSprite->Render();
+        pSprite->Render();
 
         /* Swap front and back buffers */
-        glfwSwapBuffers( window );
+        glfwSwapBuffers( pWindow );
 
         /* Poll for and process events */
         glfwPollEvents();
