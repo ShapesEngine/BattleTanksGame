@@ -37,6 +37,7 @@ namespace Renderer
 		float rotation;
 
 		GLuint VAO;
+		GLuint indEBO;
 		GLuint vertVBO;
 		GLuint texVBO;
 	};

@@ -21,19 +21,16 @@ namespace Renderer
 		rotation(rotation)
 	{
 		// =======================================================================
-		// 2--3    1
+		// 2--3    3
 		// | /   / |
-		// 1    3--2
+		// 1    1--4
 		// -----------------------------------------------------------------------
 		constexpr GLfloat vertexCoords[] = {
 			// X  Y
 			0.f, 0.f,
 			0.f, 1.f,
 			1.f, 1.f,
-
-			1.f, 1.f,
-			1.f, 0.f,
-			0.f, 0.f
+			1.f, 0.f
 		};
 
 		constexpr GLfloat textureCoords[] = {
@@ -41,20 +38,26 @@ namespace Renderer
 			0.f, 0.f,
 			0.f, 1.f,
 			1.f, 1.f,
+			1.f, 0.f
+		};
 
-			1.f, 1.f,
-			1.f, 0.f,
-			0.f, 0.f
+		constexpr GLuint vertexIndices[] = {
+			0, 1, 2,
+			0, 3, 2
 		};
 
 		glGenBuffers( 1, &vertVBO );
 		glGenBuffers( 1, &texVBO );
+		glGenBuffers( 1, &indEBO );
 
 		glBindBuffer( GL_ARRAY_BUFFER, vertVBO );
 		glBufferData( GL_ARRAY_BUFFER, sizeof( vertexCoords ), vertexCoords, GL_STATIC_DRAW );
 
 		glBindBuffer( GL_ARRAY_BUFFER, texVBO );
 		glBufferData( GL_ARRAY_BUFFER, sizeof( textureCoords ), textureCoords, GL_STATIC_DRAW );
+
+		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indEBO );
+		glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( vertexIndices ), vertexIndices, GL_STATIC_DRAW );
 
 		glGenVertexArrays( 1, &VAO );
 		glBindVertexArray( VAO );
@@ -75,6 +78,7 @@ namespace Renderer
 	{
 		glDeleteBuffers( 1, &vertVBO );
 		glDeleteBuffers( 1, &texVBO );
+		glDeleteBuffers( 1, &indEBO );
 		glDeleteVertexArrays( 1, &VAO );
 	}
 
@@ -96,7 +100,9 @@ namespace Renderer
 		glActiveTexture( GL_TEXTURE0 );
 		pTexture->Bind();
 
-		glDrawArrays( GL_TRIANGLES, 0, 6 );
+		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indEBO );
+		glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
+		//glDrawArrays( GL_TRIANGLES, 0, 6 );
 		glBindVertexArray( 0 );
 	}
 }
