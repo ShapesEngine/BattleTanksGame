@@ -7,9 +7,12 @@ layout( location = 2 ) in vec2 tex;
 out vec3 aCol;
 out vec2 texCoord;
 
+uniform mat4 model;
+uniform mat4 projection;
+
 void main( void )
 {
     aCol = col;
     texCoord = tex;
-    gl_Position = vec4( pos, 1.f );
+    gl_Position = projection * model * vec4( pos, 1.f );
 }

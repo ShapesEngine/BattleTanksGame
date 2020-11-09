@@ -7,22 +7,22 @@ namespace Renderer
 	ShaderProgram::ShaderProgram(const std::string& vertexShader, const std::string& fragmentShader)
 	{
 		GLuint vertexShaderID;
-		if (CreateShader(vertexShader, GL_VERTEX_SHADER, vertexShaderID) != Status::OK)
+		if( CreateShader( vertexShader, GL_VERTEX_SHADER, vertexShaderID ) != Status::OK )
 			return;
 
 		GLuint fragmentShaderID;
-		if (CreateShader(fragmentShader, GL_FRAGMENT_SHADER, fragmentShaderID) != Status::OK)
+		if( CreateShader( fragmentShader, GL_FRAGMENT_SHADER, fragmentShaderID ) != Status::OK )
 		{
 			glDeleteShader(vertexShaderID); // delete vertex shader, as if it was compiled it will continue consuming memory
 			return;
 		}
 
-		LinkProgram(vertexShaderID, fragmentShaderID);
+		LinkProgram( vertexShaderID, fragmentShaderID );
 	}	
 
-	ShaderProgram& ShaderProgram::operator=(ShaderProgram&& shaderProgram) noexcept
+	ShaderProgram& ShaderProgram::operator=( ShaderProgram&& shaderProgram ) noexcept
 	{
-		glDeleteProgram(ID);
+		glDeleteProgram( ID );
 		ID = shaderProgram.ID;
 		status = shaderProgram.status;
 
@@ -31,7 +31,7 @@ namespace Renderer
 		return *this;
 	}
 
-	ShaderProgram::ShaderProgram(ShaderProgram&& shaderProgram) noexcept
+	ShaderProgram::ShaderProgram( ShaderProgram&& shaderProgram ) noexcept
 	{
 		ID = shaderProgram.ID;
 		status = shaderProgram.status;
@@ -43,9 +43,9 @@ namespace Renderer
 
 	ShaderProgram::Status ShaderProgram::CreateShader( const std::string& source, const GLenum shaderType, GLuint& shaderID )
 	{
-		shaderID = glCreateShader(shaderType);
+		shaderID = glCreateShader( shaderType );
 		const char* code = source.c_str();
-		glShaderSource(shaderID, 1, &code, nullptr);
+		glShaderSource( shaderID, 1, &code, nullptr );
 		return CompileShader(shaderType, shaderID);		
 	}
 

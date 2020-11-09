@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/vec2.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
 
@@ -27,9 +28,9 @@ void glfwKeyCallback( GLFWwindow* window, int key, int scancode, int action, int
 int main( int argc, char** argv )
 {
     GLfloat vPos[] = {
-        0.f, 0.5f, 0.f,
-        -0.5f, -0.5f, 0.f,
-        0.5f, -0.5f, 0.f
+		0.0f, 50.f, 0.0f,
+		50.f, -50.f, 0.0f,
+		-50.f, -50.f, 0.0f
     };
 
     GLfloat vCol[] = {
@@ -119,9 +120,19 @@ int main( int argc, char** argv )
 	glClearColor( 1.f, 0.f, 1.f, 1.f );
     pBasicShaderProgram->Use();
     Utils::ShaderHelper::SetInt( pBasicShaderProgram->GetID(), "tex", 0 );
+    glBindVertexArray( VAO );
     tex->Bind();
+
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << "\n";
+
+    glm::mat4 modelMatrix_1 = glm::mat4( 1.f );
+    modelMatrix_1 = glm::translate( modelMatrix_1, glm::vec3( 100.f, 200.f, 0.f ) );
+
+	glm::mat4 modelMatrix_2 = glm::mat4( 1.f );
+	modelMatrix_2 = glm::translate( modelMatrix_2, glm::vec3( 590, 400.f, 0.f ) );
+
+    glm::mat4 orthoProjectionMatrix = glm::ortho( 0.f, (float)windowSize.x, 0.f, (float)windowSize.y, -100.f, 100.f );
 
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( window ) )
@@ -129,8 +140,14 @@ int main( int argc, char** argv )
         /* Render here */
         glClear( GL_COLOR_BUFFER_BIT );
         
-        glBindVertexArray( VAO );
+        Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "model", modelMatrix_1 );
+        Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "projection", orthoProjectionMatrix );        
+
         glDrawArrays( GL_TRIANGLES, 0, 3);
+
+		Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "model", modelMatrix_2 );
+        // wont bind projection as it's same for the second triangle
+		glDrawArrays( GL_TRIANGLES, 0, 3 );
 
         /* Swap front and back buffers */
         glfwSwapBuffers( window );
@@ -140,10 +157,12 @@ int main( int argc, char** argv )
     }
     Renderer::Texture2D::Unbind();
     Renderer::ShaderProgram::Disuse();
-
+    
+    // =======================================================================
     // delete resource manager before destroying context, 
     // otherwise it may lead to crash of the application
-    // -------------------------------------------------
+    // -----------------------------------------------------------------------
+    
     delete pRes;
     glfwTerminate();
 
