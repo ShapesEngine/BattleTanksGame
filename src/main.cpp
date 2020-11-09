@@ -7,6 +7,7 @@
 
 #include "Renderer/ShaderProgram.h"
 #include "Renderer/Texture2D.h"
+#include "Renderer/Sprite.h"
 #include "Resources/ResourceManager.h"
 #include "Utils/ShaderHelper.h"
 
@@ -85,7 +86,15 @@ int main( int argc, char** argv )
     if( !pBasicShaderProgram )
         return -1;
 
-    auto tex = pRes->LoadTexture( "map_16x16", "res/textures/map_16x16.png" );
+	auto pSpriteShaderProgram = pRes->LoadShaders( "Sprite", "res/shaders/sprite.vert", "res/shaders/sprite.frag" );
+
+	if( !pSpriteShaderProgram )
+		return -1;
+
+    auto pTex = pRes->LoadTexture( "map_16x16", "res/textures/map_16x16.png" );
+
+    auto pSprite = pRes->LoadSprite( "N Sprite", "map_16x16", "Sprite", 50, 100 );
+    pSprite->SetPosition( glm::vec2( 300, 100 ) );
 
     GLuint posVBO, colVBO, tCoordVBO;
 
@@ -118,10 +127,15 @@ int main( int argc, char** argv )
 	glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 0, nullptr );
 
 	glClearColor( 1.f, 0.f, 1.f, 1.f );
+
     pBasicShaderProgram->Use();
     Utils::ShaderHelper::SetInt( pBasicShaderProgram->GetID(), "tex", 0 );
+
+	pSpriteShaderProgram->Use();
+	Utils::ShaderHelper::SetInt( pSpriteShaderProgram->GetID(), "tex", 0 );
+
     glBindVertexArray( VAO );
-    tex->Bind();
+    pTex->Bind();
 
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << "\n";
@@ -134,20 +148,24 @@ int main( int argc, char** argv )
 
     glm::mat4 orthoProjectionMatrix = glm::ortho( 0.f, (float)windowSize.x, 0.f, (float)windowSize.y, -100.f, 100.f );
 
+    Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "projection", orthoProjectionMatrix );
+    
+    //Utils::ShaderHelper::SetMat4( pSpriteShaderProgram->GetID(), "projection", orthoProjectionMatrix );
+
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( window ) )
     {
         /* Render here */
         glClear( GL_COLOR_BUFFER_BIT );
         
-        Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "model", modelMatrix_1 );
-        Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "projection", orthoProjectionMatrix );        
-
+        // wont bind projection as it will remain same
+        Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "model", modelMatrix_1 );        
         glDrawArrays( GL_TRIANGLES, 0, 3);
 
-		Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "model", modelMatrix_2 );
-        // wont bind projection as it's same for the second triangle
+		Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "model", modelMatrix_2 );        
 		glDrawArrays( GL_TRIANGLES, 0, 3 );
+
+        //pSprite->Render();
 
         /* Swap front and back buffers */
         glfwSwapBuffers( window );

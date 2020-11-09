@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include "../Renderer/ShaderProgram.h"
 #include "../Renderer/Texture2D.h"
+#include "../Renderer/Sprite.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 // if you'd like to use other texture image extensions
@@ -68,7 +69,7 @@ std::shared_ptr<Renderer::ShaderProgram> ResourceManager::GetShaderProgram( cons
 {
 	auto shaderProgram = shaderPrograms.find( shaderName )->second;
 	if( !shaderProgram )
-		std::cerr << "ERROR::GETTING SHADER: " << shaderName << "\n";
+		std::cerr << "ERROR::FINDING SHADER: " << shaderName << "\n";
 
 	return shaderProgram;
 }
@@ -100,7 +101,38 @@ std::shared_ptr<Renderer::Texture2D> ResourceManager::GetTexture( const std::str
 {
 	auto texture = textures.find( textureName )->second;
 	if ( !texture )
-		std::cerr << "ERROR::GETTING SHADER: " << textureName << "\n";
+		std::cerr << "ERROR::FINDING TEXTURE: " << textureName << "\n";
 
 	return texture;
+}
+
+std::shared_ptr<Renderer::Sprite> ResourceManager::LoadSprite( const std::string& spriteName, 
+															   const std::string& textureName, 
+															   const std::string& shaderName, 
+															   const uint32_t spriteWidth, 
+															   const uint32_t spriteHeight )
+{
+	auto pTexture = GetTexture( textureName );
+	if( !pTexture )
+		std::cerr << "ERROR::GETTING TEXTURE: " << textureName << ". SPRITE NAME: " << spriteName << ".\n";
+
+	auto pShader = GetShaderProgram( shaderName );
+	if( !pShader )
+		std::cerr << "ERROR::GETTING SHADER PROGRAM: " << shaderName << ". SPRITE NAME: " << spriteName << ".\n";
+
+	auto sprite = sprites[spriteName] = std::make_shared<Renderer::Sprite>( pTexture, 
+																			pShader, 
+																			glm::vec2( 0.f ), 
+																			glm::vec2( spriteWidth, spriteHeight ) );
+	
+	return sprite;
+}
+
+std::shared_ptr<Renderer::Sprite> ResourceManager::GetSprite( const std::string& spriteName )
+{
+	auto sprite = sprites.find( spriteName )->second;
+	if( !sprite )
+		std::cerr << "ERROR::FINDING SPRITE: " << spriteName << "\n";
+
+	return sprite;
 }

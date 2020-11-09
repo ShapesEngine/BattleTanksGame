@@ -32,8 +32,12 @@ namespace Renderer
 	private:
 		std::shared_ptr<Texture2D> pTexture;
 		std::shared_ptr<ShaderProgram> pShaderProgram;
-		glm::vec2& position;
-		glm::vec2& size;
+		glm::vec2 position;
+		glm::vec2 size;
 		float rotation;
+
+		GLuint VAO;
+		GLuint vertVBO;
+		GLuint texVBO;
 	};
 }
