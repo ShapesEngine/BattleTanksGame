@@ -110,7 +110,8 @@ std::shared_ptr<Renderer::Sprite> ResourceManager::LoadSprite( const std::string
 															   const std::string& textureName, 
 															   const std::string& shaderName, 
 															   const uint32_t spriteWidth, 
-															   const uint32_t spriteHeight )
+															   const uint32_t spriteHeight,
+															   const std::string& subTextureName )
 {
 	auto pTexture = GetTexture( textureName );
 	if( !pTexture )
@@ -121,6 +122,7 @@ std::shared_ptr<Renderer::Sprite> ResourceManager::LoadSprite( const std::string
 		std::cerr << "ERROR::GETTING SHADER PROGRAM: " << shaderName << ". SPRITE NAME: " << spriteName << ".\n";
 
 	auto sprite = sprites[spriteName] = std::make_shared<Renderer::Sprite>( pTexture, 
+																			subTextureName,
 																			pShader, 
 																			glm::vec2( 0.f ), 
 																			glm::vec2( spriteWidth, spriteHeight ) );
@@ -135,4 +137,34 @@ std::shared_ptr<Renderer::Sprite> ResourceManager::GetSprite( const std::string&
 		std::cerr << "ERROR::FINDING SPRITE: " << spriteName << "\n";
 
 	return sprite;
+}
+
+std::shared_ptr<Renderer::Texture2D> ResourceManager::LoadTextureAtlas( const std::string textureName, 
+																		const std::string texturePath, 
+																		const std::vector<std::string> subTextures, 
+																		const unsigned int subTextureWidth, 
+																		const unsigned int subTextureHeight )
+{
+	auto pTexture = LoadTexture( std::move( textureName ), std::move( texturePath ) );
+	if( pTexture )
+	{
+		const unsigned int textureWidth = pTexture->GetWidth();
+		const unsigned int textureHeight = pTexture->GetHeight();
+		unsigned int currentTextureOffsetX = 0;
+		unsigned int currentTextureOffsetY = textureHeight;
+		for( const auto& currentSubTextureName : subTextures )
+		{
+			glm::vec2 leftBottomUV( static_cast<float>( currentTextureOffsetX ) / textureWidth, static_cast<float>( currentTextureOffsetY - subTextureHeight ) / textureHeight );
+			glm::vec2 rightTopUV( static_cast<float>( currentTextureOffsetX + subTextureWidth ) / textureWidth, static_cast<float>( currentTextureOffsetY ) / textureHeight );
+			pTexture->AddSubTexture( std::move( currentSubTextureName ), leftBottomUV, rightTopUV );
+
+			currentTextureOffsetX += subTextureWidth;
+			if( currentTextureOffsetX >= textureWidth )
+			{
+				currentTextureOffsetX = 0;
+				currentTextureOffsetY -= subTextureHeight;
+			}
+		}
+	}
+	return pTexture;
 }

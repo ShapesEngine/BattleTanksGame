@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include <optional>
+#include <vector>
 
 namespace Renderer
 {
@@ -33,8 +34,15 @@ public:
 												  const std::string& textureName,
 												  const std::string& shaderName,
 												  const uint32_t spriteWidth,
-												  const uint32_t spriteHeight );
+												  const uint32_t spriteHeight,
+												  const std::string& subTextureName = "default" );
 	std::shared_ptr<Renderer::Sprite> GetSprite( const std::string& spriteName );
+	// Provide relative path from the executable path
+	std::shared_ptr<Renderer::Texture2D> LoadTextureAtlas( const std::string textureName,
+														   const std::string texturePath,
+														   const std::vector<std::string> subTextures,
+														   const unsigned int subTextureWidth,
+														   const unsigned int subTextureHeight );
 private:
 	std::optional<std::string> GetFileString( const std::string& relativeFilePath ) const;
 	inline std::optional<std::string> GetFileName( const std::string& filePath ) const { return filePath.substr( filePath.find_last_of( "/\\" ) + 1, filePath.length() ); }

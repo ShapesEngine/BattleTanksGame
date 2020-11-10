@@ -93,7 +93,10 @@ int main( int argc, char** argv )
 
     auto pTex = pRes->LoadTexture( "map_16x16", "res/textures/map_16x16.png" );
 
-    auto pSprite = pRes->LoadSprite( "N Sprite", "map_16x16", "Sprite", 50, 100 );
+	std::vector<std::string> subTexturesNames = { "block", "topBlock", "bottomBlock", "leftBlock", "rightBlock", "topLeftBlock", "topRightBlock", "bottomLeftBlock", "bottomRightBlock", "beton" };
+	auto pTextureAtlas = pRes->LoadTextureAtlas( "DefaultTextureAtlas", "res/textures/map_16x16.png", std::move( subTexturesNames ), 16, 16 );
+
+	auto pSprite = pRes->LoadSprite( "NewSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "beton" );
     pSprite->SetPosition( glm::vec2( 300, 100 ) );
 
     GLuint posVBO, colVBO, tCoordVBO;

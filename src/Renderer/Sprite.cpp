@@ -32,7 +32,7 @@ namespace Renderer
 		// | /   / |
 		// 1    1--4
 		// -----------------------------------------------------------------------
-		constexpr GLfloat vertexCoords[] = {
+		const GLfloat vertexCoords[] = {
 			// X  Y
 			lbX, lbY,
 			lbX, rtY,
