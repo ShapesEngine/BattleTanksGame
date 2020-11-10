@@ -47,4 +47,20 @@ namespace Renderer
 
 		return *this;
 	}
+
+	void Texture2D::AddSubTexture( std::string name, const glm::vec2& leftBottomUV, const glm::vec2& rightTopUV )
+	{
+		subTextures.emplace( std::move( name ), SubTexture2D( leftBottomUV, rightTopUV ) );
+	}
+
+	const Texture2D::SubTexture2D& Texture2D::GetSubTexture( const std::string & name ) const
+	{
+		auto it = subTextures.find( name );
+		if( it != subTextures.end() )
+		{
+			return it->second;
+		}
+		const static SubTexture2D defaultSubTexture;
+		return defaultSubTexture;
+	}
 }
