@@ -10,6 +10,7 @@
 namespace Renderer
 {
 	Sprite::Sprite( std::shared_ptr<Texture2D> pTexture,
+					const std::string initialSubTexture,
 					std::shared_ptr<ShaderProgram> pShaderProgram,
 					const glm::vec2& position,
 					const glm::vec2& size,
@@ -20,6 +21,12 @@ namespace Renderer
 		size(size),
 		rotation(rotation)
 	{
+		auto subTexture = pTexture->GetSubTexture( std::move( initialSubTexture ) );
+		GLfloat lbX = subTexture.leftBottomUV.x;
+		GLfloat lbY = subTexture.leftBottomUV.y;
+		GLfloat rtX = subTexture.rightTopUV.x;
+		GLfloat rtY = subTexture.rightTopUV.y;
+
 		// =======================================================================
 		// 2--3    3
 		// | /   / |
@@ -27,10 +34,10 @@ namespace Renderer
 		// -----------------------------------------------------------------------
 		constexpr GLfloat vertexCoords[] = {
 			// X  Y
-			0.f, 0.f,
-			0.f, 1.f,
-			1.f, 1.f,
-			1.f, 0.f
+			lbX, lbY,
+			lbX, rtY,
+			rtX, rtY,
+			rtX, lbY
 		};
 
 		constexpr GLfloat textureCoords[] = {
