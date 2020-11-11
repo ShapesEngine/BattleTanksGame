@@ -9,13 +9,13 @@
 
 namespace Renderer
 {
-	Sprite::Sprite( std::shared_ptr<Texture2D> pTexture,
+	Sprite::Sprite( std::shared_ptr<Texture2D> pTexture_in,
 					const std::string initialSubTexture,
 					std::shared_ptr<ShaderProgram> pShaderProgram,
 					const glm::vec2& position,
 					const glm::vec2& size,
 					float rotation ) :
-		pTexture( std::move( pTexture ) ),
+		pTexture( std::move( pTexture_in ) ),
 		pShaderProgram( std::move( pShaderProgram ) ),
 		position(position),
 		size(size),
@@ -109,7 +109,6 @@ namespace Renderer
 
 		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indEBO );
 		glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
-		//glDrawArrays( GL_TRIANGLES, 0, 6 );
 		glBindVertexArray( 0 );
 	}
 }
