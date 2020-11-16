@@ -10,12 +10,12 @@ namespace Renderer
 		glGenTextures( 1, &ID );
 		glActiveTexture( GL_TEXTURE0 );
 		Bind();
-		glTexImage2D( GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data );
+		glTexImage2D( GL_TEXTURE_2D, 0, format, this->width, this->height, 0, format, GL_UNSIGNED_BYTE, data );
 
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, filter );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, filter );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, wrappingFilter );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, wrappingFilter );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrappingFilter );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrappingFilter );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter );
 		glGenerateMipmap( GL_TEXTURE_2D );
 
 		Unbind();
