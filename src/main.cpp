@@ -96,7 +96,7 @@ int main( int argc, char** argv )
 	std::vector<std::string> subTexturesNames = { "block", "topBlock", "bottomBlock", "leftBlock", "rightBlock", "topLeftBlock", "topRightBlock", "bottomLeftBlock", "bottomRightBlock", "beton" };
 	auto pTextureAtlas = pRes->LoadTextureAtlas( "DefaultTextureAtlas", "res/textures/map_16x16.png", std::move( subTexturesNames ), 16, 16 );
 
-	auto pSprite = pRes->LoadSprite( "NewSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "beton" );
+	auto pSprite = pRes->LoadSprite( "NewSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "bottomBlock" );
     pSprite->SetPosition( glm::vec2( 300, 100 ) );
 
     GLuint posVBO, colVBO, tCoordVBO;
