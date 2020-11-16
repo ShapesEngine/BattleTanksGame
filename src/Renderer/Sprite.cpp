@@ -21,31 +21,30 @@ namespace Renderer
 		size(size),
 		rotation(rotation)
 	{
-		auto subTexture = pTexture->GetSubTexture( std::move( initialSubTexture ) );
-		GLfloat lbX = subTexture.leftBottomUV.x;
-		GLfloat lbY = subTexture.leftBottomUV.y;
-		GLfloat rtX = subTexture.rightTopUV.x;
-		GLfloat rtY = subTexture.rightTopUV.y;
-
 		// =======================================================================
 		// 2--3    3
 		// | /   / |
 		// 1    1--4
 		// -----------------------------------------------------------------------
-		const GLfloat vertexCoords[] = {
+		constexpr GLfloat vertexCoords[] = {
 			// X  Y
-			lbX, lbY,
-			lbX, rtY,
-			rtX, rtY,
-			rtX, lbY
-		};
-
-		constexpr GLfloat textureCoords[] = {
-			// U  V
 			0.f, 0.f,
 			0.f, 1.f,
 			1.f, 1.f,
 			1.f, 0.f
+		};
+
+		auto subTexture = pTexture->GetSubTexture( std::move( initialSubTexture ) );
+		GLfloat lbX = subTexture.leftBottomUV.x;
+		GLfloat lbY = subTexture.leftBottomUV.y;
+		GLfloat rtX = subTexture.rightTopUV.x;
+		GLfloat rtY = subTexture.rightTopUV.y;
+		const GLfloat textureCoords[] = {
+			// U  V
+			lbX, lbY,
+			lbX, rtY,
+			rtX, rtY,
+			rtX, lbY
 		};
 
 		constexpr GLuint vertexIndices[] = {
