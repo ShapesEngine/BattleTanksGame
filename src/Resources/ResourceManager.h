@@ -56,8 +56,8 @@ public:
 														   const uint32_t subTextureWidth,
 														   const uint32_t subTextureHeight );
 private:
-	std::optional<std::string> GetFileString( const std::string& relativeFilePath ) const;
-	inline std::optional<std::string> GetFileName( const std::string& filePath ) const { return filePath.substr( filePath.find_last_of( "/\\" ) + 1, filePath.length() ); }
+	static std::optional<std::string> GetFileString( const std::string& relativeFilePath );
+	static inline std::optional<std::string> GetFileName( const std::string& filePath ) { return filePath.substr( filePath.find_last_of( "/\\" ) + 1, filePath.length() ); }
 
 private:
 	typedef std::map<const std::string, std::shared_ptr<Renderer::ShaderProgram>> ShaderProgramsMap;

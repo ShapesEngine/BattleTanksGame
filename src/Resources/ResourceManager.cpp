@@ -20,7 +20,7 @@ ResourceManager::SpritesMap ResourceManager::sprites;
 ResourceManager::AnimatedSpritesMap ResourceManager::animatedSprites;
 std::string ResourceManager::path;
 
-std::optional<std::string> ResourceManager::GetFileString( const std::string& relativeFilePath ) const
+std::optional<std::string> ResourceManager::GetFileString( const std::string& relativeFilePath )
 {
 	std::fstream file;
 	file.open( path + "/" + relativeFilePath, std::ios::in | std::ios::binary );

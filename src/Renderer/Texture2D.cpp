@@ -32,6 +32,7 @@ namespace Renderer
 
 	Texture2D::~Texture2D()
 	{
+		Unbind();
 		glDeleteTextures( 1, &ID );
 	}
 

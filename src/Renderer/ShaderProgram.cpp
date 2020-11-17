@@ -97,6 +97,7 @@ namespace Renderer
 
 	ShaderProgram::~ShaderProgram()
 	{
+		Disuse();
 		glDeleteProgram( ID );
 	}	
 }
