@@ -4,10 +4,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
+#include <chrono>
 
 #include "Renderer/ShaderProgram.h"
 #include "Renderer/Texture2D.h"
 #include "Renderer/Sprite.h"
+#include "Renderer/AnimatedSprite.h"
 #include "Resources/ResourceManager.h"
 #include "Utils/ShaderHelper.h"
 
@@ -93,11 +95,63 @@ int main( int argc, char** argv )
 
     auto pTex = pRes->LoadTexture( "map_16x16", "res/textures/map_16x16.png" );
 
-	std::vector<std::string> subTexturesNames = { "block", "topBlock", "bottomBlock", "leftBlock", "rightBlock", "topLeftBlock", "topRightBlock", "bottomLeftBlock", "bottomRightBlock", "concrete" };
+	std::vector<std::string> subTexturesNames = {
+		"block",
+		"topBlock",
+		"bottomBlock",
+		"leftBlock",
+		"rightBlock",
+		"topLeftBlock",
+		"topRightBlock",
+		"bottomLeftBlock",
+
+		"bottomRightBlock",
+		"concrete",
+		"topBeton",
+		"bottomBeton",
+		"leftBeton",
+		"rightBeton",
+		"topLeftBeton",
+		"topRightBeton",
+
+		"bottomLeftBeton",
+		"bottomRightBeton",
+		"water1",
+		"water2",
+		"water3",
+		"trees",
+		"ice",
+		"wall",
+
+		"eagle",
+		"deadEagle",
+		"nothing",
+		"respawn1",
+		"respawn2",
+		"respawn3",
+		"respawn4"
+	};
 	auto pTextureAtlas = pRes->LoadTextureAtlas( "DefaultTextureAtlas", "res/textures/map_16x16.png", std::move( subTexturesNames ), 16, 16 );
 
 	auto pSprite = pRes->LoadSprite( "NewSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
     pSprite->SetPosition( glm::vec2( 300, 100 ) );
+
+	auto pAnimatedSprite = pRes->LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
+	pAnimatedSprite->SetPosition( glm::vec2( 300, 300 ) );
+
+	Renderer::AnimatedSprite::animFramesVector waterAnimations;
+	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water1", 1000000000 ) );
+	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water2", 1000000000 ) );
+	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water3", 1000000000 ) );
+
+	std::vector<std::pair<std::string, uint64_t>> eagleAnimations;
+	eagleAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "eagle", 1000000000 ) );
+	eagleAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "deadEagle", 1000000000 ) );
+
+	pAnimatedSprite->InsertAnimation( "waterAnimation", std::move( waterAnimations ) );
+	pAnimatedSprite->InsertAnimation( "eagleAnimation", std::move( eagleAnimations ) );
+
+	pAnimatedSprite->SetAnimation( "waterAnimation" );
 
     GLuint posVBO, colVBO, tCoordVBO;
 
@@ -153,9 +207,16 @@ int main( int argc, char** argv )
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << "\n";   
 
+	auto lastTime = std::chrono::high_resolution_clock::now();
+
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( pWindow ) )
     {
+		auto currentTime = std::chrono::high_resolution_clock::now();
+		uint64_t duration = std::chrono::duration_cast<std::chrono::nanoseconds>( currentTime - lastTime ).count();
+		lastTime = currentTime;
+		pAnimatedSprite->Update( duration );
+
         /* Render here */
         glClear( GL_COLOR_BUFFER_BIT );
         
@@ -171,6 +232,8 @@ int main( int argc, char** argv )
 		glDrawArrays( GL_TRIANGLES, 0, 3 );
 
         pSprite->Render();
+
+		pAnimatedSprite->Render();
 
         /* Swap front and back buffers */
         glfwSwapBuffers( pWindow );

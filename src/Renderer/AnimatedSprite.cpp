@@ -6,7 +6,7 @@ namespace Renderer
 {
 	void AnimatedSprite::SetAnimation( const std::string& animName )
 	{
-		if( animName == itCurrentAnimFrame->first )
+		if( itCurrentAnimFrame != animFrames.end() && animName == itCurrentAnimFrame->first )
 		{
 			return;
 		}

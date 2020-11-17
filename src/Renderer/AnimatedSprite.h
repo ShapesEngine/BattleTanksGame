@@ -9,7 +9,9 @@ namespace Renderer
 {
 	class AnimatedSprite : public Sprite
 	{
+	public:
 		typedef std::vector<std::pair<std::string, uint64_t>> animFramesVector;
+
 	public:
 		using Sprite::Sprite;
 
@@ -22,7 +24,7 @@ namespace Renderer
 	private:
 		// animation name and animations collection { animation state name and duration of animation in nanoseconds }
 		std::map<std::string, animFramesVector> animFrames;
-		std::map<std::string, animFramesVector>::const_iterator itCurrentAnimFrame;
+		std::map<std::string, animFramesVector>::const_iterator itCurrentAnimFrame = animFrames.end();
 
 		size_t currentFrameIndex = 0;
 		uint64_t currentFrameTime = 0;
