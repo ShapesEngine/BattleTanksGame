@@ -2,6 +2,7 @@
 #include "../Renderer/ShaderProgram.h"
 #include "../Renderer/Texture2D.h"
 #include "../Renderer/Sprite.h"
+#include "../Renderer/AnimatedSprite.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 // if you'd like to use other texture image extensions
@@ -139,11 +140,39 @@ std::shared_ptr<Renderer::Sprite> ResourceManager::GetSprite( const std::string&
 	return sprite;
 }
 
+std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::LoadAnimatedSprite( const std::string& spriteName, const std::string& textureName, const std::string& shaderName, const uint32_t spriteWidth, const uint32_t spriteHeight, const std::string& subTextureName )
+{
+	auto pTexture = GetTexture( textureName );
+	if( !pTexture )
+		std::cerr << "ERROR::GETTING TEXTURE: " << textureName << ". ANIMATEDSPRITE NAME: " << spriteName << ".\n";
+
+	auto pShader = GetShaderProgram( shaderName );
+	if( !pShader )
+		std::cerr << "ERROR::GETTING SHADER PROGRAM: " << shaderName << ". ANIMATEDSPRITE NAME: " << spriteName << ".\n";
+
+	auto animatedSprite = animatedSprites[spriteName] = std::make_shared<Renderer::AnimatedSprite>( pTexture,
+																			subTextureName,
+																			pShader,
+																			glm::vec2( 0.f ),
+																			glm::vec2( spriteWidth, spriteHeight ) );
+
+	return animatedSprite;
+}
+
+std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::GetAnimatedSprite( const std::string& spriteName )
+{
+	auto animatedSprite = animatedSprites.find( spriteName )->second;
+	if( !animatedSprite )
+		std::cerr << "ERROR::FINDING ANIMATEDSPRITE: " << spriteName << "\n";
+
+	return animatedSprite;
+}
+
 std::shared_ptr<Renderer::Texture2D> ResourceManager::LoadTextureAtlas( std::string textureName, 
 																		std::string texturePath, 
 																		std::vector<std::string> subTextures, 
 																		const uint32_t subTextureWidth, 
-																		const unsigned int subTextureHeight )
+																		const uint32_t subTextureHeight )
 {
 	auto pTexture = LoadTexture( std::move( textureName ), std::move( texturePath ) );
 	if( pTexture )
