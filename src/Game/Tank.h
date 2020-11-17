@@ -25,8 +25,9 @@ public:
 
 	void Render() const;
 	void SetOrientation( EOrientation eOrientation_in );
-	void Move( bool move );
 	void Update( uint64_t delta );
+
+	inline void Move( bool move ) { this->move = move; }
 
 private:
 	EOrientation eOrientation = EOrientation::Top;

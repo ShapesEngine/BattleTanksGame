@@ -52,11 +52,6 @@ void Tank::SetOrientation( EOrientation eOrientation_in )
 	}
 }
 
-void Tank::Move( bool move )
-{
-	 move = move;
-}
-
 void Tank::Update( uint64_t delta )
 {
 	if( move )

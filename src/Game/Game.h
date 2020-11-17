@@ -2,6 +2,9 @@
 
 #include <glm/vec2.hpp>
 #include <bitset>
+#include <memory>
+
+#include "Tank.h"
 
 class Game
 {
@@ -22,8 +25,9 @@ public:
 
 private:
 	// 256 possible ANSI keys that might be pressed
-	std::bitset<256> keys;
+	std::bitset<350> keys;
 
 	glm::ivec2 windowSize;
 	EGameState eCurrentGameState = EGameState::Active;
+	std::unique_ptr<Tank> pTank;
 };

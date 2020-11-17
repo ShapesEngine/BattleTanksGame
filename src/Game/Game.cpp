@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #include "../Renderer/ShaderProgram.h"
 #include "../Renderer/Texture2D.h"
@@ -20,16 +21,50 @@ Game::Game( const glm::ivec2& windowSize ) :
 void Game::Render()
 {
     ResourceManager::GetAnimatedSprite("NewAnimatedSprite")->Render();
+	if( pTank )
+	{
+		pTank->Render();
+	}
 }
 
 void Game::Update( uint64_t delta )
 {
     ResourceManager::GetAnimatedSprite("NewAnimatedSprite")->Update(delta);
+
+	if( pTank )
+	{
+		if( keys[GLFW_KEY_W] )
+		{
+			pTank->SetOrientation( Tank::EOrientation::Top );
+			pTank->Move( true );
+		}
+		else if( keys[GLFW_KEY_A] )
+		{
+			pTank->SetOrientation( Tank::EOrientation::Left );
+			pTank->Move( true );
+		}
+		else if( keys[GLFW_KEY_D] )
+		{
+			pTank->SetOrientation( Tank::EOrientation::Right );
+			pTank->Move( true );
+		}
+		else if( keys[GLFW_KEY_S] )
+		{
+			pTank->SetOrientation( Tank::EOrientation::Bottom );
+			pTank->Move( true );
+		}
+		else
+		{
+			pTank->Move( false );
+		}
+
+		pTank->Update( delta );
+	}
 }
 
 void Game::SetKey( int key, int action )
 {
-    keys[key] = action;
+    keys[key] = action;	
 }
 
 bool Game::Init()
@@ -118,6 +153,44 @@ bool Game::Init()
 
 	Utils::ShaderHelper::SetInt( pSpriteShaderProgram->GetID(), "tex", 0 );
 	Utils::ShaderHelper::SetMat4( pSpriteShaderProgram->GetID(), "projection", orthoProjectionMatrix );
+
+	std::vector<std::string> tanksSubTexturesNames = {
+		"tankTop1",
+		"tankTop2",
+		"tankLeft1",
+		"tankLeft2",
+		"tankBottom1",
+		"tankBottom2",
+		"tankRight1",
+		"tankRight2"
+	};
+	auto pTanksTextureAtlas = ResourceManager::LoadTextureAtlas( "TanksTextureAtlas", "res/textures/tanks.png", std::move( tanksSubTexturesNames ), 16, 16 );
+	auto pTanksAnimatedSprite = ResourceManager::LoadAnimatedSprite( "TanksAnimatedSprite", "TanksTextureAtlas", "Sprite", 100, 100, "tankTop1" );
+
+	std::vector<std::pair<std::string, uint64_t>> tankTopState;
+	tankTopState.emplace_back( std::make_pair<std::string, uint64_t>( "tankTop1", 500000000 ) );
+	tankTopState.emplace_back( std::make_pair<std::string, uint64_t>( "tankTop2", 500000000 ) );
+
+	std::vector<std::pair<std::string, uint64_t>> tankBottomState;
+	tankBottomState.emplace_back( std::make_pair<std::string, uint64_t>( "tankBottom1", 500000000 ) );
+	tankBottomState.emplace_back( std::make_pair<std::string, uint64_t>( "tankBottom2", 500000000 ) );
+
+	std::vector<std::pair<std::string, uint64_t>> tankRightState;
+	tankRightState.emplace_back( std::make_pair<std::string, uint64_t>( "tankRight1", 500000000 ) );
+	tankRightState.emplace_back( std::make_pair<std::string, uint64_t>( "tankRight2", 500000000 ) );
+
+	std::vector<std::pair<std::string, uint64_t>> tankLeftState;
+	tankLeftState.emplace_back( std::make_pair<std::string, uint64_t>( "tankLeft1", 500000000 ) );
+	tankLeftState.emplace_back( std::make_pair<std::string, uint64_t>( "tankLeft2", 500000000 ) );
+
+	pTanksAnimatedSprite->InsertAnimation( "tankTopState", std::move( tankTopState ) );
+	pTanksAnimatedSprite->InsertAnimation( "tankBottomState", std::move( tankBottomState ) );
+	pTanksAnimatedSprite->InsertAnimation( "tankLeftState", std::move( tankLeftState ) );
+	pTanksAnimatedSprite->InsertAnimation( "tankRightState", std::move( tankRightState ) );
+
+	pTanksAnimatedSprite->SetAnimation( "tankTopState" );
+
+	pTank = std::make_unique<Tank>( pTanksAnimatedSprite, 0.0000001f, glm::vec2( 100.f, 100.f ) );
 
 	return true;
 }
