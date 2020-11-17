@@ -107,15 +107,15 @@ int main( int argc, char** argv )
 
 		"bottomRightBlock",
 		"concrete",
-		"topBeton",
-		"bottomBeton",
-		"leftBeton",
-		"rightBeton",
-		"topLeftBeton",
-		"topRightBeton",
+		"topConcrete",
+		"bottomConcrete",
+		"leftConcrete",
+		"rightConcrete",
+		"topLeftConcrete",
+		"topRightConcrete",
 
-		"bottomLeftBeton",
-		"bottomRightBeton",
+		"bottomLeftConcrete",
+		"bottomRightConcrete",
 		"water1",
 		"water2",
 		"water3",
@@ -136,7 +136,7 @@ int main( int argc, char** argv )
 	auto pSprite = pRes->LoadSprite( "NewSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
     pSprite->SetPosition( glm::vec2( 300, 100 ) );
 
-	auto pAnimatedSprite = pRes->LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "water1" );
+	auto pAnimatedSprite = pRes->LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "respawn1" );
 	pAnimatedSprite->SetPosition( glm::vec2( 300, 300 ) );
 
 	Renderer::AnimatedSprite::animFramesVector waterAnimations;
