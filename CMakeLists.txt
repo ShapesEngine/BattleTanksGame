@@ -20,7 +20,9 @@ add_executable( ${PROJECT_NAME}
 				src/Utils/ShaderHelper.cpp
 				src/Utils/ShaderHelper.h				
 				src/Game/Game.h				
-				src/Game/Game.cpp				
+				src/Game/Game.cpp	
+				src/Game/Tank.h				
+				src/Game/Tank.cpp	
 			  )
 
 set_property ( DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME} )
