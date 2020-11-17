@@ -183,7 +183,7 @@ int main( int argc, char** argv )
 	glBindBuffer( GL_ARRAY_BUFFER, tCoordVBO );
 	glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 0, nullptr );
 
-	glClearColor( 1.f, 0.f, 1.f, 1.f );
+	glClearColor( 0.f, 0.f, 0.f, 1.f );
 
     pBasicShaderProgram->Use();    
 

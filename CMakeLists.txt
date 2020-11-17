@@ -19,6 +19,8 @@ add_executable( ${PROJECT_NAME}
 				src/Resources/stb_image.h 
 				src/Utils/ShaderHelper.cpp
 				src/Utils/ShaderHelper.h				
+				src/Game/Game.h				
+				src/Game/Game.cpp				
 			  )
 
 set_property ( DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME} )
