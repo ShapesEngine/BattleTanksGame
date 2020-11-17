@@ -136,17 +136,17 @@ int main( int argc, char** argv )
 	auto pSprite = pRes->LoadSprite( "NewSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
     pSprite->SetPosition( glm::vec2( 300, 100 ) );
 
-	auto pAnimatedSprite = pRes->LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
+	auto pAnimatedSprite = pRes->LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "water1" );
 	pAnimatedSprite->SetPosition( glm::vec2( 300, 300 ) );
 
 	Renderer::AnimatedSprite::animFramesVector waterAnimations;
-	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water1", 1000000000 ) );
-	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water2", 1000000000 ) );
-	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water3", 1000000000 ) );
+	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water1", 1e9 ) );
+	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water2", 1e9 ) );
+	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water3", 1e9 ) );
 
 	std::vector<std::pair<std::string, uint64_t>> eagleAnimations;
-	eagleAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "eagle", 1000000000 ) );
-	eagleAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "deadEagle", 1000000000 ) );
+	eagleAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "eagle", 1e9 ) );
+	eagleAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "deadEagle", 1e9 ) );
 
 	pAnimatedSprite->InsertAnimation( "waterAnimation", std::move( waterAnimations ) );
 	pAnimatedSprite->InsertAnimation( "eagleAnimation", std::move( eagleAnimations ) );
@@ -244,12 +244,10 @@ int main( int argc, char** argv )
     Renderer::Texture2D::Unbind();
     Renderer::ShaderProgram::Disuse();
     
-    // =======================================================================
     // delete resource manager before destroying context, 
     // otherwise it may lead to crash of the application
-    // -----------------------------------------------------------------------
-    
     delete pRes;
+
     glfwTerminate();
 
     return 0;

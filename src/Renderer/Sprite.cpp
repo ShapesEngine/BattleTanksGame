@@ -107,7 +107,7 @@ namespace Renderer
 		GLfloat lbY = subTexture.leftBottomUV.y;
 		GLfloat rtX = subTexture.rightTopUV.x;
 		GLfloat rtY = subTexture.rightTopUV.y;
-		const std::vector<GLfloat> textureCoords = {
+		std::vector<GLfloat> textureCoords = {
 			// U  V
 			lbX, lbY,
 			lbX, rtY,
