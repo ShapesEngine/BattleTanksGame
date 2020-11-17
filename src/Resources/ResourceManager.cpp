@@ -14,13 +14,11 @@
 #include <fstream>
 #include <iostream>
 
-ResourceManager::ResourceManager( const std::string& executablePath )
-{
-	// Finding and getting substr without slash
-	// ----------------------------------------
-	size_t foundSlash = executablePath.find_last_of( "/\\" );
-	path = executablePath.substr( 0, foundSlash );
-}
+ResourceManager::ShaderProgramsMap ResourceManager::shaderPrograms;
+ResourceManager::TexturesMap ResourceManager::textures;
+ResourceManager::SpritesMap ResourceManager::sprites;
+ResourceManager::AnimatedSpritesMap ResourceManager::animatedSprites;
+std::string ResourceManager::path;
 
 std::optional<std::string> ResourceManager::GetFileString( const std::string& relativeFilePath ) const
 {
@@ -36,6 +34,22 @@ std::optional<std::string> ResourceManager::GetFileString( const std::string& re
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	return buffer.str();
+}
+
+void ResourceManager::SetExecutablePath( const std::string& executablePath )
+{
+	// Finding and getting substr without slash
+	// ----------------------------------------
+	size_t foundSlash = executablePath.find_last_of( "/\\" );
+	path = executablePath.substr( 0, foundSlash );
+}
+
+void ResourceManager::UnloadAllResources()
+{
+	shaderPrograms.clear();
+	textures.clear();
+	sprites.clear();
+	animatedSprites.clear();
 }
 
 std::shared_ptr<Renderer::ShaderProgram> ResourceManager::LoadShaders( const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath )
