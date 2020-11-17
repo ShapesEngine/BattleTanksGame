@@ -136,7 +136,7 @@ int main( int argc, char** argv )
 	auto pSprite = pRes->LoadSprite( "NewSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
     pSprite->SetPosition( glm::vec2( 300, 100 ) );
 
-	auto pAnimatedSprite = pRes->LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "respawn1" );
+	auto pAnimatedSprite = pRes->LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
 	pAnimatedSprite->SetPosition( glm::vec2( 300, 300 ) );
 
 	Renderer::AnimatedSprite::animFramesVector waterAnimations;

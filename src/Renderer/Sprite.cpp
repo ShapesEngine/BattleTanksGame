@@ -39,7 +39,7 @@ namespace Renderer
 			0, 3, 2
 		};
 
-		const std::vector<GLfloat> textureCoords = std::move( SetTextureCoordinates( std::move( initialSubTexture ) ) );
+		const std::vector<GLfloat> textureCoords = std::move( GetSubTextureCoordinates( std::move( initialSubTexture ) ) );
 
 		glGenBuffers( 1, &vertVBO );
 		glGenBuffers( 1, &texVBO );
@@ -100,7 +100,7 @@ namespace Renderer
 		glBindVertexArray( 0 );
 	}
 
-	std::vector<GLfloat> Sprite::SetTextureCoordinates( std::string initialSubTexture ) const
+	std::vector<GLfloat> Sprite::GetSubTextureCoordinates( std::string initialSubTexture ) const
 	{
 		auto subTexture = pTexture->GetSubTexture( std::move( initialSubTexture ) );
 		GLfloat lbX = subTexture.leftBottomUV.x;

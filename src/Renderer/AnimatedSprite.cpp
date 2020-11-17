@@ -49,10 +49,10 @@ namespace Renderer
 	{
 		if( isCurrentAnimFrameChanged )
 		{
-			const std::vector<GLfloat> textureCoords = std::move( SetTextureCoordinates( itCurrentAnimFrame->second[currentFrameIndex].first ) );
+			const std::vector<GLfloat> textureCoords = std::move( GetSubTextureCoordinates( itCurrentAnimFrame->second[currentFrameIndex].first ) );
 			glBindBuffer( GL_ARRAY_BUFFER, texVBO );
 			// Update current buffer
-			glBufferSubData( GL_ARRAY_BUFFER, 0, textureCoords.size(), &textureCoords[0] );
+			glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof( textureCoords ), &textureCoords[0] );
 			glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
 			isCurrentAnimFrameChanged = false;

@@ -32,7 +32,7 @@ namespace Renderer
 		inline void SetRotation( float rotation_in ) { rotation = rotation_in; }
 
 	protected:
-		std::vector<GLfloat> SetTextureCoordinates( std::string initialSubTexture ) const;
+		std::vector<GLfloat> GetSubTextureCoordinates( std::string initialSubTexture ) const;
 
 		std::shared_ptr<Texture2D> pTexture;
 		GLuint texVBO;
