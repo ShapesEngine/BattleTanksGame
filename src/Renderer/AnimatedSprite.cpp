@@ -21,6 +21,7 @@ namespace Renderer
 		itCurrentAnimFrame = it;
 		currentFrameIndex = 0;
 		currentFrameTime = 0;
+		isCurrentAnimFrameChanged = true;
 	}
 
 	void AnimatedSprite::Update( size_t deltaTime )
@@ -36,6 +37,7 @@ namespace Renderer
 		{
 			currentFrameTime -= frameTime;
 			currentFrameIndex++;
+			isCurrentAnimFrameChanged = true;
 			if( currentFrameIndex == itCurrentAnimFrame->second.size() )
 			{
 				currentFrameIndex = 0;
@@ -43,13 +45,18 @@ namespace Renderer
 		}
 	}
 
-	void AnimatedSprite::Render()
+	void AnimatedSprite::Render() const
 	{
-		const std::vector<GLfloat> textureCoords = std::move( SetTextureCoordinates( itCurrentAnimFrame->second[currentFrameIndex].first ) );
-		glBindBuffer( GL_ARRAY_BUFFER, texVBO );
-		// Update current buffer
-		glBufferSubData( GL_ARRAY_BUFFER, 0, textureCoords.size(), &textureCoords[0] );
-		glBindBuffer( GL_ARRAY_BUFFER, 0 );
+		if( isCurrentAnimFrameChanged )
+		{
+			const std::vector<GLfloat> textureCoords = std::move( SetTextureCoordinates( itCurrentAnimFrame->second[currentFrameIndex].first ) );
+			glBindBuffer( GL_ARRAY_BUFFER, texVBO );
+			// Update current buffer
+			glBufferSubData( GL_ARRAY_BUFFER, 0, textureCoords.size(), &textureCoords[0] );
+			glBindBuffer( GL_ARRAY_BUFFER, 0 );
+
+			isCurrentAnimFrameChanged = false;
+		}
 
 		Sprite::Render();
 	}

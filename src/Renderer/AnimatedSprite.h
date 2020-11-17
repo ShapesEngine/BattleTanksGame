@@ -15,7 +15,7 @@ namespace Renderer
 
 		void SetAnimation( const std::string& animName );
 		void Update( size_t deltaTime );
-		void Render() override;
+		void Render() const override;
 
 		inline void InsertAnimation( std::string animName, animFramesVector animState ) { animFrames.emplace( std::move( animName ), std::move( animState ) ); }
 
@@ -26,6 +26,7 @@ namespace Renderer
 
 		size_t currentFrameIndex = 0;
 		uint64_t currentFrameTime = 0;
+		mutable bool isCurrentAnimFrameChanged = false;
 	};
 }
 

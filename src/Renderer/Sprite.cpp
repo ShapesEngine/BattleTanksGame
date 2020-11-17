@@ -77,7 +77,7 @@ namespace Renderer
 		glDeleteVertexArrays( 1, &VAO );
 	}
 
-	void Sprite::Render()
+	void Sprite::Render() const
 	{
 		pShaderProgram->Use();
 		

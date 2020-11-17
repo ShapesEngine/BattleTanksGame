@@ -25,7 +25,7 @@ namespace Renderer
 		Sprite& operator=( const Sprite& ) = delete;
 		~Sprite();	
 
-		virtual void Render();		
+		virtual void Render() const;		
 
 		inline void SetPosition( const glm::vec2& position_in ) { position = position_in; }
 		inline void SetSize( const glm::vec2& size_in ) { size = size_in; }
