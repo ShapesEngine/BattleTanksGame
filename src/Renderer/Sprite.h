@@ -5,6 +5,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace Renderer
 {
@@ -21,26 +22,29 @@ namespace Renderer
 				const glm::vec2& size = glm::vec2( 1.f ),
 				float rotation = 0.f );
 		Sprite( const Sprite& ) = delete;
-		~Sprite();
-		
 		Sprite& operator=( const Sprite& ) = delete;
+		~Sprite();	
 
-		void Render();
+		virtual void Render();		
 
 		inline void SetPosition( const glm::vec2& position_in ) { position = position_in; }
 		inline void SetSize( const glm::vec2& size_in ) { size = size_in; }
 		inline void SetRotation( float rotation_in ) { rotation = rotation_in; }
 
-	private:
+	protected:
+		std::vector<GLfloat> SetTextureCoordinates( std::string initialSubTexture ) const;
+
 		std::shared_ptr<Texture2D> pTexture;
+		GLuint texVBO;
+
+	private:
 		std::shared_ptr<ShaderProgram> pShaderProgram;
 		glm::vec2 position;
 		glm::vec2 size;
 		float rotation;
 
 		GLuint VAO;
-		GLuint indEBO;
-		GLuint vertVBO;
-		GLuint texVBO;
+		GLuint vertVBO;	
+		GLuint indEBO;			
 	};
 }

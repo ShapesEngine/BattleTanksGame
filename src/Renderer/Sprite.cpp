@@ -34,23 +34,12 @@ namespace Renderer
 			1.f, 0.f
 		};
 
-		auto subTexture = pTexture->GetSubTexture( std::move( initialSubTexture ) );
-		GLfloat lbX = subTexture.leftBottomUV.x;
-		GLfloat lbY = subTexture.leftBottomUV.y;
-		GLfloat rtX = subTexture.rightTopUV.x;
-		GLfloat rtY = subTexture.rightTopUV.y;
-		const GLfloat textureCoords[] = {
-			// U  V
-			lbX, lbY,
-			lbX, rtY,
-			rtX, rtY,
-			rtX, lbY
-		};
-
 		constexpr GLuint vertexIndices[] = {
 			0, 1, 2,
 			0, 3, 2
 		};
+
+		const std::vector<GLfloat> textureCoords = std::move( SetTextureCoordinates( std::move( initialSubTexture ) ) );
 
 		glGenBuffers( 1, &vertVBO );
 		glGenBuffers( 1, &texVBO );
@@ -60,7 +49,7 @@ namespace Renderer
 		glBufferData( GL_ARRAY_BUFFER, sizeof( vertexCoords ), vertexCoords, GL_STATIC_DRAW );
 
 		glBindBuffer( GL_ARRAY_BUFFER, texVBO );
-		glBufferData( GL_ARRAY_BUFFER, sizeof( textureCoords ), textureCoords, GL_STATIC_DRAW );
+		glBufferData( GL_ARRAY_BUFFER, sizeof( textureCoords ), &textureCoords[0], GL_STATIC_DRAW );
 
 		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indEBO );
 		glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( vertexIndices ), vertexIndices, GL_STATIC_DRAW );
@@ -109,5 +98,23 @@ namespace Renderer
 		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indEBO );
 		glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
 		glBindVertexArray( 0 );
+	}
+
+	std::vector<GLfloat> Sprite::SetTextureCoordinates( std::string initialSubTexture ) const
+	{
+		auto subTexture = pTexture->GetSubTexture( std::move( initialSubTexture ) );
+		GLfloat lbX = subTexture.leftBottomUV.x;
+		GLfloat lbY = subTexture.leftBottomUV.y;
+		GLfloat rtX = subTexture.rightTopUV.x;
+		GLfloat rtY = subTexture.rightTopUV.y;
+		const std::vector<GLfloat> textureCoords = {
+			// U  V
+			lbX, lbY,
+			lbX, rtY,
+			rtX, rtY,
+			rtX, lbY
+		};
+
+		return std::move( textureCoords );
 	}
 }
