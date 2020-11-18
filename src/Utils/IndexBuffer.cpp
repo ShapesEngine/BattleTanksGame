@@ -15,12 +15,6 @@ namespace Utils
 		glBufferData( GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), data, GL_STATIC_DRAW );
 	}
 
-	void IndexBuffer::Update( const void* data, GLuint size ) const
-	{
-		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, id );
-		glBufferSubData( GL_ELEMENT_ARRAY_BUFFER, 0, size, data );
-	}
-
 	IndexBuffer& IndexBuffer::operator=( IndexBuffer&& indicesBuffer ) noexcept
 	{
 		id = indicesBuffer.id;

@@ -15,7 +15,6 @@ namespace Utils
 		~IndexBuffer();
 
 		void Init( const void* data, GLuint count_in );
-		void Update( const void* data, GLuint size ) const;
 
 		inline void Bind() const { glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, id ); }
 		inline static void Unbind() { glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 ); }
