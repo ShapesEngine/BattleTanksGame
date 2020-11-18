@@ -28,6 +28,8 @@ add_executable( ${PROJECT_NAME}
 				src/Utils/IndexBuffer.h 
 				src/Utils/VertexBufferLayout.cpp 
 				src/Utils/VertexBufferLayout.h 
+				src/Utils/VertexArray.cpp 
+				src/Utils/VertexArray.h 
 				
 				src/Game/Game.h				
 				src/Game/Game.cpp	
