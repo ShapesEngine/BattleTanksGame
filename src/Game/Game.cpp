@@ -7,6 +7,7 @@
 #include "../Renderer/Texture2D.h"
 #include "../Renderer/Sprite.h"
 #include "../Renderer/AnimatedSprite.h"
+#include "../Renderer/Renderer.h"
 #include "../Resources/ResourceManager.h"
 #include "../Utils/ShaderHelper.h"
 
@@ -134,7 +135,7 @@ bool Game::Init()
 
 	pAnimatedSprite->SetAnimation( "waterAnimation" );
 
-	glClearColor( 0.f, 0.f, 0.f, 1.f );
+	RenderEngine::Renderer::SetClearColor( 0.f, 0.f, 0.f, 1.f );
 
 	pBasicShaderProgram->Use();
 

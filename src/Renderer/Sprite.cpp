@@ -4,8 +4,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "ShaderProgram.h"
-#include "../Utils/ShaderHelper.h"
+#include "Renderer.h"
 #include "Texture2D.h"
+#include "../Utils/ShaderHelper.h"
 
 namespace RenderEngine
 {
@@ -53,7 +54,7 @@ namespace RenderEngine
 		textureCoordsLayout.AddElementLayoutFloat( 2, false );
 		vertexArray.AddBuffer( textureCoordsBuffer, textureCoordsLayout );
 
-		indicesBuffer.Init( vertexIndices, 6 * sizeof( GLuint ) );
+		indicesBuffer.Init( vertexIndices, 6 );
 
 		vertexArray.Unbind();
 		indicesBuffer.Unbind();
@@ -77,7 +78,7 @@ namespace RenderEngine
 		glActiveTexture( GL_TEXTURE0 );
 		pTexture->Bind();
 
-		glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
+		Renderer::Draw( vertexArray, indicesBuffer, *pShaderProgram );
 		glBindVertexArray( 0 );
 		vertexArray.Unbind();
 	}

@@ -10,17 +10,19 @@ namespace Utils
 		IndexBuffer() = default;
 		IndexBuffer( const IndexBuffer& ) = delete;
 		IndexBuffer& operator=( const IndexBuffer& ) = delete;
-		IndexBuffer& operator=( IndexBuffer&& vertexBuffer ) noexcept;
-		IndexBuffer( IndexBuffer&& vertexBuffer ) noexcept;
+		IndexBuffer& operator=( IndexBuffer&& indicesBuffer ) noexcept;
+		IndexBuffer( IndexBuffer&& indicesBuffer ) noexcept;
 		~IndexBuffer();
 
-		void Init( const void* data, GLuint size );
+		void Init( const void* data, GLuint count_in );
 		void Update( const void* data, GLuint size ) const;
 
 		inline void Bind() const { glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, id ); }
 		inline static void Unbind() { glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 ); }
+		inline GLuint GetCount() const { return count; }
 
 	private:
 		GLuint id = 0;
+		GLuint count = 0;
 	};
 }

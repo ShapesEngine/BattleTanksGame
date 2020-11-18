@@ -7,6 +7,7 @@
 #include <chrono>
 
 #include "Resources/ResourceManager.h"
+#include "Renderer/Renderer.h"
 #include "Game/Game.h"
 
 glm::vec2 windowSize = { 640,480 };
@@ -16,7 +17,7 @@ void glfwWindowSizeCallback( GLFWwindow* window, int width, int height )
 {
     windowSize.x = width;
     windowSize.y = height;
-    glViewport( 0, 0, windowSize.x, windowSize.y );
+    RenderEngine::Renderer::SetViewport( width, height );
 }
 
 void glfwKeyCallback( GLFWwindow* pWindow, int key, int scancode, int action, int mode )
@@ -65,8 +66,8 @@ int main( int argc, char** argv )
     // ---------------------------
     ResourceManager::SetExecutablePath( *argv );    
 
-	std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
-	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << "\n";   
+	std::cout << "Renderer: " << RenderEngine::Renderer::GetRendererStr() << "\n";
+	std::cout << "OpenGL Version: " << RenderEngine::Renderer::GetVersionStr() << "\n";   
 
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	
@@ -81,7 +82,7 @@ int main( int argc, char** argv )
         game.Update( duration );
 
         /* Render here */
-        glClear( GL_COLOR_BUFFER_BIT );
+        RenderEngine::Renderer::Clear();
         
         game.Render();
 
