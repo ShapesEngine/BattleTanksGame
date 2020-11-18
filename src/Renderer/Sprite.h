@@ -9,6 +9,7 @@
 
 #include "../Utils/IndexBuffer.h"
 #include "../Utils/VertexBuffer.h"
+#include "../Utils/VertexArray.h"
 
 namespace Renderer
 {
@@ -24,9 +25,6 @@ namespace Renderer
 				const glm::vec2& position = glm::vec2( 0.f ),
 				const glm::vec2& size = glm::vec2( 1.f ),
 				float rotation = 0.f );
-		Sprite( const Sprite& ) = delete;
-		Sprite& operator=( const Sprite& ) = delete;
-		~Sprite();	
 
 		virtual void Render() const;		
 
@@ -46,7 +44,7 @@ namespace Renderer
 		glm::vec2 size;
 		float rotation;
 
-		GLuint VAO;
+		Utils::VertexArray vertexArray;
 		Utils::VertexBuffer vertexCoordsBuffer;	
 		Utils::IndexBuffer indicesBuffer;			
 	};

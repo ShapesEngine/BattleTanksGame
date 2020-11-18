@@ -41,28 +41,22 @@ namespace Renderer
 
 		const std::vector<GLfloat> textureCoords = std::move( GetSubTextureCoordinates( std::move( initialSubTexture ) ) );	
 
-		glGenVertexArrays( 1, &VAO );
-		glBindVertexArray( VAO );
-
 		vertexCoordsBuffer.Init( vertexCoords, 2 * 4 * sizeof( GLfloat ) );
 
-		glEnableVertexAttribArray( 0 );
-		glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, 0, nullptr );
+		Utils::VertexBufferLayout vertexCoordsLayout;
+		vertexCoordsLayout.AddElementLayoutFloat( 2, false );
+		vertexArray.AddBuffer( vertexCoordsBuffer, vertexCoordsLayout );
 
 		textureCoordsBuffer.Init( &textureCoords[0], 2 * 4 * sizeof( GLfloat ) );
 
-		glEnableVertexAttribArray( 1 );
-		glVertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, 0, nullptr );
+		Utils::VertexBufferLayout textureCoordsLayout;
+		textureCoordsLayout.AddElementLayoutFloat( 2, false );
+		vertexArray.AddBuffer( textureCoordsBuffer, textureCoordsLayout );
 
 		indicesBuffer.Init( vertexIndices, 6 * sizeof( GLuint ) );
 
-		glBindBuffer( GL_ARRAY_BUFFER, 0 );
-		glBindVertexArray( 0 );
-	}
-
-	Sprite::~Sprite()
-	{
-		glDeleteVertexArrays( 1, &VAO );
+		vertexArray.Unbind();
+		indicesBuffer.Unbind();
 	}
 
 	void Sprite::Render() const
@@ -77,7 +71,7 @@ namespace Renderer
 		model = glm::translate( model, glm::vec3( -0.5f * size.x, -0.5f * size.y, 0.f ) );		// ||	
 		model = glm::scale( model, glm::vec3( size, 1.f ) );									// || from bottom
 
-		glBindVertexArray( VAO );
+		vertexArray.Bind();
 		Utils::ShaderHelper::SetMat4( pShaderProgram->GetID(), "model", model );
 
 		glActiveTexture( GL_TEXTURE0 );
@@ -85,6 +79,7 @@ namespace Renderer
 
 		glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
 		glBindVertexArray( 0 );
+		vertexArray.Unbind();
 	}
 
 	std::vector<GLfloat> Sprite::GetSubTextureCoordinates( std::string initialSubTexture ) const
