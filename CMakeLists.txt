@@ -6,6 +6,7 @@ project( ${PROJECT_NAME} )
 
 add_executable( ${PROJECT_NAME} 
 				src/main.cpp
+
 				src/Renderer/ShaderProgram.cpp
 				src/Renderer/ShaderProgram.h 
 				src/Renderer/Texture2D.cpp
@@ -14,11 +15,16 @@ add_executable( ${PROJECT_NAME}
 				src/Renderer/Sprite.h 
 				src/Renderer/AnimatedSprite.cpp 
 				src/Renderer/AnimatedSprite.h 
+				src/Renderer/VertexBuffer.cpp 
+				src/Renderer/VertexBuffer.h 
+
 				src/Resources/ResourceManager.cpp 
 				src/Resources/ResourceManager.h 
 				src/Resources/stb_image.h 
+
 				src/Utils/ShaderHelper.cpp
-				src/Utils/ShaderHelper.h				
+				src/Utils/ShaderHelper.h	
+				
 				src/Game/Game.h				
 				src/Game/Game.cpp	
 				src/Game/Tank.h				
