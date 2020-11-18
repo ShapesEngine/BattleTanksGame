@@ -26,6 +26,8 @@ add_executable( ${PROJECT_NAME}
 				src/Utils/VertexBuffer.h 
 				src/Utils/IndexBuffer.cpp 
 				src/Utils/IndexBuffer.h 
+				src/Utils/VertexBufferLayout.cpp 
+				src/Utils/VertexBufferLayout.h 
 				
 				src/Game/Game.h				
 				src/Game/Game.cpp	
