@@ -7,8 +7,8 @@
 #include <string>
 #include <vector>
 
-#include "IndexBuffer.h"
-#include "VertexBuffer.h"
+#include "../Utils/IndexBuffer.h"
+#include "../Utils/VertexBuffer.h"
 
 namespace Renderer
 {
@@ -38,7 +38,7 @@ namespace Renderer
 		std::vector<GLfloat> GetSubTextureCoordinates( std::string initialSubTexture ) const;
 
 		std::shared_ptr<Texture2D> pTexture;
-		VertexBuffer textureCoordsBuffer;
+		Utils::VertexBuffer textureCoordsBuffer;
 
 	private:
 		std::shared_ptr<ShaderProgram> pShaderProgram;
@@ -47,7 +47,7 @@ namespace Renderer
 		float rotation;
 
 		GLuint VAO;
-		VertexBuffer vertexCoordsBuffer;	
-		IndexBuffer indicesBuffer;			
+		Utils::VertexBuffer vertexCoordsBuffer;	
+		Utils::IndexBuffer indicesBuffer;			
 	};
 }

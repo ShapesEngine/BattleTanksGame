@@ -1,6 +1,6 @@
 #include "IndexBuffer.h"
 
-namespace Renderer
+namespace Utils
 {
 	IndexBuffer::~IndexBuffer()
 	{

@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-namespace Renderer
+namespace Utils
 {
 	class VertexBuffer
 	{
