@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace Renderer
+namespace RenderEngine
 {
 	void AnimatedSprite::SetAnimation( const std::string& animName )
 	{

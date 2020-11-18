@@ -52,7 +52,7 @@ void ResourceManager::UnloadAllResources()
 	animatedSprites.clear();
 }
 
-std::shared_ptr<Renderer::ShaderProgram> ResourceManager::LoadShaders( const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath )
+std::shared_ptr<RenderEngine::ShaderProgram> ResourceManager::LoadShaders( const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath )
 {
 	std::string vertexString = GetFileString( vertexPath ).value_or( std::string() );
 	if( vertexString.empty() )
@@ -68,7 +68,7 @@ std::shared_ptr<Renderer::ShaderProgram> ResourceManager::LoadShaders( const std
 		return nullptr;
 	}
 
-	auto program = shaderPrograms[shaderName] = std::make_shared<Renderer::ShaderProgram>( vertexString, fragmentString );
+	auto program = shaderPrograms[shaderName] = std::make_shared<RenderEngine::ShaderProgram>( vertexString, fragmentString );
 
 	if( program->GetStatus() )
 		return program;
@@ -80,7 +80,7 @@ std::shared_ptr<Renderer::ShaderProgram> ResourceManager::LoadShaders( const std
 	return nullptr;
 }
 
-std::shared_ptr<Renderer::ShaderProgram> ResourceManager::GetShaderProgram( const std::string& shaderName )
+std::shared_ptr<RenderEngine::ShaderProgram> ResourceManager::GetShaderProgram( const std::string& shaderName )
 {
 	auto shaderProgram = shaderPrograms.find( shaderName )->second;
 	if( !shaderProgram )
@@ -89,7 +89,7 @@ std::shared_ptr<Renderer::ShaderProgram> ResourceManager::GetShaderProgram( cons
 	return shaderProgram;
 }
 
-std::shared_ptr<Renderer::Texture2D> ResourceManager::LoadTexture(const std::string& textureName, const std::string& texturePath)
+std::shared_ptr<RenderEngine::Texture2D> ResourceManager::LoadTexture(const std::string& textureName, const std::string& texturePath)
 {
 	int width;
 	int height;
@@ -107,12 +107,12 @@ std::shared_ptr<Renderer::Texture2D> ResourceManager::LoadTexture(const std::str
 		return nullptr;
 	}
 
-	auto texture = textures[textureName] = std::make_shared<Renderer::Texture2D>( width, height, pixels, nrChannels );
+	auto texture = textures[textureName] = std::make_shared<RenderEngine::Texture2D>( width, height, pixels, nrChannels );
 	stbi_image_free( pixels );
 	return texture;
 }
 
-std::shared_ptr<Renderer::Texture2D> ResourceManager::GetTexture( const std::string& textureName )
+std::shared_ptr<RenderEngine::Texture2D> ResourceManager::GetTexture( const std::string& textureName )
 {
 	auto texture = textures.find( textureName )->second;
 	if ( !texture )
@@ -121,7 +121,7 @@ std::shared_ptr<Renderer::Texture2D> ResourceManager::GetTexture( const std::str
 	return texture;
 }
 
-std::shared_ptr<Renderer::Sprite> ResourceManager::LoadSprite( const std::string& spriteName, 
+std::shared_ptr<RenderEngine::Sprite> ResourceManager::LoadSprite( const std::string& spriteName, 
 															   const std::string& textureName, 
 															   const std::string& shaderName, 
 															   const uint32_t spriteWidth, 
@@ -136,7 +136,7 @@ std::shared_ptr<Renderer::Sprite> ResourceManager::LoadSprite( const std::string
 	if( !pShader )
 		std::cerr << "ERROR::GETTING SHADER PROGRAM: " << shaderName << ". SPRITE NAME: " << spriteName << ".\n";
 
-	auto sprite = sprites[spriteName] = std::make_shared<Renderer::Sprite>( pTexture, 
+	auto sprite = sprites[spriteName] = std::make_shared<RenderEngine::Sprite>( pTexture, 
 																			subTextureName,
 																			pShader, 
 																			glm::vec2( 0.f ), 
@@ -145,7 +145,7 @@ std::shared_ptr<Renderer::Sprite> ResourceManager::LoadSprite( const std::string
 	return sprite;
 }
 
-std::shared_ptr<Renderer::Sprite> ResourceManager::GetSprite( const std::string& spriteName )
+std::shared_ptr<RenderEngine::Sprite> ResourceManager::GetSprite( const std::string& spriteName )
 {
 	auto sprite = sprites.find( spriteName )->second;
 	if( !sprite )
@@ -154,7 +154,7 @@ std::shared_ptr<Renderer::Sprite> ResourceManager::GetSprite( const std::string&
 	return sprite;
 }
 
-std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::LoadAnimatedSprite( const std::string& spriteName, const std::string& textureName, const std::string& shaderName, const uint32_t spriteWidth, const uint32_t spriteHeight, const std::string& subTextureName )
+std::shared_ptr<RenderEngine::AnimatedSprite> ResourceManager::LoadAnimatedSprite( const std::string& spriteName, const std::string& textureName, const std::string& shaderName, const uint32_t spriteWidth, const uint32_t spriteHeight, const std::string& subTextureName )
 {
 	auto pTexture = GetTexture( textureName );
 	if( !pTexture )
@@ -164,7 +164,7 @@ std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::LoadAnimatedSprite( c
 	if( !pShader )
 		std::cerr << "ERROR::GETTING SHADER PROGRAM: " << shaderName << ". ANIMATEDSPRITE NAME: " << spriteName << ".\n";
 
-	auto animatedSprite = animatedSprites[spriteName] = std::make_shared<Renderer::AnimatedSprite>( pTexture,
+	auto animatedSprite = animatedSprites[spriteName] = std::make_shared<RenderEngine::AnimatedSprite>( pTexture,
 																			subTextureName,
 																			pShader,
 																			glm::vec2( 0.f ),
@@ -173,7 +173,7 @@ std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::LoadAnimatedSprite( c
 	return animatedSprite;
 }
 
-std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::GetAnimatedSprite( const std::string& spriteName )
+std::shared_ptr<RenderEngine::AnimatedSprite> ResourceManager::GetAnimatedSprite( const std::string& spriteName )
 {
 	auto animatedSprite = animatedSprites.find( spriteName )->second;
 	if( !animatedSprite )
@@ -182,7 +182,7 @@ std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::GetAnimatedSprite( co
 	return animatedSprite;
 }
 
-std::shared_ptr<Renderer::Texture2D> ResourceManager::LoadTextureAtlas( std::string textureName, 
+std::shared_ptr<RenderEngine::Texture2D> ResourceManager::LoadTextureAtlas( std::string textureName, 
 																		std::string texturePath, 
 																		std::vector<std::string> subTextures, 
 																		const uint32_t subTextureWidth, 

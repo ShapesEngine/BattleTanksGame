@@ -11,7 +11,7 @@
 #include "../Utils/VertexBuffer.h"
 #include "../Utils/VertexArray.h"
 
-namespace Renderer
+namespace RenderEngine
 {
 	class Texture2D;
 	class ShaderProgram;

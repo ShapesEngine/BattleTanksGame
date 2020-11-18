@@ -120,7 +120,7 @@ bool Game::Init()
 	auto pAnimatedSprite = ResourceManager::LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
 	pAnimatedSprite->SetPosition( glm::vec2( 300, 300 ) );
 
-	Renderer::AnimatedSprite::animFramesVector waterAnimations;
+	RenderEngine::AnimatedSprite::animFramesVector waterAnimations;
 	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water1", 1e9 ) );
 	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water2", 1e9 ) );
 	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water3", 1e9 ) );

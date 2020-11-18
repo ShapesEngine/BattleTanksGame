@@ -7,7 +7,7 @@
 #include "../Utils/ShaderHelper.h"
 #include "Texture2D.h"
 
-namespace Renderer
+namespace RenderEngine
 {
 	Sprite::Sprite( std::shared_ptr<Texture2D> pTexture_in,
 					std::string initialSubTexture,
