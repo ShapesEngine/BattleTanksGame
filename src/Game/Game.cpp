@@ -70,7 +70,7 @@ void Game::SetKey( int key, int action )
 
 bool Game::Init()
 {
-	ResourceManager::loadJSONResources( "res/resourcer.json" );
+	ResourceManager::loadJSONResources( "res/resources.json" );
 	auto pSpriteShaderProgram = ResourceManager::LoadShaders( "Sprite", "res/shaders/sprite.vert", "res/shaders/sprite.frag" );
 	if( !pSpriteShaderProgram )
 		return -1;
