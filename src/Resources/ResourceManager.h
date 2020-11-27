@@ -55,6 +55,9 @@ public:
 														   std::vector<std::string> subTextures,
 														   const uint32_t subTextureWidth,
 														   const uint32_t subTextureHeight );
+	// Provide relative path from the executable path
+	static bool loadJSONResources(const std::string& relativeFilePath); 
+
 private:
 	static std::optional<std::string> GetFileString( const std::string& relativeFilePath );
 	static inline std::optional<std::string> GetFileName( const std::string& filePath ) { return filePath.substr( filePath.find_last_of( "/\\" ) + 1, filePath.length() ); }

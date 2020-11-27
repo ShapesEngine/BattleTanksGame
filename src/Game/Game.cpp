@@ -70,13 +70,10 @@ void Game::SetKey( int key, int action )
 
 bool Game::Init()
 {
+	ResourceManager::loadJSONResources( "res/resourcer.json" );
 	auto pSpriteShaderProgram = ResourceManager::LoadShaders( "Sprite", "res/shaders/sprite.vert", "res/shaders/sprite.frag" );
 	if( !pSpriteShaderProgram )
 		return -1;
-
-	auto pBasicShaderProgram = ResourceManager::LoadShaders( "Basic", "res/shaders/basic.vert", "res/shaders/basic.frag" );
-	if( !pBasicShaderProgram )
-		return false;
 
 	auto pTex = ResourceManager::LoadTexture( "map_16x16", "res/textures/map_16x16.png" );
 
@@ -137,8 +134,6 @@ bool Game::Init()
 
 	RenderEngine::Renderer::SetClearColor( 0.f, 0.f, 0.f, 1.f );
 
-	pBasicShaderProgram->Use();
-
 	glm::mat4 modelMatrix_1 = glm::mat4( 1.f );
 	modelMatrix_1 = glm::translate( modelMatrix_1, glm::vec3( 100.f, 200.f, 0.f ) );
 
@@ -146,9 +141,6 @@ bool Game::Init()
 	modelMatrix_2 = glm::translate( modelMatrix_2, glm::vec3( 590, 400.f, 0.f ) );
 
 	glm::mat4 orthoProjectionMatrix = glm::ortho( 0.f, (float)windowSize.x, 0.f, (float)windowSize.y, -100.f, 100.f );
-
-	Utils::ShaderHelper::SetInt( pBasicShaderProgram->GetID(), "tex", 0 );
-	Utils::ShaderHelper::SetMat4( pBasicShaderProgram->GetID(), "projection", orthoProjectionMatrix );
 
 	pSpriteShaderProgram->Use();
 

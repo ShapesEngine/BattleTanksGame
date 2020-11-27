@@ -10,6 +10,9 @@
 #define STBI_ONLY_PNG
 #include "stb_image.h"
 
+#include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
+
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -210,4 +213,35 @@ std::shared_ptr<RenderEngine::Texture2D> ResourceManager::LoadTextureAtlas( std:
 		}
 	}
 	return pTexture;
+}
+
+bool ResourceManager::loadJSONResources( const std::string& relativeFilePath )
+{
+	if( const auto tempFile = GetFileString( relativeFilePath ) )
+	{
+		rapidjson::Document document;
+		rapidjson::ParseResult parseResult = document.Parse( tempFile->c_str() );
+
+		if( !parseResult )
+		{
+			std::cerr << "ERROR::JSON File Parsing!\n" << "Message: " << rapidjson::GetParseError_En( parseResult.Code() ) << "(" <<
+				parseResult.Offset() << ")" << std::endl;
+			std::cerr << "JSON File: " << relativeFilePath << "\n";
+			return false;
+		}
+
+		auto shadersIt = document.FindMember( "shaders" );
+		if( shadersIt != document.MemberEnd() )
+		{
+			for( const auto& currentShader : shadersIt->value.GetArray() )
+			{
+				const std::string name = currentShader["name"].GetString();
+				const std::string filePath_v = currentShader["filepath_v"].GetString();
+				const std::string filePath_f = currentShader["filepath_f"].GetString();
+				LoadShaders( name, filePath_v, filePath_f );
+			}
+		}
+	}
+	std::cerr << "ERROR::JSON Resource Not Loaded!\n";
+	return false;
 }
