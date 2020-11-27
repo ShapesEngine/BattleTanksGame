@@ -1,0 +1,140 @@
+{
+  "shaders": [
+    {
+      "name": "Sprite",
+      "filepath_v": "res/shaders/sprite.vert",
+      "filepath_f": "res/shaders/sprite.frag"
+    }
+  ],
+
+  "textureAtlases": [
+    {
+      "name": "DefaultTextureAtlas",
+      "filepath": "res/textures/map_16x16.png",
+      "width": 128,
+      "height": 128,
+      "subtexture_width": 16,
+      "subtexture_height": 16,
+      "subtexture": [
+        "block",
+        "topBlock",
+        "bottomBlock",
+        "leftBlock",
+        "rightBlock",
+        "topLeftBlock",
+        "topRightBlock",
+        "bottomLeftBlock",
+
+        "bottomRightBlock",
+        "concrete",
+        "topConcrete",
+        "bottomConcrete",
+        "leftConcrete",
+        "rightConcrete",
+        "topLeftConcrete",
+        "topRightConcrete",
+
+        "bottomLeftConcrete",
+        "bottomRightConcrete",
+        "water1",
+        "water2",
+        "water3",
+        "trees",
+        "ice",
+        "wall",
+
+        "eagle",
+        "deadEagle",
+        "nothing",
+        "respawn1",
+        "respawn2",
+        "respawn3",
+        "respawn4"
+      ]
+    },
+
+    {
+      "name": "TanksTextureAtlas",
+      "filepath": "res/textures/tanks.png",
+      "width": 256,
+      "height": 256,
+      "subtexture_width": 16,
+      "subtexture_height": 16,
+      "subtextures": [
+        "yellowTankTop1",
+        "yellowTankTop2",
+        "yellowTankLeft1",
+        "yellowTankLeft2",
+        "yellowTankBottom1",
+        "yellowTankBottom2",
+        "yellowTankRight1",
+        "yellowTankRight2"
+      ]
+    }
+  ],
+
+  "animatedSprites": [
+    {
+      "name": "TanksAnimatedSprite",
+      "texture_atlas": "TanksTextureAtlas",
+      "shader": "Sprite",
+      "width": 100,
+      "height": 100,
+      "subtexture": "yellowTankTop1",
+      "states": [
+        {
+          "state_name": "tankTopState",
+          "frames": [
+            {
+              "subtexture": "yellowTankTop1",
+              "duration": 5e8
+            },
+            {
+              "subtexture": "yellowTankTop2",
+              "duration": 5e8
+            }
+          ]
+        },
+        {
+          "state_name": "tankBottomState",
+          "frames": [
+            {
+              "subtexture": "yellowTankBottom1",
+              "duration": 5e8
+            },
+            {
+              "subtexture": "yellowTankBottom2",
+              "duration": 5e8
+            }
+          ]
+        },
+        {
+          "state_name": "tankRightState",
+          "frames": [
+            {
+              "subtexture": "yellowTankRight1",
+              "duration": 5e8
+            },
+            {
+              "subtexture": "yellowTankRight2",
+              "duration": 5e8
+            }
+          ]
+        },
+        {
+          "state_name": "tankLeftState",
+          "frames": [
+            {
+              "subtexture": "yellowTankLeft1",
+              "duration": 5e8
+            },
+            {
+              "subtexture": "yellowTankLeft2",
+              "duration": 5e8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -169,20 +169,20 @@ bool Game::Init()
 	auto pTanksAnimatedSprite = ResourceManager::LoadAnimatedSprite( "TanksAnimatedSprite", "TanksTextureAtlas", "Sprite", 100, 100, "tankTop1" );
 
 	std::vector<std::pair<std::string, uint64_t>> tankTopState;
-	tankTopState.emplace_back( std::make_pair<std::string, uint64_t>( "tankTop1", 500000000 ) );
-	tankTopState.emplace_back( std::make_pair<std::string, uint64_t>( "tankTop2", 500000000 ) );
+	tankTopState.emplace_back( std::make_pair<std::string, uint64_t>( "tankTop1", 5e8 ) );
+	tankTopState.emplace_back( std::make_pair<std::string, uint64_t>( "tankTop2", 5e8 ) );
 
 	std::vector<std::pair<std::string, uint64_t>> tankBottomState;
-	tankBottomState.emplace_back( std::make_pair<std::string, uint64_t>( "tankBottom1", 500000000 ) );
-	tankBottomState.emplace_back( std::make_pair<std::string, uint64_t>( "tankBottom2", 500000000 ) );
+	tankBottomState.emplace_back( std::make_pair<std::string, uint64_t>( "tankBottom1", 5e8 ) );
+	tankBottomState.emplace_back( std::make_pair<std::string, uint64_t>( "tankBottom2", 5e8 ) );
 
 	std::vector<std::pair<std::string, uint64_t>> tankRightState;
-	tankRightState.emplace_back( std::make_pair<std::string, uint64_t>( "tankRight1", 500000000 ) );
-	tankRightState.emplace_back( std::make_pair<std::string, uint64_t>( "tankRight2", 500000000 ) );
+	tankRightState.emplace_back( std::make_pair<std::string, uint64_t>( "tankRight1", 5e8 ) );
+	tankRightState.emplace_back( std::make_pair<std::string, uint64_t>( "tankRight2", 5e8 ) );
 
 	std::vector<std::pair<std::string, uint64_t>> tankLeftState;
-	tankLeftState.emplace_back( std::make_pair<std::string, uint64_t>( "tankLeft1", 500000000 ) );
-	tankLeftState.emplace_back( std::make_pair<std::string, uint64_t>( "tankLeft2", 500000000 ) );
+	tankLeftState.emplace_back( std::make_pair<std::string, uint64_t>( "tankLeft1", 5e8 ) );
+	tankLeftState.emplace_back( std::make_pair<std::string, uint64_t>( "tankLeft2", 5e8 ) );
 
 	pTanksAnimatedSprite->InsertAnimation( "tankTopState", std::move( tankTopState ) );
 	pTanksAnimatedSprite->InsertAnimation( "tankBottomState", std::move( tankBottomState ) );

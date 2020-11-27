@@ -37,6 +37,8 @@ add_executable( ${PROJECT_NAME}
 				src/Game/Game.cpp	
 				src/Game/Tank.h				
 				src/Game/Tank.cpp	
+
+				res/resourcer.json
 			  )
 
 set_property ( DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME} )
