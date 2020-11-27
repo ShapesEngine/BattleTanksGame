@@ -83,11 +83,11 @@
           "frames": [
             {
               "subtexture": "yellowTankTop1",
-              "duration": 5e8
+              "duration": 500000000
             },
             {
               "subtexture": "yellowTankTop2",
-              "duration": 5e8
+              "duration": 500000000
             }
           ]
         },
@@ -96,11 +96,11 @@
           "frames": [
             {
               "subtexture": "yellowTankBottom1",
-              "duration": 5e8
+              "duration": 500000000
             },
             {
               "subtexture": "yellowTankBottom2",
-              "duration": 5e8
+              "duration": 500000000
             }
           ]
         },
@@ -109,11 +109,11 @@
           "frames": [
             {
               "subtexture": "yellowTankRight1",
-              "duration": 5e8
+              "duration": 500000000
             },
             {
               "subtexture": "yellowTankRight2",
-              "duration": 5e8
+              "duration": 500000000
             }
           ]
         },
@@ -122,11 +122,11 @@
           "frames": [
             {
               "subtexture": "yellowTankLeft1",
-              "duration": 5e8
+              "duration": 500000000
             },
             {
               "subtexture": "yellowTankLeft2",
-              "duration": 5e8
+              "duration": 500000000
             }
           ]
         }

@@ -72,46 +72,20 @@ bool Game::Init()
 {
 	ResourceManager::loadJSONResources( "res/resources.json" );
 	auto pSpriteShaderProgram = ResourceManager::GetShaderProgram( "Sprite" );
+	if( !pSpriteShaderProgram )
+	{
+		std::cerr << "ERROR::Couldn't find sprite!\n";
+		return false;
+	}
 
 	auto pTex = ResourceManager::LoadTexture( "map_16x16", "res/textures/map_16x16.png" );
 
-	/*std::vector<std::string> subTexturesNames = {
-		"block",
-		"topBlock",
-		"bottomBlock",
-		"leftBlock",
-		"rightBlock",
-		"topLeftBlock",
-		"topRightBlock",
-		"bottomLeftBlock",
-
-		"bottomRightBlock",
-		"concrete",
-		"topConcrete",
-		"bottomConcrete",
-		"leftConcrete",
-		"rightConcrete",
-		"topLeftConcrete",
-		"topRightConcrete",
-
-		"bottomLeftConcrete",
-		"bottomRightConcrete",
-		"water1",
-		"water2",
-		"water3",
-		"trees",
-		"ice",
-		"wall",
-
-		"eagle",
-		"deadEagle",
-		"nothing",
-		"respawn1",
-		"respawn2",
-		"respawn3",
-		"respawn4"
-	};*/
 	auto pTextureAtlas = ResourceManager::GetTexture( "DefaultTextureAtlas" );
+	if( !pTextureAtlas )
+	{
+		std::cerr << "ERROR::Couldn't find texture atlas!\n";
+		return false;
+	}
 
 	auto pAnimatedSprite = ResourceManager::LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
 	pAnimatedSprite->SetPosition( glm::vec2( 300, 300 ) );
@@ -145,18 +119,13 @@ bool Game::Init()
 	Utils::ShaderHelper::SetInt( pSpriteShaderProgram->GetID(), "tex", 0 );
 	Utils::ShaderHelper::SetMat4( pSpriteShaderProgram->GetID(), "projection", orthoProjectionMatrix );
 
-	std::vector<std::string> tanksSubTexturesNames = {
-		"tankTop1",
-		"tankTop2",
-		"tankLeft1",
-		"tankLeft2",
-		"tankBottom1",
-		"tankBottom2",
-		"tankRight1",
-		"tankRight2"
-	};
 	auto pTanksTextureAtlas = ResourceManager::GetTexture( "TanksTextureAtlas" );
-	auto pTanksAnimatedSprite = ResourceManager::LoadAnimatedSprite( "TanksAnimatedSprite", "TanksTextureAtlas", "Sprite", 100, 100, "tankTop1" );
+	if( !pTanksTextureAtlas )
+	{
+		std::cerr << "ERROR::Couldn't find tank texture atlas!\n";
+		return false;
+	}
+	auto pTanksAnimatedSprite = ResourceManager::GetAnimatedSprite( "TanksAnimatedSprite" );
 
 	std::vector<std::pair<std::string, uint64_t>> tankTopState;
 	tankTopState.emplace_back( std::make_pair<std::string, uint64_t>( "tankTop1", 5e8 ) );
