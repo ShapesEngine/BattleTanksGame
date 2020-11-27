@@ -11,11 +11,9 @@
     {
       "name": "DefaultTextureAtlas",
       "filepath": "res/textures/map_16x16.png",
-      "width": 128,
-      "height": 128,
       "subtexture_width": 16,
       "subtexture_height": 16,
-      "subtexture": [
+      "subtextures": [
         "block",
         "topBlock",
         "bottomBlock",
@@ -56,8 +54,6 @@
     {
       "name": "TanksTextureAtlas",
       "filepath": "res/textures/tanks.png",
-      "width": 256,
-      "height": 256,
       "subtexture_width": 16,
       "subtexture_height": 16,
       "subtextures": [

@@ -71,13 +71,11 @@ void Game::SetKey( int key, int action )
 bool Game::Init()
 {
 	ResourceManager::loadJSONResources( "res/resources.json" );
-	auto pSpriteShaderProgram = ResourceManager::LoadShaders( "Sprite", "res/shaders/sprite.vert", "res/shaders/sprite.frag" );
-	if( !pSpriteShaderProgram )
-		return -1;
+	auto pSpriteShaderProgram = ResourceManager::GetShaderProgram( "Sprite" );
 
 	auto pTex = ResourceManager::LoadTexture( "map_16x16", "res/textures/map_16x16.png" );
 
-	std::vector<std::string> subTexturesNames = {
+	/*std::vector<std::string> subTexturesNames = {
 		"block",
 		"topBlock",
 		"bottomBlock",
@@ -112,8 +110,8 @@ bool Game::Init()
 		"respawn2",
 		"respawn3",
 		"respawn4"
-	};
-	auto pTextureAtlas = ResourceManager::LoadTextureAtlas( "DefaultTextureAtlas", "res/textures/map_16x16.png", std::move( subTexturesNames ), 16, 16 );
+	};*/
+	auto pTextureAtlas = ResourceManager::GetTexture( "DefaultTextureAtlas" );
 
 	auto pAnimatedSprite = ResourceManager::LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
 	pAnimatedSprite->SetPosition( glm::vec2( 300, 300 ) );
@@ -157,7 +155,7 @@ bool Game::Init()
 		"tankRight1",
 		"tankRight2"
 	};
-	auto pTanksTextureAtlas = ResourceManager::LoadTextureAtlas( "TanksTextureAtlas", "res/textures/tanks.png", std::move( tanksSubTexturesNames ), 16, 16 );
+	auto pTanksTextureAtlas = ResourceManager::GetTexture( "TanksTextureAtlas" );
 	auto pTanksAnimatedSprite = ResourceManager::LoadAnimatedSprite( "TanksAnimatedSprite", "TanksTextureAtlas", "Sprite", 100, 100, "tankTop1" );
 
 	std::vector<std::pair<std::string, uint64_t>> tankTopState;

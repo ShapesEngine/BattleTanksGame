@@ -241,6 +241,28 @@ bool ResourceManager::loadJSONResources( const std::string& relativeFilePath )
 				LoadShaders( name, filePath_v, filePath_f );
 			}
 		}
+
+		auto textureAtlasesIt = document.FindMember( "textureAtlases" );
+		if( textureAtlasesIt != document.MemberEnd() )
+		{
+			for( const auto& currentTexAtlas : textureAtlasesIt->value.GetArray() )
+			{
+				const std::string name = currentTexAtlas["name"].GetString();
+				const std::string filePath = currentTexAtlas["filepath"].GetString();
+				const uint32_t subtexture_width = currentTexAtlas["subtexture_width"].GetUint();
+				const uint32_t subtexture_height = currentTexAtlas["subtexture_height"].GetUint();
+				const auto texAtlasArr = currentTexAtlas["subtextures"].GetArray();
+				std::vector<std::string> subtextures;
+				subtextures.reserve( texAtlasArr.Size() );
+				for( const auto& currentSubtexture : texAtlasArr )
+				{
+					subtextures.emplace_back( currentSubtexture.GetString() );
+				}
+				LoadTextureAtlas( name, filePath, subtextures, subtexture_width, subtexture_height );
+			}
+		}		
+
+		return true;
 	}
 	std::cerr << "ERROR::JSON Resource Not Loaded!\n";
 	return false;
