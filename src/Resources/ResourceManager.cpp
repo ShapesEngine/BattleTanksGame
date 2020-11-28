@@ -298,6 +298,21 @@ bool ResourceManager::loadJSONResources( const std::string& relativeFilePath )
 			}
 		}
 
+		auto levelsIt = document.FindMember( "levels" );
+		if( levelsIt != document.MemberEnd() )
+		{
+			for( const auto& currentLevel : levelsIt->value.GetArray() )
+			{
+				const auto description = currentLevel["description"].GetArray();
+				std::vector<std::string> levelRows;
+				levelRows.reserve( description.Size() );
+				for( const auto& currentRow : description )
+				{
+					levelRows.emplace_back( currentRow.GetString() );
+				}
+			}
+		}
+
 		return true;
 	}
 	std::cerr << "ERROR::JSON Resource Not Loaded!\n";
