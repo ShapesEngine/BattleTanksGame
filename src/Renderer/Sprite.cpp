@@ -12,15 +12,9 @@ namespace RenderEngine
 {
 	Sprite::Sprite( std::shared_ptr<Texture2D> pTexture_in,
 					std::string initialSubTexture,
-					std::shared_ptr<ShaderProgram> pShaderProgram,
-					const glm::vec2& position,
-					const glm::vec2& size,
-					float rotation ) :
+					std::shared_ptr<ShaderProgram> pShaderProgram ) :
 		pTexture( std::move( pTexture_in ) ),
-		pShaderProgram( std::move( pShaderProgram ) ),
-		position(position),
-		size(size),
-		rotation(rotation)
+		pShaderProgram( std::move( pShaderProgram ) )
 	{
 		// =======================================================================
 		// 2--3    3
@@ -60,7 +54,7 @@ namespace RenderEngine
 		indicesBuffer.Unbind();
 	}
 
-	void Sprite::Render() const
+	void Sprite::Render( const glm::vec2& position, const glm::vec2& size, float rotation ) const
 	{
 		pShaderProgram->Use();
 		

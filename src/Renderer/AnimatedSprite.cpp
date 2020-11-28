@@ -45,7 +45,7 @@ namespace RenderEngine
 		}
 	}
 
-	void AnimatedSprite::Render() const
+	void AnimatedSprite::Render( const glm::vec2& position, const glm::vec2& size, float rotation ) const
 	{
 		if( isCurrentAnimFrameChanged )
 		{
@@ -54,6 +54,6 @@ namespace RenderEngine
 			isCurrentAnimFrameChanged = false;
 		}
 
-		Sprite::Render();
+		Sprite::Render( position, size, rotation );
 	}
 }

@@ -1,17 +1,15 @@
 #include "Tank.h"
-#include "../Renderer/AnimatedSprite.h"
+#include "../../Renderer/AnimatedSprite.h"
 
-Tank::Tank( std::shared_ptr<RenderEngine::AnimatedSprite> pSprite, float velocity, glm::vec2& position ) :
+Tank::Tank( std::shared_ptr<RenderEngine::AnimatedSprite> pSprite, float velocity, const glm::vec2& position, const glm::vec2& size ) :
+	IGameObject( position, size, 0.f ),
 	pSprite( std::move( pSprite ) ),
-	velocity( velocity ),
-	position( position )
-{
-	this->pSprite->SetPosition( position );
-}
+	velocity( velocity )
+{}
 
 void Tank::Render() const
 {
-	pSprite->Render();
+	pSprite->Render( position, size, rotation );
 }
 
 void Tank::SetOrientation( EOrientation eOrientation_in )
@@ -57,7 +55,6 @@ void Tank::Update( uint64_t delta )
 	if( move )
 	{
 		position += delta * velocity * moveOffset;
-		pSprite->SetPosition( position );
 		pSprite->Update( delta );
 	}
 }

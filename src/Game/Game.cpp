@@ -21,16 +21,22 @@ Game::Game( const glm::ivec2& windowSize ) :
 
 void Game::Render()
 {
-    ResourceManager::GetAnimatedSprite("NewAnimatedSprite")->Render();
 	if( pTank )
 	{
 		pTank->Render();
+	}
+	if( pLevel )
+	{
+		pLevel->Render();
 	}
 }
 
 void Game::Update( uint64_t delta )
 {
-    ResourceManager::GetAnimatedSprite("NewAnimatedSprite")->Update(delta);
+	if( pLevel )
+	{
+		pLevel->Update( delta );
+	}
 
 	if( pTank )
 	{
@@ -87,23 +93,6 @@ bool Game::Init()
 		return false;
 	}
 
-	auto pAnimatedSprite = ResourceManager::LoadAnimatedSprite( "NewAnimatedSprite", "DefaultTextureAtlas", "Sprite", 100, 100, "concrete" );
-	pAnimatedSprite->SetPosition( glm::vec2( 300, 300 ) );
-
-	RenderEngine::AnimatedSprite::animFramesVector waterAnimations;
-	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water1", 1e9 ) );
-	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water2", 1e9 ) );
-	waterAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "water3", 1e9 ) );
-
-	std::vector<std::pair<std::string, uint64_t>> eagleAnimations;
-	eagleAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "eagle", 1e9 ) );
-	eagleAnimations.emplace_back( std::make_pair<std::string, uint64_t>( "deadEagle", 1e9 ) );
-
-	pAnimatedSprite->InsertAnimation( "waterAnimation", std::move( waterAnimations ) );
-	pAnimatedSprite->InsertAnimation( "eagleAnimation", std::move( eagleAnimations ) );
-
-	pAnimatedSprite->SetAnimation( "waterAnimation" );
-
 	RenderEngine::Renderer::SetClearColor( 0.f, 0.f, 0.f, 1.f );
 
 	glm::mat4 modelMatrix_1 = glm::mat4( 1.f );
@@ -127,30 +116,11 @@ bool Game::Init()
 	}
 	auto pTanksAnimatedSprite = ResourceManager::GetAnimatedSprite( "TanksAnimatedSprite" );
 
-	std::vector<std::pair<std::string, uint64_t>> tankTopState;
-	tankTopState.emplace_back( std::make_pair<std::string, uint64_t>( "tankTop1", 5e8 ) );
-	tankTopState.emplace_back( std::make_pair<std::string, uint64_t>( "tankTop2", 5e8 ) );
-
-	std::vector<std::pair<std::string, uint64_t>> tankBottomState;
-	tankBottomState.emplace_back( std::make_pair<std::string, uint64_t>( "tankBottom1", 5e8 ) );
-	tankBottomState.emplace_back( std::make_pair<std::string, uint64_t>( "tankBottom2", 5e8 ) );
-
-	std::vector<std::pair<std::string, uint64_t>> tankRightState;
-	tankRightState.emplace_back( std::make_pair<std::string, uint64_t>( "tankRight1", 5e8 ) );
-	tankRightState.emplace_back( std::make_pair<std::string, uint64_t>( "tankRight2", 5e8 ) );
-
-	std::vector<std::pair<std::string, uint64_t>> tankLeftState;
-	tankLeftState.emplace_back( std::make_pair<std::string, uint64_t>( "tankLeft1", 5e8 ) );
-	tankLeftState.emplace_back( std::make_pair<std::string, uint64_t>( "tankLeft2", 5e8 ) );
-
-	pTanksAnimatedSprite->InsertAnimation( "tankTopState", std::move( tankTopState ) );
-	pTanksAnimatedSprite->InsertAnimation( "tankBottomState", std::move( tankBottomState ) );
-	pTanksAnimatedSprite->InsertAnimation( "tankLeftState", std::move( tankLeftState ) );
-	pTanksAnimatedSprite->InsertAnimation( "tankRightState", std::move( tankRightState ) );
-
 	pTanksAnimatedSprite->SetAnimation( "tankTopState" );
 
-	pTank = std::make_unique<Tank>( pTanksAnimatedSprite, 0.0000001f, glm::vec2( 100.f, 100.f ) );
+	pTank = std::make_unique<Tank>( pTanksAnimatedSprite, 0.0000001f, glm::vec2( 0.f ), glm::vec2( 16.f, 16.f ) );
+
+	pLevel = std::make_unique<Level>( ResourceManager::getLevels()[0] );
 
 	return true;
 }

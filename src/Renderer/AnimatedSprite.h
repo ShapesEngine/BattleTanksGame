@@ -17,7 +17,7 @@ namespace RenderEngine
 
 		void SetAnimation( const std::string& animName );
 		void Update( size_t deltaTime );
-		void Render() const override;
+		void Render( const glm::vec2& position, const glm::vec2& size, const float rotation ) const override;
 
 		inline void InsertAnimation( std::string animName, animFramesVector animState ) { animFrames.emplace( std::move( animName ), std::move( animState ) ); }
 

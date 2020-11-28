@@ -10,8 +10,8 @@
 #include "Renderer/Renderer.h"
 #include "Game/Game.h"
 
-glm::vec2 windowSize = { 640,480 };
-Game game( windowSize );
+glm::ivec2 windowSize( 13 * 16, 14 * 16 );
+std::unique_ptr<Game> pGame = std::make_unique<Game>( windowSize );
 
 void glfwWindowSizeCallback( GLFWwindow* window, int width, int height )
 {
@@ -25,7 +25,7 @@ void glfwKeyCallback( GLFWwindow* pWindow, int key, int scancode, int action, in
     if( key == GLFW_KEY_ESCAPE && action == GLFW_PRESS )
         glfwSetWindowShouldClose( pWindow, GL_TRUE );
 
-    game.SetKey(key, action);
+    pGame->SetKey(key, action);
 }
 
 int main( int argc, char** argv )
@@ -71,7 +71,7 @@ int main( int argc, char** argv )
 
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	
-	game.Init();
+	pGame->Init();
 
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( pWindow ) )
@@ -79,12 +79,12 @@ int main( int argc, char** argv )
 		auto currentTime = std::chrono::high_resolution_clock::now();
 		uint64_t duration = std::chrono::duration_cast<std::chrono::nanoseconds>( currentTime - lastTime ).count();
 		lastTime = currentTime;
-        game.Update( duration );
+        pGame->Update( duration );
 
         /* Render here */
         RenderEngine::Renderer::Clear();
         
-        game.Render();
+        pGame->Render();
 
         /* Swap front and back buffers */
         glfwSwapBuffers( pWindow );
@@ -93,6 +93,7 @@ int main( int argc, char** argv )
         glfwPollEvents();
     }
     
+    pGame = nullptr;
     // delete resource manager before destroying context, 
     // otherwise it may lead to crash of the application
     ResourceManager::UnloadAllResources();

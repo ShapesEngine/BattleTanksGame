@@ -4,7 +4,10 @@
 #include <bitset>
 #include <memory>
 
-#include "Tank.h"
+#include "GameObjects/Tank.h"
+#include "Level.h"
+
+class Level;
 
 class Game
 {
@@ -30,4 +33,5 @@ private:
 	glm::ivec2 windowSize;
 	EGameState eCurrentGameState = EGameState::Active;
 	std::unique_ptr<Tank> pTank;
+	std::unique_ptr<Level> pLevel; 
 };

@@ -21,16 +21,9 @@ namespace RenderEngine
 	public:
 		Sprite( std::shared_ptr<Texture2D> pTexture,
 				std::string initialSubTexture,
-				std::shared_ptr<ShaderProgram> pShaderProgram,
-				const glm::vec2& position = glm::vec2( 0.f ),
-				const glm::vec2& size = glm::vec2( 1.f ),
-				float rotation = 0.f );
+				std::shared_ptr<ShaderProgram> pShaderProgram );
 
-		virtual void Render() const;		
-
-		inline void SetPosition( const glm::vec2& position_in ) { position = position_in; }
-		inline void SetSize( const glm::vec2& size_in ) { size = size_in; }
-		inline void SetRotation( float rotation_in ) { rotation = rotation_in; }
+		virtual void Render( const glm::vec2& position, const glm::vec2& size, float rotation ) const;
 
 	protected:
 		std::vector<GLfloat> GetSubTextureCoordinates( std::string initialSubTexture ) const;
@@ -40,9 +33,6 @@ namespace RenderEngine
 
 	private:
 		std::shared_ptr<ShaderProgram> pShaderProgram;
-		glm::vec2 position;
-		glm::vec2 size;
-		float rotation;
 
 		Utils::VertexArray vertexArray;
 		Utils::VertexBuffer vertexCoordsBuffer;	
