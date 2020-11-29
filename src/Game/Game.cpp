@@ -120,7 +120,7 @@ bool Game::Init()
 
 	pTank = std::make_unique<Tank>( pTanksAnimatedSprite, 0.0000001f, glm::vec2( 0.f ), glm::vec2( 16.f, 16.f ) );
 
-	pLevel = std::make_unique<Level>( ResourceManager::getLevels()[0] );
+	pLevel = std::make_unique<Level>( ResourceManager::GetLevels()[0] );
 
 	return true;
 }

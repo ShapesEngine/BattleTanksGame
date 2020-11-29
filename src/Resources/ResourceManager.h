@@ -53,7 +53,7 @@ public:
 														   const uint32_t subTextureHeight );
 	// Provide relative path from the executable path
 	static bool loadJSONResources(const std::string& relativeFilePath); 
-	static const std::vector<std::vector<std::string>>& getLevels() { return levels; } 
+	static const std::vector<std::vector<std::string>>& GetLevels() { return levels; } 
 
 private:
 	static std::optional<std::string> GetFileString( const std::string& relativeFilePath );
