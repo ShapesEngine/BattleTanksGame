@@ -320,7 +320,6 @@ bool ResourceManager::loadJSONResources( const std::string& relativeFilePath )
 			}
 		}
 		
-
 		auto spritesIt = document.FindMember( "sprites" );
 		if( spritesIt != document.MemberEnd() )
 		{

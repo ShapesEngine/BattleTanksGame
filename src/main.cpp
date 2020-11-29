@@ -10,6 +10,7 @@
 #include "Renderer/Renderer.h"
 #include "Game/Game.h"
 
+// 13 pixels width and 14 pixels height, 16 in this case is the dimension of subtexture
 glm::ivec2 windowSize( 13 * 16, 14 * 16 );
 std::unique_ptr<Game> pGame = std::make_unique<Game>( windowSize );
 

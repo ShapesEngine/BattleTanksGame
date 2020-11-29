@@ -31,7 +31,7 @@ namespace Utils
 		vertexBuffer.Bind();
 		const auto& layoutElements = layout.GetLayoutElements();
 		GLbyte* offset = nullptr;
-		for( unsigned int i = 0; i < layoutElements.size(); ++i )
+		for( uint32_t i = 0; i < layoutElements.size(); ++i )
 		{
 			const auto& currentLayoutElement = layoutElements[i];
 			GLuint currentAttribIndex = elementsCount + i;
