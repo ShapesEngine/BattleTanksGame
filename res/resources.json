@@ -72,71 +72,70 @@
   "sprites": [
     {
       "name": "brickWall",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "brickWall"
     },
 
     {
       "name": "brickWall_top",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "brickWall_top"
     },
 
     {
       "name": "brickWall_bottom",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "brickWall_bottom"
     },
 
     {
       "name": "brickWall_left",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
-
       "subTextureName": "brickWall_left"
     },
 
     {
       "name": "brickWall_right",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "brickWall_right"
     },
 
     {
       "name": "brickWall_top_left",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "brickWall_top_left"
     },
 
     {
       "name": "brickWall_top_right",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "brickWall_top_right"
     },
 
     {
       "name": "brickWall_bottom_left",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "brickWall_bottom_left"
     },
 
     {
       "name": "brickWall_bottom_right",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "brickWall_bottom_right"
     },
 
     {
       "name": "concreteWall",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
 
       "subTextureName": "concreteWall"
@@ -144,49 +143,49 @@
 
     {
       "name": "concreteWall_top",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "concreteWall_top"
     },
 
     {
       "name": "concreteWall_bottom",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "concreteWall_bottom"
     },
 
     {
       "name": "concreteWall_left",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "concreteWall_left"
     },
 
     {
       "name": "concreteWall_right",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "concreteWall_right"
     },
 
     {
       "name": "concreteWall_top_left",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "concreteWall_top_left"
     },
 
     {
       "name": "concreteWall_top_right",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "concreteWall_top_right"
     },
 
     {
       "name": "concreteWall_bottom_left",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
 
       "subTextureName": "concreteWall_bottom_left"
@@ -194,97 +193,89 @@
 
     {
       "name": "concreteWall_bottom_right",
-      "textureAtlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "concreteWall_bottom_right"
-    }
-  ],
+    },
 
-  "animatedSprites": [
     {
-      "name": "TanksAnimatedSprite",
+      "name": "eagle",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "eagle"
+    },
+
+    {
+      "name": "eagle",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "eagle_dead"
+    },
+
+    {
+      "name": "TankSprite_Top",
       "texture_atlas": "TanksTextureAtlas",
       "shader": "Sprite",
-      "subtexture": "yellowTankTop1",
-      "states": [
+      "subTextureName": "yellowTankTop1",
+      "frames": [
         {
-          "state_name": "tankTopState",
-          "frames": [
-            {
-              "subtexture": "yellowTankTop1",
-              "duration": 500000000
-            },
-            {
-              "subtexture": "yellowTankTop2",
-              "duration": 500000000
-            }
-          ]
+          "subtexture": "yellowTankTop1",
+          "duration": 500000000
         },
         {
-          "state_name": "tankBottomState",
-          "frames": [
-            {
-              "subtexture": "yellowTankBottom1",
-              "duration": 500000000
-            },
-            {
-              "subtexture": "yellowTankBottom2",
-              "duration": 500000000
-            }
-          ]
-        },
-        {
-          "state_name": "tankRightState",
-          "frames": [
-            {
-              "subtexture": "yellowTankRight1",
-              "duration": 500000000
-            },
-            {
-              "subtexture": "yellowTankRight2",
-              "duration": 500000000
-            }
-          ]
-        },
-        {
-          "state_name": "tankLeftState",
-          "frames": [
-            {
-              "subtexture": "yellowTankLeft1",
-              "duration": 500000000
-            },
-            {
-              "subtexture": "yellowTankLeft2",
-              "duration": 500000000
-            }
-          ]
+          "subtexture": "yellowTankTop2",
+          "duration": 500000000
         }
       ]
     },
-    {
-      "name": "eagleAnimatedSprite",
-      "texture_atlas": "DefaultTextureAtlas",
-      "shader": "Sprite",
-      "subtexture": "eagle",
-      "states": [
-        {
-          "state_name": "eagle",
-          "frames": [
-            {
-              "subtexture": "eagle_dead",
-              "duration": 0
-            }
-          ]
-        },
 
+    {
+      "name": "TankSprite_Bottom",
+      "texture_atlas": "TanksTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "yellowTankBottom1",
+      "frames": [
         {
-          "state_name": "eagle_dead",
-          "frames": [
-            {
-              "subtexture": "eagle_dead",
-              "duration": 0
-            }
-          ]
+          "subtexture": "yellowTankBottom1",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "yellowTankBottom2",
+          "duration": 500000000
+        }
+      ]
+    },
+
+    {
+      "name": "TankSprite_Left",
+      "texture_atlas": "TanksTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "yellowTankLeft1",
+      "frames": [
+        {
+          "subtexture": "yellowTankLeft1",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "yellowTankLeft2",
+          "duration": 500000000
+        }
+      ]
+    },
+
+    {
+      "name": "TankSprite_Right",
+      "texture_atlas": "TanksTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "yellowTankRight1",
+      "frames": [
+        {
+          "subtexture": "yellowTankRight1",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "yellowTankRight2",
+          "duration": 500000000
         }
       ]
     }

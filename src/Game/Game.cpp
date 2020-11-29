@@ -6,7 +6,6 @@
 #include "../Renderer/ShaderProgram.h"
 #include "../Renderer/Texture2D.h"
 #include "../Renderer/Sprite.h"
-#include "../Renderer/AnimatedSprite.h"
 #include "../Renderer/Renderer.h"
 #include "../Resources/ResourceManager.h"
 #include "../Utils/ShaderHelper.h"
@@ -114,11 +113,11 @@ bool Game::Init()
 		std::cerr << "ERROR::Couldn't find tank texture atlas!\n";
 		return false;
 	}
-	auto pTanksAnimatedSprite = ResourceManager::GetAnimatedSprite( "TanksAnimatedSprite" );
-
-	pTanksAnimatedSprite->SetAnimation( "tankTopState" );
-
-	pTank = std::make_unique<Tank>( pTanksAnimatedSprite, 0.0000001f, glm::vec2( 0.f ), glm::vec2( 16.f, 16.f ) );
+	pTank = std::make_unique<Tank>( ResourceManager::GetSprite( "TankSprite_Top" ),
+									  ResourceManager::GetSprite( "TankSprite_Bottom" ),
+									  ResourceManager::GetSprite( "TankSprite_Right" ),
+									  ResourceManager::GetSprite( "TankSprite_Left" ),
+									  0.00000001f, glm::vec2( 0 ), glm::vec2( 16.f, 16.f ) );
 
 	pLevel = std::make_unique<Level>( ResourceManager::GetLevels()[0] );
 

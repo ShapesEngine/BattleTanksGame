@@ -54,8 +54,23 @@ namespace RenderEngine
 		indicesBuffer.Unbind();
 	}
 
-	void Sprite::Render( const glm::vec2& position, const glm::vec2& size, float rotation ) const
+	void Sprite::Render( const glm::vec2& position, const glm::vec2& size, float rotation, size_t frameId ) const
 	{
+		if( lastFrameId != frameId )
+		{
+			lastFrameId = frameId;
+			const FrameDesc& currentFrameDescription = descFrames[frameId];
+
+			const GLfloat textureCoords[] = {
+				// U									V 
+				currentFrameDescription.leftBottomUV.x, currentFrameDescription.leftBottomUV.y,
+				currentFrameDescription.leftBottomUV.x, currentFrameDescription.rightTopUV.y,
+				currentFrameDescription.rightTopUV.x,	currentFrameDescription.rightTopUV.y,
+				currentFrameDescription.rightTopUV.x,	currentFrameDescription.leftBottomUV.y,
+			};
+
+			textureCoordsBuffer.Update( textureCoords, 2 * 4 * sizeof( GLfloat ) );
+		}
 		pShaderProgram->Use();
 		
 		glm::mat4 model( 1.f );

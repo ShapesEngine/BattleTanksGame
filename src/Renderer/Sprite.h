@@ -19,11 +19,28 @@ namespace RenderEngine
 	class Sprite
 	{
 	public:
+		struct FrameDesc
+		{
+			FrameDesc( const glm::vec2& leftBottomUV, const glm::vec2& rightTopUV, uint64_t duration ) :
+				leftBottomUV( leftBottomUV ),
+				rightTopUV( rightTopUV ),
+				duration( duration )
+			{}
+			glm::vec2 leftBottomUV;
+			glm::vec2 rightTopUV;
+			uint64_t duration;
+		};
+
+	public:
 		Sprite( std::shared_ptr<Texture2D> pTexture,
 				std::string initialSubTexture,
 				std::shared_ptr<ShaderProgram> pShaderProgram );
 
-		virtual void Render( const glm::vec2& position, const glm::vec2& size, float rotation ) const;
+		void Render( const glm::vec2& position, const glm::vec2& size, float rotation, size_t frameId = 0 ) const;
+
+		inline void InsertFrames( std::vector<FrameDesc> framesDescriptions ) { descFrames = std::move( framesDescriptions ); }
+		inline uint64_t GetFrameDuration( size_t frameId ) const { return descFrames[frameId].duration; }
+		inline size_t GetFramesCount() const { return descFrames.size(); }
 
 	protected:
 		std::vector<GLfloat> GetSubTextureCoordinates( std::string initialSubTexture ) const;
@@ -36,6 +53,9 @@ namespace RenderEngine
 
 		Utils::VertexArray vertexArray;
 		Utils::VertexBuffer vertexCoordsBuffer;	
-		Utils::IndexBuffer indicesBuffer;			
+		Utils::IndexBuffer indicesBuffer;	
+
+		std::vector<FrameDesc> descFrames;
+		mutable size_t lastFrameId = 0;
 	};
 }

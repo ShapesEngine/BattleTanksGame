@@ -11,7 +11,6 @@ namespace RenderEngine
 	class ShaderProgram;
 	class Texture2D;
 	class Sprite;
-	class AnimatedSprite;
 }
 
 class ResourceManager
@@ -40,12 +39,6 @@ public:
 												  const std::string& subTextureName = "default" );
 	static std::shared_ptr<RenderEngine::Sprite> GetSprite( const std::string& spriteName );
 	// Provide relative path from the executable path
-	static std::shared_ptr<RenderEngine::AnimatedSprite> LoadAnimatedSprite( const std::string& spriteName,
-												  const std::string& textureName,
-												  const std::string& shaderName,
-												  const std::string& subTextureName = "default" );
-	static std::shared_ptr<RenderEngine::AnimatedSprite> GetAnimatedSprite( const std::string& spriteName );
-	// Provide relative path from the executable path
 	static std::shared_ptr<RenderEngine::Texture2D> LoadTextureAtlas( std::string textureName,
 														   std::string texturePath,
 														   std::vector<std::string> subTextures,
@@ -63,12 +56,10 @@ private:
 	typedef std::map<const std::string, std::shared_ptr<RenderEngine::ShaderProgram>> ShaderProgramsMap;
 	typedef std::map<const std::string, std::shared_ptr<RenderEngine::Texture2D>> TexturesMap;
 	typedef std::map<const std::string, std::shared_ptr<RenderEngine::Sprite>> SpritesMap;
-	typedef std::map<const std::string, std::shared_ptr<RenderEngine::AnimatedSprite>> AnimatedSpritesMap;
 
 	static ShaderProgramsMap shaderPrograms;
 	static TexturesMap textures;
 	static SpritesMap sprites;
-	static AnimatedSpritesMap animatedSprites;
 
 	static std::vector<std::vector<std::string>> levels; 
 
