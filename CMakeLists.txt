@@ -44,6 +44,8 @@ add_executable( ${PROJECT_NAME}
 				src/Game/GameObjects/IGameObject.cpp
 				src/Game/GameObjects/BrickWall.h				
 				src/Game/GameObjects/BrickWall.cpp
+				src/Game/GameObjects/ConcreteWall.h				
+				src/Game/GameObjects/ConcreteWall.cpp
 
 				res/resources.json
 			  )

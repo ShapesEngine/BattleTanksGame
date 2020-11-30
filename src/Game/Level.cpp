@@ -1,6 +1,7 @@
 #include "Level.h" 
 
 #include "GameObjects/BrickWall.h" 
+#include "GameObjects/ConcreteWall.h" 
 
 #include <iostream>
 
@@ -74,6 +75,16 @@ std::shared_ptr<IGameObject> Level::CreateGameObjectFromDescription( char descri
 		return std::make_shared<BrickWall>( BrickWall::EBrickWallType::TopLeft, position, size, rotation );
 	case 'J':
 		return std::make_shared<BrickWall>( BrickWall::EBrickWallType::TopRight, position, size, rotation );
+	case '5':
+		return std::make_shared<ConcreteWall>( ConcreteWall::EConcreteWallType::Right, position, size, rotation );
+	case '6':
+		return std::make_shared<ConcreteWall>( ConcreteWall::EConcreteWallType::Bottom, position, size, rotation );
+	case '7':
+		return std::make_shared<ConcreteWall>( ConcreteWall::EConcreteWallType::Left, position, size, rotation );
+	case '8':
+		return std::make_shared<ConcreteWall>( ConcreteWall::EConcreteWallType::Top, position, size, rotation );
+	case '9':
+		return std::make_shared<ConcreteWall>( ConcreteWall::EConcreteWallType::All, position, size, rotation );
 	case 'D':
 		return nullptr;
 	default:
