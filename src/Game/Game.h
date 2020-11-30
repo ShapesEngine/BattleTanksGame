@@ -27,7 +27,6 @@ public:
 	bool Init();
 
 private:
-	// 256 possible ANSI keys that might be pressed
 	std::bitset<350> keys;
 
 	glm::ivec2 windowSize;

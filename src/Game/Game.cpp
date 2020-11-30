@@ -113,11 +113,7 @@ bool Game::Init()
 		std::cerr << "ERROR::Couldn't find tank texture atlas!\n";
 		return false;
 	}
-	pTank = std::make_unique<Tank>( ResourceManager::GetSprite( "TankSprite_Top" ),
-									  ResourceManager::GetSprite( "TankSprite_Bottom" ),
-									  ResourceManager::GetSprite( "TankSprite_Right" ),
-									  ResourceManager::GetSprite( "TankSprite_Left" ),
-									  0.00000001f, glm::vec2( 0 ), glm::vec2( 16.f, 16.f ) );
+	pTank = std::make_unique<Tank>( 0.0000001f, glm::vec2( 0 ), glm::vec2( 16.f, 16.f ) );
 
 	pLevel = std::make_unique<Level>( ResourceManager::GetLevels()[0] );
 

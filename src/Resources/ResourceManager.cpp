@@ -104,6 +104,7 @@ std::shared_ptr<RenderEngine::Texture2D> ResourceManager::LoadTexture(const std:
 	if( !pixels )
 	{
 		std::cerr << "ERROR::TEXTURE NOT LOADED!\n";
+		std::cerr << __LINE__ << "\n";
 		std::cerr << "INFO::TEXTURE: " << GetFileName(texturePath).value_or( textureName );
 		return nullptr;
 	}
@@ -168,9 +169,9 @@ std::shared_ptr<RenderEngine::Texture2D> ResourceManager::LoadTextureAtlas( std:
 		for( auto& currentSubTextureName : subTextures )
 		{
 			// adding textureoffset to discard neighbor subtexture pixels
-			glm::vec2 leftBottomUV( static_cast<float>( currentTextureOffsetX + textureOffset ) / textureWidth, static_cast<float>( currentTextureOffsetY - subTextureHeight + textureOffset ) / textureHeight );
+			glm::vec2 leftBottomUV( float( currentTextureOffsetX + textureOffset ) / textureWidth, float( currentTextureOffsetY - subTextureHeight + textureOffset ) / textureHeight );
 			// adding textureoffset to discard neighbor subtexture pixels
-			glm::vec2 rightTopUV( static_cast<float>( currentTextureOffsetX + subTextureWidth - textureOffset ) / textureWidth, static_cast<float>( currentTextureOffsetY - textureOffset ) / textureHeight );
+			glm::vec2 rightTopUV( float( currentTextureOffsetX + subTextureWidth - textureOffset ) / textureWidth, float( currentTextureOffsetY - textureOffset ) / textureHeight );
 			pTexture->AddSubTexture( std::move( currentSubTextureName ), leftBottomUV, rightTopUV );
 
 			currentTextureOffsetX += subTextureWidth;

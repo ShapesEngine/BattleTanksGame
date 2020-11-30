@@ -1,20 +1,17 @@
 #include "Tank.h"
 #include "../../Renderer/Sprite.h"
+#include "../../Resources/ResourceManager.h"
 
-Tank::Tank(	std::shared_ptr<RenderEngine::Sprite> pSprite_top,
-			std::shared_ptr<RenderEngine::Sprite> pSprite_bottom,
-			std::shared_ptr<RenderEngine::Sprite> pSprite_right,
-			std::shared_ptr<RenderEngine::Sprite> pSprite_left,
-			float velocity, const glm::vec2& position, const glm::vec2& size ) :
+Tank::Tank(	float velocity, const glm::vec2& position, const glm::vec2& size ) :
 	IGameObject( position, size, 0.f ),
-	pSprite_top( std::move( pSprite_top ) ),
-	pSprite_bottom( std::move( pSprite_bottom ) ),
-	pSprite_left( std::move( pSprite_left ) ),
-	pSprite_right( std::move( pSprite_right ) ),
-	spriteAnimator_top( this->pSprite_top ),
-	spriteAnimator_bottom( this->pSprite_bottom ),
-	spriteAnimator_left( this->pSprite_left ),
-	spriteAnimator_right( this->pSprite_right ),
+	pSprite_top( ResourceManager::GetSprite( "TankSprite_Top" ) ),
+	pSprite_bottom( ResourceManager::GetSprite( "TankSprite_Bottom" ) ),
+	pSprite_left( ResourceManager::GetSprite( "TankSprite_Left" )),
+	pSprite_right( ResourceManager::GetSprite( "TankSprite_Right" ) ),
+	spriteAnimator_top( pSprite_top ),
+	spriteAnimator_bottom( pSprite_bottom ),
+	spriteAnimator_left( pSprite_left ),
+	spriteAnimator_right( pSprite_right ),
 	velocity( velocity )
 {}
 
