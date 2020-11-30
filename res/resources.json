@@ -14,40 +14,41 @@
       "subtexture_width": 16,
       "subtexture_height": 16,
       "subtextures": [
-        "brickWall",
-        "brickWall_top",
-        "brickWall_bottom",
-        "brickWall_left",
-        "brickWall_right",
-        "brickWall_top_left",
-        "brickWall_top_right",
-        "brickWall_bottom_left",
-
-        "brickWall_bottom_right",
-        "concreteWall",
-        "concreteWall_top",
-        "concreteWall_bottom",
-        "concreteWall_left",
-        "concreteWall_right",
-        "concreteWall_top_left",
-        "concreteWall_top_right",
-
-        "concreteWall_bottom_left",
-        "concreteWall_bottom_right",
-        "water1",
-        "water2",
-        "water3",
-        "trees",
-        "ice",
-        "wall",
-
         "eagle",
         "eagle_dead",
-        "blank",
         "respawn1",
         "respawn2",
         "respawn3",
-        "respawn4"
+        "respawn4",
+        "shield1",
+        "shield2",
+
+        "bigExplosion1_top_left",
+        "bigExplosion1_top_right",
+        "bigExplosion2_top_left",
+        "bigExplosion2_top_right",
+        "explosion1",
+        "explosion2",
+        "explosion3",
+        "reserved1",
+
+        "bigExplosion1_bottom_left",
+        "bigExplosion1_bottom_right",
+        "bigExplosion2_bottom_left",
+        "bigExplosion2_bottom_right",
+        "reserved2",
+        "reserved3",
+        "reserved4",
+        "reserved5",
+
+        "bonus_helmet",
+        "bonus_clock",
+        "bonus_shovel",
+        "bonus_star",
+        "bonus_grenade",
+        "bonus_tank",
+        "bonus_gun",
+        "reserved6"
       ]
     },
 
@@ -79,7 +80,7 @@
         "water3",
 
         "concreteWall",
-        "wall",
+        "trees",
         "ice",
         "wall",
         "bullet",
@@ -198,69 +199,40 @@
       "shader": "Sprite",
       "subTextureName": "brickWall_TopRight_Bottom"
     },
-    
+
     {
       "name": "concreteWall",
-      "texture_atlas": "DefaultTextureAtlas",
+      "texture_atlas": "DefaultTextureAtlas8x8",
       "shader": "Sprite",
       "subTextureName": "concreteWall"
     },
 
     {
-      "name": "concreteWall_top",
-      "texture_atlas": "DefaultTextureAtlas",
+      "name": "trees",
+      "texture_atlas": "DefaultTextureAtlas8x8",
       "shader": "Sprite",
-      "subTextureName": "concreteWall_top"
+      "subTextureName": "trees"
     },
 
     {
-      "name": "concreteWall_bottom",
-      "texture_atlas": "DefaultTextureAtlas",
+      "name": "ice",
+      "texture_atlas": "DefaultTextureAtlas8x8",
       "shader": "Sprite",
-      "subTextureName": "concreteWall_bottom"
+      "subTextureName": "ice"
     },
 
     {
-      "name": "concreteWall_left",
-      "texture_atlas": "DefaultTextureAtlas",
+      "name": "wall",
+      "texture_atlas": "DefaultTextureAtlas8x8",
       "shader": "Sprite",
-      "subTextureName": "concreteWall_left"
+      "subTextureName": "wall"
     },
 
     {
-      "name": "concreteWall_right",
-      "texture_atlas": "DefaultTextureAtlas",
+      "name": "bullet",
+      "texture_atlas": "DefaultTextureAtlas8x8",
       "shader": "Sprite",
-      "subTextureName": "concreteWall_right"
-    },
-
-    {
-      "name": "concreteWall_top_left",
-      "texture_atlas": "DefaultTextureAtlas",
-      "shader": "Sprite",
-      "subTextureName": "concreteWall_top_left"
-    },
-
-    {
-      "name": "concreteWall_top_right",
-      "texture_atlas": "DefaultTextureAtlas",
-      "shader": "Sprite",
-      "subTextureName": "concreteWall_top_right"
-    },
-
-    {
-      "name": "concreteWall_bottom_left",
-      "texture_atlas": "DefaultTextureAtlas",
-      "shader": "Sprite",
-
-      "subTextureName": "concreteWall_bottom_left"
-    },
-
-    {
-      "name": "concreteWall_bottom_right",
-      "texture_atlas": "DefaultTextureAtlas",
-      "shader": "Sprite",
-      "subTextureName": "concreteWall_bottom_right"
+      "subTextureName": "bullet"
     },
 
     {
@@ -278,6 +250,170 @@
     },
 
     {
+      "name": "respawn",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "respawn1",
+      "frames": [
+        {
+          "subtexture": "respawn1",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "respawn2",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "respawn3",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "respawn4",
+          "duration": 500000000
+        }
+      ]
+    },
+
+    {
+      "name": "shield",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "shield1",
+      "frames": [
+        {
+          "subtexture": "shield1",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "shield1",
+          "duration": 500000000
+        }
+      ]
+    },
+    {
+      "name": "explosion",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "explosion1",
+      "frames": [
+        {
+          "subtexture": "explosion1",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "explosion2",
+          "duration": 500000000
+        }
+      ]
+    },
+    {
+      "name": "bigExplosion_top_left",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bigExplosion1_top_left",
+      "frames": [
+        {
+          "subtexture": "bigExplosion1_top_left",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "bigExplosion2_top_left",
+          "duration": 500000000
+        }
+      ]
+    },
+    {
+      "name": "bigExplosion_top_right",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bigExplosion1_top_right",
+      "frames": [
+        {
+          "subtexture": "bigExplosion1_top_right",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "bigExplosion2_top_right",
+          "duration": 500000000
+        }
+      ]
+    },
+    {
+      "name": "bigExplosion_bottom_left",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bigExplosion1_bottom_left",
+      "frames": [
+        {
+          "subtexture": "bigExplosion1_bottom_left",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "bigExplosion2_bottom_left",
+          "duration": 500000000
+        }
+      ]
+    },
+    {
+      "name": "bigExplosion_bottom_right",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bigExplosion1_bottom_right",
+      "frames": [
+        {
+          "subtexture": "bigExplosion1_bottom_right",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "bigExplosion2_bottom_right",
+          "duration": 500000000
+        }
+      ]
+    },
+    {
+      "name": "bonus_helmet",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bonus_helmet"
+    },
+    {
+      "name": "bonus_clock",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bonus_clock"
+    },
+    {
+      "name": "bonus_shovel",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bonus_shovel"
+    },
+    {
+      "name": "bonus_star",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bonus_star"
+    },
+    {
+      "name": "bonus_grenade",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bonus_grenade"
+    },
+    {
+      "name": "bonus_tank",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bonus_tank"
+    },
+    {
+      "name": "bonus_gun",
+      "texture_atlas": "DefaultTextureAtlas",
+      "shader": "Sprite",
+      "subTextureName": "bonus_gun"
+    },
+
+    {
       "name": "TankSprite_Top",
       "texture_atlas": "TanksTextureAtlas",
       "shader": "Sprite",
@@ -289,6 +425,27 @@
         },
         {
           "subtexture": "yellowTankTop2",
+          "duration": 500000000
+        }
+      ]
+    },
+
+    {
+      "name": "water",
+      "texture_atlas": "DefaultTextureAtlas8x8",
+      "shader": "Sprite",
+      "subTextureName": "water1",
+      "frames": [
+        {
+          "subtexture": "water1",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "water2",
+          "duration": 500000000
+        },
+        {
+          "subtexture": "water3",
           "duration": 500000000
         }
       ]
