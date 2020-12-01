@@ -3,6 +3,7 @@
 #include "GameObjects/BrickWall.h" 
 #include "GameObjects/ConcreteWall.h" 
 #include "GameObjects/Trees.h"
+#include "GameObjects/Ice.h"
 
 #include <iostream>
 
@@ -88,6 +89,8 @@ std::shared_ptr<IGameObject> Level::CreateGameObjectFromDescription( char descri
 		return std::make_shared<ConcreteWall>( ConcreteWall::EConcreteWallType::All, position, size, rotation );
 	case 'B':
 		return std::make_shared<Trees>( position, size, rotation );
+	case 'C':
+		return std::make_shared<Ice>( position, size, rotation );
 	case 'D':
 		return nullptr;
 	default:

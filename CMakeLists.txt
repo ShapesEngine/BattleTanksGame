@@ -48,6 +48,8 @@ add_executable( ${PROJECT_NAME}
 				src/Game/GameObjects/ConcreteWall.cpp
 				src/Game/GameObjects/Trees.h				
 				src/Game/GameObjects/Trees.cpp
+				src/Game/GameObjects/Ice.h				
+				src/Game/GameObjects/Ice.cpp
 
 				res/resources.json
 			  )
