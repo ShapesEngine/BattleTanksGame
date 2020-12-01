@@ -93,6 +93,7 @@ bool Game::Init()
 	}
 
 	RenderEngine::Renderer::SetClearColor( 0.f, 0.f, 0.f, 1.f );
+	RenderEngine::Renderer::SetDepthBuffer( true );
 
 	glm::mat4 modelMatrix_1 = glm::mat4( 1.f );
 	modelMatrix_1 = glm::translate( modelMatrix_1, glm::vec3( 100.f, 200.f, 0.f ) );

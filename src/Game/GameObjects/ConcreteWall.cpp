@@ -2,8 +2,8 @@
 
 #include "../../Resources/ResourceManager.h"
 
-ConcreteWall::ConcreteWall( EConcreteWallType eConcreteWallType, const glm::vec2& position, const glm::vec2& size, float rotation ) :
-	IGameObject( position, size, rotation ),
+ConcreteWall::ConcreteWall( EConcreteWallType eConcreteWallType, const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer ) :
+	IGameObject( position, size, rotation, depthLayer ),
 	eCurrentBlockState{ EConcreteState::Destroyed,
 						EConcreteState::Destroyed,
 						EConcreteState::Destroyed,
@@ -63,6 +63,6 @@ void ConcreteWall::RenderBrick( const EConcreteLocation eBlockLocation ) const
 	const EConcreteState state = eCurrentBlockState[static_cast<size_t>( eBlockLocation )];
 	if( state != EConcreteState::Destroyed )
 	{
-		pSprite->Render( position + blockOffsets[static_cast<size_t>( eBlockLocation )], size / 2.f, rotation );
+		pSprite->Render( position + blockOffsets[static_cast<size_t>( eBlockLocation )], size / 2.f, rotation, depthLayer );
 	}
 }

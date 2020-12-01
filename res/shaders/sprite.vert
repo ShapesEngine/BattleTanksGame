@@ -7,9 +7,10 @@ out vec2 texCoord;
 
 uniform mat4 model;
 uniform mat4 projection;
+uniform float depth_layer;
 
 void main( void )
 {
     texCoord = tex;
-    gl_Position = projection * model * vec4( pos, 0.f, 1.f );
+    gl_Position = projection * model * vec4( pos, depth_layer, 1.f );
 }

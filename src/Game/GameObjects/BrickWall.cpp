@@ -2,8 +2,8 @@
 
 #include "../../Resources/ResourceManager.h"
 
-BrickWall::BrickWall( EBrickWallType eBrickWallType, const glm::vec2& position, const glm::vec2& size, float rotation ) :
-	IGameObject( position, size, rotation ),
+BrickWall::BrickWall( EBrickWallType eBrickWallType, const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer ) :
+	IGameObject( position, size, rotation, depthLayer ),
 	eCurrentBrickState{ EBrickState::Destroyed,
 						EBrickState::Destroyed,
 						EBrickState::Destroyed,
@@ -78,6 +78,6 @@ void BrickWall::RenderBrick( const EBrickLocation eBrickLocation ) const
 	const EBrickState state = eCurrentBrickState[static_cast<size_t>( eBrickLocation )];
 	if( state != EBrickState::Destroyed )
 	{
-		sprites[static_cast<size_t>( state )]->Render( position + blockOffsets[static_cast<size_t>( eBrickLocation )], size / 2.f, rotation );
+		sprites[static_cast<size_t>( state )]->Render( position + blockOffsets[static_cast<size_t>( eBrickLocation )], size / 2.f, rotation, depthLayer );
 	}
 }

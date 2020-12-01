@@ -54,7 +54,7 @@ namespace RenderEngine
 		indicesBuffer.Unbind();
 	}
 
-	void Sprite::Render( const glm::vec2& position, const glm::vec2& size, float rotation, size_t frameId ) const
+	void Sprite::Render( const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer, size_t frameId ) const
 	{
 		if( lastFrameId != frameId )
 		{
@@ -83,6 +83,7 @@ namespace RenderEngine
 
 		vertexArray.Bind();
 		Utils::ShaderHelper::SetMat4( pShaderProgram->GetID(), "model", model );
+		Utils::ShaderHelper::SetFloat( pShaderProgram->GetID(), "depth_layer", depthLayer );
 
 		glActiveTexture( GL_TEXTURE0 );
 		pTexture->Bind();

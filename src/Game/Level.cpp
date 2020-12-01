@@ -92,9 +92,9 @@ std::shared_ptr<IGameObject> Level::CreateGameObjectFromDescription( char descri
 	case 'A':
 		return std::make_shared<Water>( position, size, rotation );
 	case 'B':
-		return std::make_shared<Trees>( position, size, rotation );
+		return std::make_shared<Trees>( position, size, rotation, 1.f );
 	case 'C':
-		return std::make_shared<Ice>( position, size, rotation );
+		return std::make_shared<Ice>( position, size, rotation, -1.f );
 	case 'E':
 		return std::make_shared<Eagle>( position, size, rotation );
 	default:

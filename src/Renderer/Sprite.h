@@ -36,7 +36,7 @@ namespace RenderEngine
 				std::string initialSubTexture,
 				std::shared_ptr<ShaderProgram> pShaderProgram );
 
-		void Render( const glm::vec2& position, const glm::vec2& size, float rotation, size_t frameId = 0 ) const;
+		void Render( const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer, size_t frameId = 0 ) const;
 
 		inline void InsertFrames( std::vector<FrameDesc> framesDescriptions ) { descFrames = std::move( framesDescriptions ); }
 		inline uint64_t GetFrameDuration( size_t frameId ) const { return descFrames[frameId].duration; }

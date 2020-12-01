@@ -2,8 +2,8 @@
 
 #include "../../Resources/ResourceManager.h"
 
-Water::Water( const glm::vec2& position, const glm::vec2& size, float rotation ) :
-	IGameObject( position, size, rotation ),
+Water::Water( const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer ) :
+	IGameObject( position, size, rotation, depthLayer ),
 	pSprite( ResourceManager::GetSprite( "water" ) ),
 	spriteAnim( pSprite ),
 	blockOffsets { glm::vec2( 0, size.y / 2.f ), 
@@ -24,5 +24,5 @@ void Water::Render() const
 
 void Water::RenderBrick( const EBlockLocation eBlockLocation ) const
 {
-	pSprite->Render( position + blockOffsets[(size_t)eBlockLocation], size / 2.f, rotation, spriteAnim.GetCurrentFrame() );
+	pSprite->Render( position + blockOffsets[(size_t)eBlockLocation], size / 2.f, rotation, depthLayer, spriteAnim.GetCurrentFrame() );
 }

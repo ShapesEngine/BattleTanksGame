@@ -56,6 +56,8 @@ add_executable( ${PROJECT_NAME}
 				src/Game/GameObjects/Eagle.cpp
 
 				res/resources.json
+				res/shaders/sprite.vert
+				res/shaders/sprite.frag
 			  )
 
 set_property ( DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME} )

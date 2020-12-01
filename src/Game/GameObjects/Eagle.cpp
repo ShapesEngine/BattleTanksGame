@@ -3,8 +3,8 @@
 #include "../../Resources/ResourceManager.h"
 #include "../../Renderer/Sprite.h"
 
-Eagle::Eagle( const glm::vec2& position, const glm::vec2& size, float rotation ) :
-	IGameObject( position, size, rotation ),
+Eagle::Eagle( const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer ) :
+	IGameObject( position, size, rotation, depthLayer ),
 	pSprites{ ResourceManager::GetSprite( "eagle" ), ResourceManager::GetSprite( "eagle_dead" ) },
 	eCurrentState( EEagleState::Alive )
 {	
@@ -12,5 +12,5 @@ Eagle::Eagle( const glm::vec2& position, const glm::vec2& size, float rotation )
 
 void Eagle::Render() const
 {
-	pSprites[(size_t)( eCurrentState )]->Render( position, size, rotation );
+	pSprites[(size_t)( eCurrentState )]->Render( position, size, rotation, depthLayer );
 }

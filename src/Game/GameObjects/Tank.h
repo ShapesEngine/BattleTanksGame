@@ -25,7 +25,7 @@ public:
 	};
 
 public:
-	Tank( float velocity, const glm::vec2& position, const glm::vec2& size );
+	Tank( float velocity, const glm::vec2& position, const glm::vec2& size, float depthLayer = 0 );
 
 	void Render() const override;
 	void SetOrientation( EOrientation eOrientation_in );
