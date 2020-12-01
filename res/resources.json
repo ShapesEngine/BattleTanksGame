@@ -82,7 +82,7 @@
         "concreteWall",
         "trees",
         "ice",
-        "wall",
+        "border",
         "bullet",
         "blank"
       ]
@@ -222,10 +222,10 @@
     },
 
     {
-      "name": "wall",
+      "name": "border",
       "texture_atlas": "DefaultTextureAtlas8x8",
       "shader": "Sprite",
-      "subTextureName": "wall"
+      "subTextureName": "border"
     },
 
     {
