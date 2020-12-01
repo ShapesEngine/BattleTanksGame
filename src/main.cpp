@@ -19,7 +19,7 @@ void glfwWindowSizeCallback( GLFWwindow* window, int width, int height )
     windowSize.x = width;
     windowSize.y = height;
 
-    const float level_aspect_ratio = 13.f / 14.f;
+    const float level_aspect_ratio = static_cast<float>(pGame->GetCurrentLevelWidth()) / pGame->GetCurrentLevelHeight();
     uint32_t viewport_width = windowSize.x;
     uint32_t viewport_height = windowSize.y;
     uint32_t viewport_left_offset = 0u;
@@ -27,12 +27,12 @@ void glfwWindowSizeCallback( GLFWwindow* window, int width, int height )
 
     if( (float)windowSize.x / windowSize.y > level_aspect_ratio )
     {
-        viewport_width = (uint32_t)windowSize.y * level_aspect_ratio;
+        viewport_width = uint32_t( windowSize.y * level_aspect_ratio );
         viewport_left_offset = ( windowSize.x - viewport_width ) / 2;
     }
     else
     {
-		viewport_height = (uint32_t)windowSize.x * level_aspect_ratio;
+		viewport_height = int( windowSize.x / level_aspect_ratio);
 		viewport_bottom_offset = ( windowSize.y - viewport_height ) / 2;
     }
 
@@ -91,6 +91,7 @@ int main( int argc, char** argv )
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	
 	pGame->Init();
+    glfwSetWindowSize( pWindow, int( pGame->GetCurrentLevelWidth() ), int( pGame->GetCurrentLevelHeight() ) );
 
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( pWindow ) )
