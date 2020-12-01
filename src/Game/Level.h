@@ -27,6 +27,9 @@ public:
 private:
 	std::shared_ptr<IGameObject> CreateGameObjectFromDescription( char description, const glm::vec2& position, const glm::vec2& size, float rotation );
 
+public:
+	static constexpr uint32_t BLOCK_SIZE = 16u;
+
 private:
 	size_t width = 0;
 	size_t height = 0;
@@ -34,9 +37,7 @@ private:
 	glm::ivec2 playerRespawn_2Pos;
 	glm::ivec2 enemyRespawn_1Pos;
 	glm::ivec2 enemyRespawn_2Pos;
-	glm::ivec2 enemyRespawn_3Pos;
-
-	static constexpr uint32_t BLOCK_SIZE = 16u;
+	glm::ivec2 enemyRespawn_3Pos;	
 
 	std::vector<std::shared_ptr<IGameObject>> levelObjects;
 };
