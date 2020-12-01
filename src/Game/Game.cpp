@@ -101,6 +101,10 @@ bool Game::Init()
 	glm::mat4 modelMatrix_2 = glm::mat4( 1.f );
 	modelMatrix_2 = glm::translate( modelMatrix_2, glm::vec3( 590, 400.f, 0.f ) );
 
+	pLevel = std::make_unique<Level>( ResourceManager::GetLevels()[1] );
+	windowSize.x = (int)GetCurrentLevelWidth();
+	windowSize.y = (int)GetCurrentLevelHeight();
+
 	glm::mat4 orthoProjectionMatrix = glm::ortho( 0.f, (float)windowSize.x, 0.f, (float)windowSize.y, -100.f, 100.f );
 
 	pSpriteShaderProgram->Use();
@@ -115,8 +119,6 @@ bool Game::Init()
 		return false;
 	}
 	pTank = std::make_unique<Tank>( 0.0000001f, glm::vec2( 0 ), glm::vec2( 16.f, 16.f ) );
-
-	pLevel = std::make_unique<Level>( ResourceManager::GetLevels()[1] );
 
 	return true;
 }

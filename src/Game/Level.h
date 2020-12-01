@@ -15,8 +15,8 @@ public:
 	void Render() const;
 	void Update( uint64_t delta );
 
-	inline size_t GetWidth() const {}
-	inline size_t GetHeight() const {}
+	inline size_t GetWidth() const { return( width + 3 ) * BLOCK_SIZE; }
+	inline size_t GetHeight() const { return( height + 1 ) * BLOCK_SIZE; }
 
 private:
 	std::shared_ptr<IGameObject> CreateGameObjectFromDescription( char description, const glm::vec2& position, const glm::vec2& size, float rotation );

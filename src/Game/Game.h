@@ -26,6 +26,9 @@ public:
 	void SetKey( int key, int action );
 	bool Init();
 
+	inline size_t GetCurrentLevelWidth() const { return pLevel->GetWidth();}
+	inline size_t GetCurrentLevelHeight() const { return pLevel->GetHeight(); }
+
 private:
 	std::bitset<350> keys;
 
