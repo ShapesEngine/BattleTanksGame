@@ -6,6 +6,7 @@
 #include "GameObjects/Ice.h"
 #include "GameObjects/Water.h"
 #include "GameObjects/Eagle.h"
+#include "GameObjects/Border.h"
 
 #include <iostream>
 
@@ -19,13 +20,14 @@ Level::Level( const std::vector<std::string>& levelDescription )
 	width = levelDescription[0].length();
 	height = levelDescription.size();
 
-	levelObjects.reserve( width * height );
+	levelObjects.reserve( width * height + 4 );
+	constexpr float HALF_BLOCK_SIZE = BLOCK_SIZE / 2.f;
 	// offset is needed because of the fact that positions are loaded from bottom to top,
 	// while level is loaded from top to bottom
-	uint32_t currentBottomOffset = static_cast<uint32_t>( BLOCK_SIZE * ( height - 1 ) );
+	uint32_t currentBottomOffset = static_cast<uint32_t>( BLOCK_SIZE * ( height - 1 ) + BLOCK_SIZE / 2.f );
 	for( const std::string& currentRow : levelDescription )
 	{
-		uint32_t currentLeftOffset = 0;
+		uint32_t currentLeftOffset = BLOCK_SIZE;
 		for( const char currentElement : currentRow )
 		{
 			levelObjects.emplace_back( CreateGameObjectFromDescription( currentElement, glm::vec2( currentLeftOffset, currentBottomOffset ), glm::vec2( BLOCK_SIZE, BLOCK_SIZE ), 0.f ) );
@@ -33,6 +35,18 @@ Level::Level( const std::vector<std::string>& levelDescription )
 		}
 		currentBottomOffset -= BLOCK_SIZE;
 	}
+
+	// =======================================================================
+	// Borders
+	// -----------------------------------------------------------------------
+	// BOTTOM
+	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( BLOCK_SIZE, 0.f ), glm::vec2( width * BLOCK_SIZE, HALF_BLOCK_SIZE ), 0.f ) );
+	// TOP
+	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( BLOCK_SIZE, height * BLOCK_SIZE + HALF_BLOCK_SIZE ), glm::vec2( width * BLOCK_SIZE, HALF_BLOCK_SIZE ), 0.f ) );
+	// LEFT
+	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( 0.f, 0.f ), glm::vec2( BLOCK_SIZE, ( height + 1 ) * BLOCK_SIZE ), 0.f ) );
+	// RIGHT
+	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( ( width + 1 ) * BLOCK_SIZE, 0.f ), glm::vec2( BLOCK_SIZE * 2.f, ( height + 1 ) * BLOCK_SIZE ), 0.f ) );
 }
 
 void Level::Render() const
@@ -99,6 +113,7 @@ std::shared_ptr<IGameObject> Level::CreateGameObjectFromDescription( char descri
 		return std::make_shared<Eagle>( position, size, rotation );
 	default:
 		std::cerr << "Unknown GameObject description: " << description << std::endl;
+		[[fallthrough]];
 	case 'D':
 		return nullptr;
 	}
