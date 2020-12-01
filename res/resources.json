@@ -243,7 +243,7 @@
     },
 
     {
-      "name": "eagle",
+      "name": "eagle_dead",
       "texture_atlas": "DefaultTextureAtlas",
       "shader": "Sprite",
       "subTextureName": "eagle_dead"

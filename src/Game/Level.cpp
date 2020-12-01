@@ -5,6 +5,7 @@
 #include "GameObjects/Trees.h"
 #include "GameObjects/Ice.h"
 #include "GameObjects/Water.h"
+#include "GameObjects/Eagle.h"
 
 #include <iostream>
 
@@ -94,10 +95,11 @@ std::shared_ptr<IGameObject> Level::CreateGameObjectFromDescription( char descri
 		return std::make_shared<Trees>( position, size, rotation );
 	case 'C':
 		return std::make_shared<Ice>( position, size, rotation );
-	case 'D':
-		return nullptr;
+	case 'E':
+		return std::make_shared<Eagle>( position, size, rotation );
 	default:
 		std::cerr << "Unknown GameObject description: " << description << std::endl;
+	case 'D':
 		return nullptr;
 	}
 }

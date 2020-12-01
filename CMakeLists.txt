@@ -52,6 +52,8 @@ add_executable( ${PROJECT_NAME}
 				src/Game/GameObjects/Ice.cpp
 				src/Game/GameObjects/Water.h				
 				src/Game/GameObjects/Water.cpp
+				src/Game/GameObjects/Eagle.h				
+				src/Game/GameObjects/Eagle.cpp
 
 				res/resources.json
 			  )
