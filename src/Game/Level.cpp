@@ -24,13 +24,39 @@ Level::Level( const std::vector<std::string>& levelDescription )
 	constexpr float HALF_BLOCK_SIZE = BLOCK_SIZE / 2.f;
 	// offset is needed because of the fact that positions are loaded from bottom to top,
 	// while level is loaded from top to bottom
-	uint32_t currentBottomOffset = static_cast<uint32_t>( BLOCK_SIZE * ( height - 1 ) + BLOCK_SIZE / 2.f );
+	uint32_t currentBottomOffset = static_cast<uint32_t>( BLOCK_SIZE * ( height - 1 ) + HALF_BLOCK_SIZE );
+	/* default respawn positions */
+	playerRespawn_1Pos = { BLOCK_SIZE * ( width / 2 - 1 ), BLOCK_SIZE / 2 };
+	playerRespawn_2Pos = { BLOCK_SIZE * ( width / 2 + 3 ), BLOCK_SIZE / 2 };
+	enemyRespawn_1Pos = { BLOCK_SIZE, BLOCK_SIZE * height - BLOCK_SIZE / 2 };
+	enemyRespawn_2Pos = { BLOCK_SIZE * ( width / 2 + 1 ), BLOCK_SIZE * height - BLOCK_SIZE / 2 };
+	enemyRespawn_3Pos = { BLOCK_SIZE * width, BLOCK_SIZE * height - BLOCK_SIZE / 2 };
 	for( const std::string& currentRow : levelDescription )
 	{
 		uint32_t currentLeftOffset = BLOCK_SIZE;
 		for( const char currentElement : currentRow )
 		{
-			levelObjects.emplace_back( CreateGameObjectFromDescription( currentElement, glm::vec2( currentLeftOffset, currentBottomOffset ), glm::vec2( BLOCK_SIZE, BLOCK_SIZE ), 0.f ) );
+			switch( currentElement )
+			{
+			case 'K':
+				playerRespawn_1Pos = { currentLeftOffset, currentBottomOffset };
+				break;
+			case 'L':
+				playerRespawn_2Pos = { currentLeftOffset, currentBottomOffset };
+				break;
+			case 'M':
+				enemyRespawn_1Pos = { currentLeftOffset, currentBottomOffset };
+				break;
+			case 'N':
+				enemyRespawn_2Pos = { currentLeftOffset, currentBottomOffset };
+				break;
+			case 'O':
+				enemyRespawn_3Pos = { currentLeftOffset, currentBottomOffset };
+				break;
+			default:
+				levelObjects.emplace_back( CreateGameObjectFromDescription( currentElement, glm::vec2( currentLeftOffset, currentBottomOffset ), glm::vec2( BLOCK_SIZE, BLOCK_SIZE ), 0.f ) );
+				break;
+			}
 			currentLeftOffset += BLOCK_SIZE;
 		}
 		currentBottomOffset -= BLOCK_SIZE;
