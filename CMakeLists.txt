@@ -22,16 +22,18 @@ add_executable( ${PROJECT_NAME}
 				src/Resources/ResourceManager.h 
 				src/Resources/stb_image.h 
 
-				src/Utils/ShaderHelper.cpp
-				src/Utils/ShaderHelper.h	
-				src/Utils/VertexBuffer.cpp 
-				src/Utils/VertexBuffer.h 
-				src/Utils/IndexBuffer.cpp 
-				src/Utils/IndexBuffer.h 
-				src/Utils/VertexBufferLayout.cpp 
-				src/Utils/VertexBufferLayout.h 
-				src/Utils/VertexArray.cpp 
-				src/Utils/VertexArray.h 
+				src/System/Utils/ShaderHelper.cpp
+				src/System/Utils/ShaderHelper.h	
+				src/System/Utils/VertexBuffer.cpp 
+				src/System/Utils/VertexBuffer.h 
+				src/System/Utils/IndexBuffer.cpp 
+				src/System/Utils/IndexBuffer.h 
+				src/System/Utils/VertexBufferLayout.cpp 
+				src/System/Utils/VertexBufferLayout.h 
+				src/System/Utils/VertexArray.cpp 
+				src/System/Utils/VertexArray.h 
+				src/System/Timer.cpp
+				src/System/Timer.h
 				
 				src/Game/Game.h				
 				src/Game/Game.cpp	

@@ -8,7 +8,7 @@
 #include "../Renderer/Sprite.h"
 #include "../Renderer/Renderer.h"
 #include "../Resources/ResourceManager.h"
-#include "../Utils/ShaderHelper.h"
+#include "../System/Utils/ShaderHelper.h"
 
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>

@@ -6,7 +6,7 @@
 #include "ShaderProgram.h"
 #include "Renderer.h"
 #include "Texture2D.h"
-#include "../Utils/ShaderHelper.h"
+#include "../System/Utils/ShaderHelper.h"
 
 namespace RenderEngine
 {

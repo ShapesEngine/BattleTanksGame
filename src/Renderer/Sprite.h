@@ -7,9 +7,9 @@
 #include <string>
 #include <vector>
 
-#include "../Utils/IndexBuffer.h"
-#include "../Utils/VertexBuffer.h"
-#include "../Utils/VertexArray.h"
+#include "../System/Utils/IndexBuffer.h"
+#include "../System/Utils/VertexBuffer.h"
+#include "../System/Utils/VertexArray.h"
 
 namespace RenderEngine
 {
