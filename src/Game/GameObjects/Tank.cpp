@@ -2,7 +2,7 @@
 #include "../../Renderer/Sprite.h"
 #include "../../Resources/ResourceManager.h"
 
-Tank::Tank(	float velocity, const glm::vec2& position, const glm::vec2& size, float depthLayer ) :
+Tank::Tank(	float maxVelocity, const glm::vec2& position, const glm::vec2& size, float depthLayer ) :
 	IGameObject( position, size, 0.f, depthLayer ),
 	pSprite_top( ResourceManager::GetSprite( "TankSprite_Top" ) ),
 	pSprite_bottom( ResourceManager::GetSprite( "TankSprite_Bottom" ) ),
@@ -16,7 +16,7 @@ Tank::Tank(	float velocity, const glm::vec2& position, const glm::vec2& size, fl
 	spriteAnimator_respawn( pSprite_respawn ),
 	pSprite_shield( ResourceManager::GetSprite( "shield" ) ),
 	spriteAnimator_shield( pSprite_shield ),
-	velocity( velocity )
+	maxVelocity( maxVelocity )
 {
 	respawnTimer.SetCallback( [&]()
 	{
@@ -72,23 +72,23 @@ void Tank::SetOrientation( EOrientation eOrientation_in )
 	switch( eOrientation )
 	{
 	case Tank::EOrientation::Top:
-		moveOffset.x = 0.f;
-		moveOffset.y = 1.f;
+		direction.x = 0.f;
+		direction.y = 1.f;
 		break;
 
 	case Tank::EOrientation::Bottom:
-		moveOffset.x = 0.f;
-		moveOffset.y = -1.f;
+		direction.x = 0.f;
+		direction.y = -1.f;
 		break;
 
 	case Tank::EOrientation::Left:
-		moveOffset.x = -1.f;
-		moveOffset.y = 0.f;
+		direction.x = -1.f;
+		direction.y = 0.f;
 		break;
 
 	case Tank::EOrientation::Right:
-		moveOffset.x = 1.f;
-		moveOffset.y = 0.f;
+		direction.x = 1.f;
+		direction.y = 0.f;
 		break;
 
 	default:
@@ -110,9 +110,8 @@ void Tank::Update( double delta )
 			spriteAnimator_shield.Update( delta );
 			shieldTimer.Update( delta );
 		}
-		if( move )
+		if( velocity > 0 )
 		{
-			position += float( delta * velocity ) * moveOffset;
 			switch( eOrientation )
 			{
 			case Tank::EOrientation::Top:

@@ -9,6 +9,7 @@
 #include "../Renderer/Renderer.h"
 #include "../Resources/ResourceManager.h"
 #include "../System/Utils/ShaderHelper.h"
+#include "../Physics/PhysicsEngine.h"
 
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -39,26 +40,26 @@ void Game::Update( double delta )
 
 	if( pTank )
 	{
-		pTank->Move( false );
+		pTank->SetVelocity( 0.f );
 		if( keys[GLFW_KEY_W] )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Top );
-			pTank->Move( true );
+			pTank->SetVelocity( pTank->GetMaxVelocity() );
 		}
 		if( keys[GLFW_KEY_S] )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Bottom );
-			pTank->Move( true );
+			pTank->SetVelocity( pTank->GetMaxVelocity() );
 		}
 		if( keys[GLFW_KEY_A] )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Left );
-			pTank->Move( true );
+			pTank->SetVelocity( pTank->GetMaxVelocity() );
 		}
 		if( keys[GLFW_KEY_D] )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Right );
-			pTank->Move( true );
+			pTank->SetVelocity( pTank->GetMaxVelocity() );
 		}
 
 		pTank->Update( delta );
@@ -98,7 +99,7 @@ bool Game::Init()
 	glm::mat4 modelMatrix_2 = glm::mat4( 1.f );
 	modelMatrix_2 = glm::translate( modelMatrix_2, glm::vec3( 590, 400.f, 0.f ) );
 
-	pLevel = std::make_unique<Level>( ResourceManager::GetLevels()[1] );
+	pLevel = std::make_shared<Level>( ResourceManager::GetLevels()[1] );
 	windowSize.x = (int)GetCurrentLevelWidth();
 	windowSize.y = (int)GetCurrentLevelHeight();
 
@@ -115,7 +116,8 @@ bool Game::Init()
 		std::cerr << "ERROR::Couldn't find tank texture atlas!\n";
 		return false;
 	}
-	pTank = std::make_unique<Tank>( 0.05f, pLevel->GetPlayerRespawn_1Pos(), glm::vec2( Level::BLOCK_SIZE, Level::BLOCK_SIZE ) );
+	pTank = std::make_shared<Tank>( 0.05f, pLevel->GetPlayerRespawn_1Pos(), glm::vec2( Level::BLOCK_SIZE, Level::BLOCK_SIZE ) );
+	PhysicsEngine::AddDynamicGameObject( pTank );
 
 	return true;
 }

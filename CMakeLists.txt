@@ -22,6 +22,9 @@ add_executable( ${PROJECT_NAME}
 				src/Resources/ResourceManager.h 
 				src/Resources/stb_image.h 
 
+				src/Physics/PhysicsEngine.cpp 
+				src/Physics/PhysicsEngine.h 
+
 				src/System/Utils/ShaderHelper.cpp
 				src/System/Utils/ShaderHelper.h	
 				src/System/Utils/VertexBuffer.cpp 

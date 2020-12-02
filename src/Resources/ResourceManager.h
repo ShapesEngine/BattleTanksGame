@@ -18,9 +18,9 @@ class ResourceManager
 public:	
 	ResourceManager() = delete;
 	ResourceManager( const ResourceManager& ) = delete;
-	ResourceManager( const ResourceManager&& ) = delete;
+	ResourceManager( ResourceManager&& ) = delete;
 	ResourceManager operator=( const ResourceManager& ) = delete;
-	ResourceManager operator=( const ResourceManager&& ) = delete;
+	ResourceManager operator=( ResourceManager&& ) = delete;
 	~ResourceManager() = delete;
 
 	static void SetExecutablePath( const std::string& executablePath );

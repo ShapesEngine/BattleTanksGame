@@ -9,6 +9,7 @@
 #include "Resources/ResourceManager.h"
 #include "Renderer/Renderer.h"
 #include "Game/Game.h"
+#include "Physics/PhysicsEngine.h"
 
 // 13 pixels width and 14 pixels height, 16 in this case is the dimension of subtexture
 glm::ivec2 windowSize( 13 * 16, 14 * 16 );
@@ -83,7 +84,8 @@ int main( int argc, char** argv )
     
     // Getting executable location
     // ---------------------------
-    ResourceManager::SetExecutablePath( *argv );    
+    ResourceManager::SetExecutablePath( *argv );  
+    PhysicsEngine::Init();
 
 	std::cout << "Renderer: " << RenderEngine::Renderer::GetRendererStr() << "\n";
 	std::cout << "OpenGL Version: " << RenderEngine::Renderer::GetVersionStr() << "\n";   
@@ -100,6 +102,7 @@ int main( int argc, char** argv )
         double duration = std::chrono::duration<double, std::milli>( currentTime - lastTime ).count();
 		lastTime = currentTime;
         pGame->Update( duration );
+        PhysicsEngine::Update( duration );
 
         /* Render here */
         RenderEngine::Renderer::Clear();
@@ -112,7 +115,7 @@ int main( int argc, char** argv )
         /* Poll for and process events */
         glfwPollEvents();
     }
-    
+    PhysicsEngine::Terminate();
     pGame = nullptr;
     // delete resource manager before destroying context, 
     // otherwise it may lead to crash of the application
