@@ -54,7 +54,8 @@ void Tank::Render() const
 
 		if( hasShield )
 		{
-			pSprite_shield->Render( position, size, rotation, depthLayer, spriteAnimator_shield.GetCurrentFrame() );
+			// render the shield in front of the tank, but behind the trees
+			pSprite_shield->Render( position, size, rotation, depthLayer + 0.1f, spriteAnimator_shield.GetCurrentFrame() );
 		}
 	}
 
