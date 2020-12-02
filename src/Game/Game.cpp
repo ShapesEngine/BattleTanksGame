@@ -44,6 +44,11 @@ void Game::Update( double delta )
 			pTank->SetOrientation( Tank::EOrientation::Top );
 			pTank->Move( true );
 		}
+		else if( keys[GLFW_KEY_S] )
+		{
+			pTank->SetOrientation( Tank::EOrientation::Bottom );
+			pTank->Move( true );
+		}
 		else if( keys[GLFW_KEY_A] )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Left );
@@ -53,12 +58,7 @@ void Game::Update( double delta )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Right );
 			pTank->Move( true );
-		}
-		else if( keys[GLFW_KEY_S] )
-		{
-			pTank->SetOrientation( Tank::EOrientation::Bottom );
-			pTank->Move( true );
-		}
+		}		
 		else
 		{
 			pTank->Move( false );

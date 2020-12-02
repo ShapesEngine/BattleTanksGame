@@ -12,26 +12,53 @@ Tank::Tank(	float velocity, const glm::vec2& position, const glm::vec2& size, fl
 	spriteAnimator_bottom( pSprite_bottom ),
 	spriteAnimator_left( pSprite_left ),
 	spriteAnimator_right( pSprite_right ),
+	pSprite_respawn( ResourceManager::GetSprite( "respawn" ) ),
+	spriteAnimator_respawn( pSprite_respawn ),
+	pSprite_shield( ResourceManager::GetSprite( "shield" ) ),
+	spriteAnimator_shield( pSprite_shield ),
 	velocity( velocity )
-{}
+{
+	respawnTimer.SetCallback( [&]()
+	{
+		isSpawning = false;
+		hasShield = true;
+		shieldTimer.Start( 2000.0 );
+	} );
+	respawnTimer.Start( 1500.0 );
+	shieldTimer.SetCallback( [&]() { hasShield = false; } );
+}
 
 void Tank::Render() const
 {
-	switch( eOrientation )
+	if( isSpawning )
 	{
-	case Tank::EOrientation::Top:
-		pSprite_top->Render( position, size, rotation, depthLayer, spriteAnimator_top.GetCurrentFrame() );
-		break;
-	case Tank::EOrientation::Bottom:
-		pSprite_bottom->Render( position, size, rotation, depthLayer, spriteAnimator_bottom.GetCurrentFrame() );
-		break;
-	case Tank::EOrientation::Left:
-		pSprite_left->Render( position, size, rotation, depthLayer, spriteAnimator_left.GetCurrentFrame() );
-		break;
-	case Tank::EOrientation::Right:
-		pSprite_right->Render( position, size, rotation, depthLayer, spriteAnimator_right.GetCurrentFrame() );
-		break;
+		pSprite_respawn->Render( position, size, rotation, 0.f, spriteAnimator_respawn.GetCurrentFrame() );
 	}
+	else
+	{
+		switch( eOrientation )
+		{
+		case Tank::EOrientation::Top:
+			pSprite_top->Render( position, size, rotation, depthLayer, spriteAnimator_top.GetCurrentFrame() );
+			break;
+		case Tank::EOrientation::Bottom:
+			pSprite_bottom->Render( position, size, rotation, depthLayer, spriteAnimator_bottom.GetCurrentFrame() );
+			break;
+		case Tank::EOrientation::Left:
+			pSprite_left->Render( position, size, rotation, depthLayer, spriteAnimator_left.GetCurrentFrame() );
+			break;
+		case Tank::EOrientation::Right:
+			pSprite_right->Render( position, size, rotation, depthLayer, spriteAnimator_right.GetCurrentFrame() );
+			break;
+		}
+
+		if( hasShield )
+		{
+			pSprite_shield->Render( position, size, rotation, depthLayer, spriteAnimator_shield.GetCurrentFrame() );
+		}
+	}
+
+	
 }
 
 void Tank::SetOrientation( EOrientation eOrientation_in )
@@ -70,23 +97,36 @@ void Tank::SetOrientation( EOrientation eOrientation_in )
 
 void Tank::Update( double delta )
 {
-	if( move )
+	if( isSpawning )
 	{
-		position += float( delta * velocity ) * moveOffset;
-		switch( eOrientation )
-		{
-		case Tank::EOrientation::Top:
-			spriteAnimator_top.Update( delta );
-			break;
-		case Tank::EOrientation::Bottom:
-			spriteAnimator_bottom.Update( delta );
-			break;
-		case Tank::EOrientation::Left:
-			spriteAnimator_left.Update( delta );
-			break;
-		case Tank::EOrientation::Right:
-			spriteAnimator_right.Update( delta );
-			break;
-		}
+		spriteAnimator_respawn.Update( delta );
+		respawnTimer.Update( delta );
 	}
+	else
+	{
+		if( hasShield )
+		{
+			spriteAnimator_shield.Update( delta );
+			shieldTimer.Update( delta );
+		}
+		if( move )
+		{
+			position += float( delta * velocity ) * moveOffset;
+			switch( eOrientation )
+			{
+			case Tank::EOrientation::Top:
+				spriteAnimator_top.Update( delta );
+				break;
+			case Tank::EOrientation::Bottom:
+				spriteAnimator_bottom.Update( delta );
+				break;
+			case Tank::EOrientation::Left:
+				spriteAnimator_left.Update( delta );
+				break;
+			case Tank::EOrientation::Right:
+				spriteAnimator_right.Update( delta );
+				break;
+			}
+		}
+	}	
 }

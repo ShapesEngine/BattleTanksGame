@@ -2,6 +2,7 @@
 
 #include "IGameObject.h"
 #include "../../Renderer/SpriteAnimator.h"
+#include "../../System/Timer.h"
 
 #include <memory>
 
@@ -43,7 +44,17 @@ private:
 	RenderEngine::SpriteAnimator spriteAnimator_bottom;
 	RenderEngine::SpriteAnimator spriteAnimator_left;
 	RenderEngine::SpriteAnimator spriteAnimator_right;
+	std::shared_ptr<RenderEngine::Sprite> pSprite_respawn;
+	RenderEngine::SpriteAnimator spriteAnimator_respawn;
+	std::shared_ptr<RenderEngine::Sprite> pSprite_shield;
+	RenderEngine::SpriteAnimator spriteAnimator_shield;
+
+	Timer respawnTimer;
+	Timer shieldTimer;
+
 	bool move = false;
 	float velocity;
 	glm::vec2 moveOffset = glm::vec2( 0.f, 1.f );
+	bool isSpawning = true;
+	bool hasShield = false;
 };
