@@ -29,7 +29,7 @@ public:
 
 	void Render() const override;
 	void SetOrientation( EOrientation eOrientation_in );
-	void Update( uint64_t delta ) override;
+	void Update( double delta ) override;
 
 	inline void Move( bool move ) { this->move = move; }
 

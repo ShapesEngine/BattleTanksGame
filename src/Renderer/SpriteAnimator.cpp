@@ -6,7 +6,7 @@ RenderEngine::SpriteAnimator::SpriteAnimator( std::shared_ptr<Sprite> pSprite ) 
 	currentFrameDuration( pSprite->GetFrameDuration( 0 ) )
 {}
 
-void RenderEngine::SpriteAnimator::Update( uint64_t delta )
+void RenderEngine::SpriteAnimator::Update( double delta )
 {
 	currentAnimationTime += delta;
 	while( currentAnimationTime >= currentFrameDuration )

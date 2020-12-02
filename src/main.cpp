@@ -91,13 +91,13 @@ int main( int argc, char** argv )
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	
 	pGame->Init();
-    glfwSetWindowSize( pWindow, int( pGame->GetCurrentLevelWidth() ), int( pGame->GetCurrentLevelHeight() ) );
+    glfwSetWindowSize( pWindow, 3 * int( pGame->GetCurrentLevelWidth() ), 3 * int( pGame->GetCurrentLevelHeight() ) );
 
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( pWindow ) )
     {
 		auto currentTime = std::chrono::high_resolution_clock::now();
-		uint64_t duration = std::chrono::duration_cast<std::chrono::nanoseconds>( currentTime - lastTime ).count();
+        double duration = std::chrono::duration<double, std::milli>( currentTime - lastTime ).count();
 		lastTime = currentTime;
         pGame->Update( duration );
 

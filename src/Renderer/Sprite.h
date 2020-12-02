@@ -21,14 +21,14 @@ namespace RenderEngine
 	public:
 		struct FrameDesc
 		{
-			FrameDesc( const glm::vec2& leftBottomUV, const glm::vec2& rightTopUV, uint64_t duration ) :
+			FrameDesc( const glm::vec2& leftBottomUV, const glm::vec2& rightTopUV, double duration ) :
 				leftBottomUV( leftBottomUV ),
 				rightTopUV( rightTopUV ),
 				duration( duration )
 			{}
 			glm::vec2 leftBottomUV;
 			glm::vec2 rightTopUV;
-			uint64_t duration;
+			double duration;
 		};
 
 	public:
@@ -39,7 +39,7 @@ namespace RenderEngine
 		void Render( const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer, size_t frameId = 0 ) const;
 
 		inline void InsertFrames( std::vector<FrameDesc> framesDescriptions ) { descFrames = std::move( framesDescriptions ); }
-		inline uint64_t GetFrameDuration( size_t frameId ) const { return descFrames[frameId].duration; }
+		inline double GetFrameDuration( size_t frameId ) const { return descFrames[frameId].duration; }
 		inline size_t GetFramesCount() const { return descFrames.size(); }
 
 	protected:

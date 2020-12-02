@@ -521,19 +521,19 @@
       "frames": [
         {
           "subtexture": "respawn1",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "respawn2",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "respawn3",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "respawn4",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -546,11 +546,11 @@
       "frames": [
         {
           "subtexture": "shield1",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "shield1",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -562,11 +562,11 @@
       "frames": [
         {
           "subtexture": "explosion1",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "explosion2",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -578,11 +578,11 @@
       "frames": [
         {
           "subtexture": "bigExplosion1_top_left",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "bigExplosion2_top_left",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -594,11 +594,11 @@
       "frames": [
         {
           "subtexture": "bigExplosion1_top_right",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "bigExplosion2_top_right",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -610,11 +610,11 @@
       "frames": [
         {
           "subtexture": "bigExplosion1_bottom_left",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "bigExplosion2_bottom_left",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -626,11 +626,11 @@
       "frames": [
         {
           "subtexture": "bigExplosion1_bottom_right",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "bigExplosion2_bottom_right",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -685,11 +685,11 @@
       "frames": [
         {
           "subtexture": "yellowType1_Top1",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "yellowType1_Top2",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -702,15 +702,15 @@
       "frames": [
         {
           "subtexture": "water1",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "water2",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "water3",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -723,11 +723,11 @@
       "frames": [
         {
           "subtexture": "yellowType1_Bottom1",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "yellowType1_Bottom2",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -740,11 +740,11 @@
       "frames": [
         {
           "subtexture": "yellowType1_Left1",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "yellowType1_Left2",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     },
@@ -757,11 +757,11 @@
       "frames": [
         {
           "subtexture": "yellowType1_Right1",
-          "duration": 500000000
+          "duration": 500
         },
         {
           "subtexture": "yellowType1_Right2",
-          "duration": 500000000
+          "duration": 500
         }
       ]
     }

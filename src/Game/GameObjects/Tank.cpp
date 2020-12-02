@@ -68,11 +68,11 @@ void Tank::SetOrientation( EOrientation eOrientation_in )
 	}
 }
 
-void Tank::Update( uint64_t delta )
+void Tank::Update( double delta )
 {
 	if( move )
 	{
-		position += delta * velocity * moveOffset;
+		position += float( delta * velocity ) * moveOffset;
 		switch( eOrientation )
 		{
 		case Tank::EOrientation::Top:

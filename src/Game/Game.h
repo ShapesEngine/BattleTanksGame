@@ -22,7 +22,7 @@ public:
 	Game( const glm::ivec2& windowSize );
 
 	void Render();
-	void Update( uint64_t delta );
+	void Update( double delta );
 	void SetKey( int key, int action );
 	bool Init();
 

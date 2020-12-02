@@ -13,7 +13,7 @@ class Level
 public:
 	Level( const std::vector<std::string>& levelDescription );
 	void Render() const;
-	void Update( uint64_t delta );
+	void Update( double delta );
 
 	inline size_t GetWidth() const { return( width + 3 ) * BLOCK_SIZE; }
 	inline size_t GetHeight() const { return( height + 1 ) * BLOCK_SIZE; }

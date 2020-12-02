@@ -30,7 +30,7 @@ void Game::Render()
 	}
 }
 
-void Game::Update( uint64_t delta )
+void Game::Update( double delta )
 {
 	if( pLevel )
 	{
@@ -118,7 +118,7 @@ bool Game::Init()
 		std::cerr << "ERROR::Couldn't find tank texture atlas!\n";
 		return false;
 	}
-	pTank = std::make_unique<Tank>( 0.0000001f, pLevel->GetPlayerRespawn_1Pos(), glm::vec2( Level::BLOCK_SIZE, Level::BLOCK_SIZE ) );
+	pTank = std::make_unique<Tank>( 0.05f, pLevel->GetPlayerRespawn_1Pos(), glm::vec2( Level::BLOCK_SIZE, Level::BLOCK_SIZE ) );
 
 	return true;
 }

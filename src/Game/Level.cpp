@@ -86,7 +86,7 @@ void Level::Render() const
 	}
 }
 
-void Level::Update( const uint64_t delta )
+void Level::Update( double delta )
 {
 	for( const auto& currentLevelObject : levelObjects )
 	{

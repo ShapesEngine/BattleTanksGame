@@ -9,7 +9,7 @@ public:
 	virtual ~IGameObject() = default;
 
 	virtual void Render() const = 0;
-	virtual void Update( const uint64_t delta ) = 0;	
+	virtual void Update( double delta ) = 0;	
 
 protected:
 	glm::vec2 position;

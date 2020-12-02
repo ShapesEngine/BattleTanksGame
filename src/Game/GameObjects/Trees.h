@@ -25,7 +25,7 @@ public:
 public:
 	Trees( const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer = 0 );
 	inline void Render() const override;
-	inline void Update( const uint64_t delta ) override {};
+	inline void Update( double delta ) override {};
 
 private:
 	void RenderBrick( const EBlockLocation eBlockLocation ) const;
