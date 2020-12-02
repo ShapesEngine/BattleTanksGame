@@ -185,7 +185,7 @@ std::shared_ptr<RenderEngine::Texture2D> ResourceManager::LoadTextureAtlas( std:
 	return pTexture;
 }
 
-bool ResourceManager::loadJSONResources( const std::string& relativeFilePath )
+bool ResourceManager::LoadJSONResources( const std::string& relativeFilePath )
 {
 	if( const auto tempFile = GetFileString( relativeFilePath ) )
 	{

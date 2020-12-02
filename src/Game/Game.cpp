@@ -39,29 +39,26 @@ void Game::Update( double delta )
 
 	if( pTank )
 	{
+		pTank->Move( false );
 		if( keys[GLFW_KEY_W] )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Top );
 			pTank->Move( true );
 		}
-		else if( keys[GLFW_KEY_S] )
+		if( keys[GLFW_KEY_S] )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Bottom );
 			pTank->Move( true );
 		}
-		else if( keys[GLFW_KEY_A] )
+		if( keys[GLFW_KEY_A] )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Left );
 			pTank->Move( true );
 		}
-		else if( keys[GLFW_KEY_D] )
+		if( keys[GLFW_KEY_D] )
 		{
 			pTank->SetOrientation( Tank::EOrientation::Right );
 			pTank->Move( true );
-		}		
-		else
-		{
-			pTank->Move( false );
 		}
 
 		pTank->Update( delta );
@@ -75,7 +72,7 @@ void Game::SetKey( int key, int action )
 
 bool Game::Init()
 {
-	ResourceManager::loadJSONResources( "res/resources.json" );
+	ResourceManager::LoadJSONResources( "res/resources.json" );
 	auto pSpriteShaderProgram = ResourceManager::GetShaderProgram( "Sprite" );
 	if( !pSpriteShaderProgram )
 	{
