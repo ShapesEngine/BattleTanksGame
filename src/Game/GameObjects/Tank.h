@@ -33,10 +33,7 @@ public:
 	void Update( double delta ) override;
 
 	float GetMaxVelocity() const { return maxVelocity; }
-	void SetVelocity( float velocity_in ) override 
-	{ 
-		velocity = ( isSpawning ? 0.f : velocity_in ); 
-	}
+	inline void SetVelocity( float velocity_in ) override { velocity = ( isSpawning ? 0.f : velocity_in ); }
 
 private:
 	EOrientation eOrientation = EOrientation::Top;

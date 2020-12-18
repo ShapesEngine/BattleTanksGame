@@ -102,6 +102,7 @@ bool Game::Init()
 	pLevel = std::make_shared<Level>( ResourceManager::GetLevels()[1] );
 	windowSize.x = (int)GetCurrentLevelWidth();
 	windowSize.y = (int)GetCurrentLevelHeight();
+	Physics::PhysicsEngine::SetCurrentLevel( pLevel );
 
 	glm::mat4 orthoProjectionMatrix = glm::ortho( 0.f, (float)windowSize.x, 0.f, (float)windowSize.y, -100.f, 100.f );
 

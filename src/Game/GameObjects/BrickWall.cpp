@@ -33,34 +33,43 @@ BrickWall::BrickWall( EBrickWallType eBrickWallType, const glm::vec2& position, 
 	{
 	case EBrickWallType::All:
 		eCurrentBrickState.fill( EBrickState::All );
+		colliders.emplace_back( glm::vec2( 0 ), size );
 		break;
 	case EBrickWallType::Top:
 		eCurrentBrickState[(int)EBrickLocation::TopLeft] = EBrickState::All;
 		eCurrentBrickState[(int)EBrickLocation::TopRight] = EBrickState::All;
+		colliders.emplace_back(glm::vec2(0, size.y / 2), size);
 		break;
 	case EBrickWallType::Bottom:
 		eCurrentBrickState[(int)EBrickLocation::BottomLeft] = EBrickState::All;
 		eCurrentBrickState[(int)EBrickLocation::BottomRight] = EBrickState::All;
+		colliders.emplace_back(glm::vec2(0), glm::vec2(size.x, size.y / 2));
 		break;
 	case EBrickWallType::Left:
 		eCurrentBrickState[(int)EBrickLocation::TopLeft] = EBrickState::All;
 		eCurrentBrickState[(int)EBrickLocation::BottomLeft] = EBrickState::All;
+		colliders.emplace_back(glm::vec2(0), glm::vec2(size.x / 2, size.y));
 		break;
 	case EBrickWallType::Right:
 		eCurrentBrickState[(int)EBrickLocation::TopRight] = EBrickState::All;
 		eCurrentBrickState[(int)EBrickLocation::BottomRight] = EBrickState::All;
+		colliders.emplace_back(glm::vec2(size.x / 2, 0), size);
 		break;
 	case EBrickWallType::TopLeft:
 		eCurrentBrickState[(int)EBrickLocation::TopLeft] = EBrickState::All;
+		colliders.emplace_back(glm::vec2(0, size.y / 2), glm::vec2(size.x / 2, size.y));
 		break;
 	case EBrickWallType::TopRight:
 		eCurrentBrickState[(int)EBrickLocation::TopRight] = EBrickState::All;
+		colliders.emplace_back(glm::vec2(size.x / 2, size.y / 2), size);
 		break;
 	case EBrickWallType::BottomLeft:
 		eCurrentBrickState[(int)EBrickLocation::BottomLeft] = EBrickState::All;
+		colliders.emplace_back(glm::vec2(0), glm::vec2(size.x / 2, size.y / 2));
 		break;
 	case EBrickWallType::BottomRight:
 		eCurrentBrickState[(int)EBrickLocation::BottomRight] = EBrickState::All;
+		colliders.emplace_back(glm::vec2(size.x / 2, 0), glm::vec2(size.x, size.y / 2));
 		break;
 	}
 }

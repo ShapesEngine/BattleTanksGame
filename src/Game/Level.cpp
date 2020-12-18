@@ -9,6 +9,8 @@
 #include "GameObjects/Border.h"
 
 #include <iostream>
+#include <algorithm>
+#include <cmath>
 
 Level::Level( const std::vector<std::string>& levelDescription )
 {
@@ -17,20 +19,22 @@ Level::Level( const std::vector<std::string>& levelDescription )
 		std::cerr << "Empty level description!" << std::endl;
 	}
 
-	width = levelDescription[0].length();
-	height = levelDescription.size();
+	widthBlocks = levelDescription[0].length();
+	heightBlocks = levelDescription.size();
+	widthPixels = uint32_t( widthBlocks * BLOCK_SIZE );
+	heightPixels = uint32_t( heightBlocks * BLOCK_SIZE );
 
-	levelObjects.reserve( width * height + 4 );
+	levelObjects.reserve( widthBlocks * heightBlocks + 4 );
 	constexpr float HALF_BLOCK_SIZE = BLOCK_SIZE / 2.f;
 	// offset is needed because of the fact that positions are loaded from bottom to top,
 	// while level is loaded from top to bottom
-	uint32_t currentBottomOffset = static_cast<uint32_t>( BLOCK_SIZE * ( height - 1 ) + HALF_BLOCK_SIZE );
+	uint32_t currentBottomOffset = uint32_t( BLOCK_SIZE * ( heightBlocks - 1 ) + HALF_BLOCK_SIZE );
 	/* default respawn positions */
-	playerRespawn_1Pos = { BLOCK_SIZE * ( width / 2 - 1 ), BLOCK_SIZE / 2 };
-	playerRespawn_2Pos = { BLOCK_SIZE * ( width / 2 + 3 ), BLOCK_SIZE / 2 };
-	enemyRespawn_1Pos = { BLOCK_SIZE, BLOCK_SIZE * height - BLOCK_SIZE / 2 };
-	enemyRespawn_2Pos = { BLOCK_SIZE * ( width / 2 + 1 ), BLOCK_SIZE * height - BLOCK_SIZE / 2 };
-	enemyRespawn_3Pos = { BLOCK_SIZE * width, BLOCK_SIZE * height - BLOCK_SIZE / 2 };
+	playerRespawn_1Pos = { BLOCK_SIZE * ( widthBlocks / 2 - 1 ), BLOCK_SIZE / 2 };
+	playerRespawn_2Pos = { BLOCK_SIZE * ( widthBlocks / 2 + 3 ), BLOCK_SIZE / 2 };
+	enemyRespawn_1Pos = { BLOCK_SIZE, BLOCK_SIZE * heightBlocks - BLOCK_SIZE / 2 };
+	enemyRespawn_2Pos = { BLOCK_SIZE * ( widthBlocks / 2 + 1 ), BLOCK_SIZE * heightBlocks - BLOCK_SIZE / 2 };
+	enemyRespawn_3Pos = { BLOCK_SIZE * widthBlocks, BLOCK_SIZE * heightBlocks - BLOCK_SIZE / 2 };
 	for( const std::string& currentRow : levelDescription )
 	{
 		uint32_t currentLeftOffset = BLOCK_SIZE;
@@ -40,18 +44,23 @@ Level::Level( const std::vector<std::string>& levelDescription )
 			{
 			case 'K':
 				playerRespawn_1Pos = { currentLeftOffset, currentBottomOffset };
+				levelObjects.emplace_back( nullptr );
 				break;
 			case 'L':
 				playerRespawn_2Pos = { currentLeftOffset, currentBottomOffset };
+				levelObjects.emplace_back( nullptr );
 				break;
 			case 'M':
 				enemyRespawn_1Pos = { currentLeftOffset, currentBottomOffset };
+				levelObjects.emplace_back( nullptr );
 				break;
 			case 'N':
 				enemyRespawn_2Pos = { currentLeftOffset, currentBottomOffset };
+				levelObjects.emplace_back( nullptr );
 				break;
 			case 'O':
 				enemyRespawn_3Pos = { currentLeftOffset, currentBottomOffset };
+				levelObjects.emplace_back( nullptr );
 				break;
 			default:
 				levelObjects.emplace_back( CreateGameObjectFromDescription( currentElement, glm::vec2( currentLeftOffset, currentBottomOffset ), glm::vec2( BLOCK_SIZE, BLOCK_SIZE ), 0.f ) );
@@ -66,13 +75,13 @@ Level::Level( const std::vector<std::string>& levelDescription )
 	// Borders
 	// -----------------------------------------------------------------------
 	// BOTTOM
-	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( BLOCK_SIZE, 0.f ), glm::vec2( width * BLOCK_SIZE, HALF_BLOCK_SIZE ), 0.f ) );
+	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( BLOCK_SIZE, 0.f ), glm::vec2( widthBlocks * BLOCK_SIZE, HALF_BLOCK_SIZE ), 0.f ) );
 	// TOP
-	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( BLOCK_SIZE, height * BLOCK_SIZE + HALF_BLOCK_SIZE ), glm::vec2( width * BLOCK_SIZE, HALF_BLOCK_SIZE ), 0.f ) );
+	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( BLOCK_SIZE, heightBlocks * BLOCK_SIZE + HALF_BLOCK_SIZE ), glm::vec2( widthBlocks * BLOCK_SIZE, HALF_BLOCK_SIZE ), 0.f ) );
 	// LEFT
-	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( 0.f, 0.f ), glm::vec2( BLOCK_SIZE, ( height + 1 ) * BLOCK_SIZE ), 0.f ) );
+	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( 0.f, 0.f ), glm::vec2( BLOCK_SIZE, ( heightBlocks + 1 ) * BLOCK_SIZE ), 0.f ) );
 	// RIGHT
-	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( ( width + 1 ) * BLOCK_SIZE, 0.f ), glm::vec2( BLOCK_SIZE * 2.f, ( height + 1 ) * BLOCK_SIZE ), 0.f ) );
+	levelObjects.emplace_back( std::make_shared<Border>( glm::vec2( ( widthBlocks + 1 ) * BLOCK_SIZE, 0.f ), glm::vec2( BLOCK_SIZE * 2.f, ( heightBlocks + 1 ) * BLOCK_SIZE ), 0.f ) );
 }
 
 void Level::Render() const
@@ -95,6 +104,37 @@ void Level::Update( double delta )
 			currentLevelObject->Update( delta );
 		}
 	}
+}
+
+std::vector<std::shared_ptr<IGameObject>> Level::GetObjectsInArea( const glm::vec2& bottomLeft, const glm::vec2& topRight ) const
+{
+	std::vector<std::shared_ptr<IGameObject>> output;
+	output.reserve( 9 );
+
+	glm::vec2 bottomLeft_converted( std::clamp( bottomLeft.x - BLOCK_SIZE, 0.f, (float)widthPixels ),
+									std::clamp( heightPixels - bottomLeft.y + BLOCK_SIZE / 2, 0.f, (float)heightPixels ) );
+	glm::vec2 topRight_converted( std::clamp( topRight.x - BLOCK_SIZE, 0.f, (float)widthPixels ),
+								  std::clamp( heightPixels - topRight.y + BLOCK_SIZE / 2, 0.f, (float)heightPixels ) );
+
+	size_t startX = size_t( floor( bottomLeft_converted.x / BLOCK_SIZE ) );
+	size_t endX = size_t( ceil( topRight_converted.x / BLOCK_SIZE ) );
+
+	size_t startY = size_t( floor( topRight_converted.y / BLOCK_SIZE ) );
+	size_t endY = size_t( ceil( bottomLeft_converted.y / BLOCK_SIZE ) );
+
+	for( size_t currentColumn = startX; currentColumn < endX; ++currentColumn )
+	{
+		for( size_t currentRow = startY; currentRow < endY; ++currentRow )
+		{
+			auto& currentObject = levelObjects[currentRow * widthBlocks + currentColumn];
+			if( currentObject )
+			{
+				output.push_back( currentObject );
+			}
+		}
+	}
+
+	return output;
 }
 
 std::shared_ptr<IGameObject> Level::CreateGameObjectFromDescription( char description, const glm::vec2& position, const glm::vec2& size, float rotation )
