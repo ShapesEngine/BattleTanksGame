@@ -2,6 +2,8 @@ language: cpp
 
 dist: bionic
 
+sudo: true
+
 # This is clang on macOS
 compiler: gcc
 
@@ -12,7 +14,6 @@ branches:
 addons:
   apt:
     packages:
-      - libglad
       - libglew-dev
       - freeglut3-dev
       - libxi-dev
