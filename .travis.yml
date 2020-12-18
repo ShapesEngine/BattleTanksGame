@@ -12,6 +12,7 @@ branches:
 addons:
   apt:
     packages:
+      - libglad
       - libglew-dev
       - freeglut3-dev
       - libxi-dev
