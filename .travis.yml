@@ -12,10 +12,24 @@ branches:
 addons:
   apt:
     packages:
-      - libxrandr-dev
-      - libxinerama-dev
-      - libxcursor-dev
+      - libglew-dev
+      - freeglut3-dev
       - libxi-dev
+      - libxmu-dev
+      - xserver-xorg-video-dummy
+      - xpra
+      - xorg-dev
+      - opencl-headers
+      - libgl1-mesa-dev
+      - libxcursor-dev
+      - libpulse-dev
+      - libxinerama-dev
+      - libxrandr-dev
+      - libxv-dev
+      - libasound2-dev
+      - libudev-dev
+      - mesa-utils
+      - libgl1-mesa-glx
 
 jobs:
   include:
