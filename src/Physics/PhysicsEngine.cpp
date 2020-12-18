@@ -2,15 +2,18 @@
 
 #include "../Game/GameObjects/IGameObject.h"
 
-std::unordered_set<std::shared_ptr<IGameObject>> PhysicsEngine::pDynamicObjects;
-
-void PhysicsEngine::Update( double delta )
+namespace Physics
 {
-	for( auto& currentObject : pDynamicObjects )
+	std::unordered_set<std::shared_ptr<IGameObject>> PhysicsEngine::pDynamicObjects;
+
+	void PhysicsEngine::Update( double delta )
 	{
-		if( currentObject->GetCurrentVelocity() > 0 )
+		for( auto& currentObject : pDynamicObjects )
 		{
-			currentObject->SetCurrentPosition( currentObject->GetCurrentPosition() + currentObject->GetCurrentDirection() * float( currentObject->GetCurrentVelocity() * delta ) );
+			if( currentObject->GetCurrentVelocity() > 0 )
+			{
+				currentObject->SetCurrentPosition( currentObject->GetCurrentPosition() + currentObject->GetCurrentDirection() * float( currentObject->GetCurrentVelocity() * delta ) );
+			}
 		}
 	}
 }
