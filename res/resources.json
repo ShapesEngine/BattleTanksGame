@@ -83,7 +83,10 @@
         "trees",
         "ice",
         "border",
-        "bullet",
+        "bullet_top",
+        "bullet_bottom",
+        "bullet_left",
+        "bullet_right",
         "blank"
       ]
     },
@@ -493,10 +496,31 @@
     },
 
     {
-      "name": "bullet",
+      "name": "bullet_top",
       "texture_atlas": "DefaultTextureAtlas8x8",
       "shader": "Sprite",
-      "subTextureName": "bullet"
+      "subTextureName": "bullet_top"
+    },
+
+    {
+      "name": "bullet_right",
+      "texture_atlas": "DefaultTextureAtlas8x8",
+      "shader": "Sprite",
+      "subTextureName": "bullet_right"
+    },
+
+    {
+      "name": "bullet_bottom",
+      "texture_atlas": "DefaultTextureAtlas8x8",
+      "shader": "Sprite",
+      "subTextureName": "bullet_bottom"
+    },
+
+    {
+      "name": "bullet_left",
+      "texture_atlas": "DefaultTextureAtlas8x8",
+      "shader": "Sprite",
+      "subTextureName": "bullet_left"
     },
 
     {
