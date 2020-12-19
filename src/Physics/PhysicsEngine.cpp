@@ -2,6 +2,7 @@
 
 #include "../Game/GameObjects/IGameObject.h"
 #include "../Game/Level.h"
+#include "../Game/GameObjects/Water.h"
 
 namespace Physics
 {
@@ -32,11 +33,12 @@ namespace Physics
 				for( const auto& currentObjectToCheck : objectsToCheck )
 				{
 					const auto& collidersToCheck = currentObjectToCheck->GetColliders();
-					if( !collidersToCheck.empty() )
+					if( currentObjectToCheck->IsCollidableWithSecondObject( currentObject.get() ) && !collidersToCheck.empty() )
 					{
 						if( HasIntersection( colliders, newPosition, collidersToCheck, currentObjectToCheck->GetCurrentPosition() ) )
 						{
 							hasCollision = true;
+							currentObjectToCheck->OnCollision();
 							break;
 						}
 					}
@@ -57,6 +59,7 @@ namespace Physics
 					{
 						currentObject->SetCurrentPosition( glm::vec2( currentObject->GetCurrentPosition().x, uint32_t( currentObject->GetCurrentPosition().y / 8.f + 0.5f ) * 8.f ) );
 					}
+					currentObject->OnCollision();
 				}
 			}
 		}

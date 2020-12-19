@@ -7,10 +7,9 @@ Bullet::Bullet( float velocity, const glm::vec2& position, const glm::vec2& size
 	pSprite_top( ResourceManager::GetSprite( "bullet_top" ) ),
 	pSprite_bottom( ResourceManager::GetSprite( "bullet_bottom" ) ),
 	pSprite_left( ResourceManager::GetSprite( "bullet_left" ) ),
-	pSprite_right( ResourceManager::GetSprite( "bullet_right" ) )
+	pSprite_right( ResourceManager::GetSprite( "bullet_right" ) ),
+	maxVelocity( velocity )
 {
-	this->velocity = velocity;
-	SetVelocity( velocity );
 	colliders.emplace_back( glm::vec2( 0 ), size );
 }
 
@@ -46,4 +45,11 @@ void Bullet::Fire( const glm::vec2 & position_in, const glm::vec2 & direction_in
 		eOrientation = ( direction.x < 0 ) ? EOrientation::Left : EOrientation::Right;
 	}
 	isActive = true;
+	SetVelocity( maxVelocity );
+}
+
+void Bullet::OnCollision()
+{
+	SetVelocity( 0.f );
+	isActive = false;
 }

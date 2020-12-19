@@ -27,6 +27,7 @@ public:
 	Water( const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer = 0 );
 	inline void Render() const override;
 	inline void Update( double delta ) override { spriteAnim.Update( delta ); };
+	bool IsCollidableWithSecondObject( IGameObject* obj ) const override;
 
 private:
 	void RenderBrick( const EBlockLocation eBlockLocation ) const;

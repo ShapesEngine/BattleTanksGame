@@ -12,15 +12,14 @@ public:
 
 	virtual void Render() const = 0;
 	virtual void Update( double delta ) = 0;	
+	virtual void OnCollision() {};
 
-	const glm::vec2& GetCurrentPosition() const { return position; }
-	void SetCurrentPosition( const glm::vec2& position_in ) 
-	{ 
-		position = position_in; 
-	}
-	const glm::vec2& GetCurrentDirection() const { return direction; }
-	const float GetCurrentVelocity() const { return velocity; }
-	virtual void SetVelocity( float velocity_in ) { velocity = velocity_in; }
+	inline const glm::vec2& GetCurrentPosition() const { return position; }
+	inline void SetCurrentPosition( const glm::vec2& position_in ) { position = position_in; }
+	inline const glm::vec2& GetCurrentDirection() const { return direction; }
+	inline const float GetCurrentVelocity() const { return velocity; }
+	inline virtual void SetVelocity( float velocity_in ) { velocity = velocity_in; }
+	inline virtual bool IsCollidableWithSecondObject( IGameObject* obj = nullptr ) const { return collidable; }
 
 	const glm::vec2& GetSize() const { return size; }
 	const std::vector<Physics::AABB>& GetColliders() const { return colliders; }
@@ -32,5 +31,6 @@ protected:
 	float rotation;
 	float depthLayer;
 	float velocity = 0.f;
+	bool collidable = true;
 	std::vector<Physics::AABB> colliders; 
 };
