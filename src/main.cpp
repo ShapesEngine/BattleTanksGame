@@ -90,11 +90,9 @@ int main( int argc, char** argv )
 	std::cout << "Renderer: " << RenderEngine::Renderer::GetRendererStr() << "\n";
 	std::cout << "OpenGL Version: " << RenderEngine::Renderer::GetVersionStr() << "\n";   
 
-	auto lastTime = std::chrono::high_resolution_clock::now();
-	
 	pGame->Init();
     glfwSetWindowSize( pWindow, 3 * int( pGame->GetCurrentLevelWidth() ), 3 * int( pGame->GetCurrentLevelHeight() ) );
-
+    auto lastTime = std::chrono::high_resolution_clock::now();
     /* Loop until the user closes the window */
     while( !glfwWindowShouldClose( pWindow ) )
     {
