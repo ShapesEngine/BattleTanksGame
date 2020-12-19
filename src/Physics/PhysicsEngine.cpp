@@ -14,6 +14,16 @@ namespace Physics
 		{
 			if( currentObject->GetCurrentVelocity() > 0.f )
 			{
+				// align position to multiple of 4 pixels 
+				if( currentObject->GetCurrentDirection().x != 0.f ) // right and left 
+				{
+					currentObject->SetCurrentPosition( glm::vec2( currentObject->GetCurrentPosition().x, uint32_t( currentObject->GetCurrentPosition().y / 4.f + 0.5f ) * 4.f ) );
+				}
+				else if( currentObject->GetCurrentDirection().y != 0.f ) // top and bottom 
+				{
+					currentObject->SetCurrentPosition( glm::vec2( uint32_t( currentObject->GetCurrentPosition().x / 4.f + 0.5f ) * 4.f, currentObject->GetCurrentPosition().y ) );
+				}
+
 				const auto newPosition = currentObject->GetCurrentPosition() + currentObject->GetCurrentDirection() * float( currentObject->GetCurrentVelocity() * delta );
 				const auto& colliders = currentObject->GetColliders();
 				std::vector<std::shared_ptr<IGameObject>> objectsToCheck = pCurrentLevel->GetObjectsInArea( newPosition, newPosition + currentObject->GetSize() );
@@ -35,6 +45,18 @@ namespace Physics
 				if( !hasCollision )
 				{
 					currentObject->SetCurrentPosition( newPosition );
+				}
+				else
+				{
+					// align position to multiple of 8 pixels 
+					if( currentObject->GetCurrentDirection().x != 0.f ) // right and left 
+					{
+						currentObject->SetCurrentPosition( glm::vec2( uint32_t( currentObject->GetCurrentPosition().x / 8.f + 0.5f ) * 8.f, currentObject->GetCurrentPosition().y ) );
+					}
+					else if( currentObject->GetCurrentDirection().y != 0.f ) // top and bottom 
+					{
+						currentObject->SetCurrentPosition( glm::vec2( currentObject->GetCurrentPosition().x, uint32_t( currentObject->GetCurrentPosition().y / 8.f + 0.5f ) * 8.f ) );
+					}
 				}
 			}
 		}
