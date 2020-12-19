@@ -2,9 +2,15 @@
 #include "Sprite.h"
 
 RenderEngine::SpriteAnimator::SpriteAnimator( std::shared_ptr<Sprite> pSprite ) :
-	pSprite( pSprite ),
-	currentFrameDuration( pSprite->GetFrameDuration( 0 ) )
-{}
+	pSprite( pSprite )
+{
+	Reset();
+
+	for( size_t currentFrameId = 0; currentFrameId < pSprite->GetFramesCount(); ++currentFrameId )
+	{
+		totalDuration += pSprite->GetFrameDuration( currentFrameId );
+	}
+}
 
 void RenderEngine::SpriteAnimator::Update( double delta )
 {
@@ -19,4 +25,11 @@ void RenderEngine::SpriteAnimator::Update( double delta )
 		}
 		currentFrameDuration = pSprite->GetFrameDuration( currentFrame );
 	}
+}
+
+void RenderEngine::SpriteAnimator::Reset()
+{
+	currentFrame = 0;
+	currentFrameDuration = pSprite->GetFrameDuration( 0 );
+	currentAnimationTime = 0.0;
 }

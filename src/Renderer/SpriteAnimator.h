@@ -11,13 +11,16 @@ namespace RenderEngine
 	public:
 		SpriteAnimator( std::shared_ptr<Sprite> pSprite );
 		void Update( double delta );
+		void Reset();
 
-		size_t GetCurrentFrame() const { return currentFrame; }
+		inline size_t GetCurrentFrame() const { return currentFrame; }
+		inline double GetTotalDuration() const { return totalDuration; }		
 
 	private:
 		std::shared_ptr<Sprite> pSprite;
-		size_t currentFrame = 0;
+		size_t currentFrame;
 		double currentFrameDuration;
-		double currentAnimationTime = 0.0;
+		double currentAnimationTime;
+		double totalDuration = 0.0;
 	};
 }
