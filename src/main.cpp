@@ -24,7 +24,7 @@ void glfwWindowSizeCallback( GLFWwindow* window, int width, int height )
     uint32_t viewport_width = windowSize.x;
     uint32_t viewport_height = windowSize.y;
     uint32_t viewport_left_offset = 0u;
-    uint32_t viewport_bottom_offset = 0u;
+    uint32_t viewport_bottooffset = 0u;
 
     if( (float)windowSize.x / windowSize.y > level_aspect_ratio )
     {
@@ -34,10 +34,10 @@ void glfwWindowSizeCallback( GLFWwindow* window, int width, int height )
     else
     {
 		viewport_height = int( windowSize.x / level_aspect_ratio);
-		viewport_bottom_offset = ( windowSize.y - viewport_height ) / 2;
+		viewport_bottooffset = ( windowSize.y - viewport_height ) / 2;
     }
 
-    RenderEngine::Renderer::SetViewport( viewport_width, viewport_height, viewport_left_offset, viewport_bottom_offset );
+    RenderEngine::Renderer::SetViewport( viewport_width, viewport_height, viewport_left_offset, viewport_bottooffset );
 }
 
 void glfwKeyCallback( GLFWwindow* pWindow, int key, int scancode, int action, int mode )

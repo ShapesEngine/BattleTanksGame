@@ -6,7 +6,7 @@
 
 Tank::Tank(	float maxVelocity, const glm::vec2& position, const glm::vec2& size, float depthLayer ) :
 	IGameObject( position, size, 0.f, depthLayer ),
-	pCurrentBullet( std::make_shared<Bullet>( 0.1f, position + size / 4.f, size / 2.f, depthLayer ) ),
+	pCurrentBullet( std::make_shared<Bullet>( 0.1f, position + size / 4.f, size / 2.f, size, depthLayer ) ),
 	pSprite_top( ResourceManager::GetSprite( "TankSprite_Top" ) ),
 	pSprite_bottom( ResourceManager::GetSprite( "TankSprite_Bottom" ) ),
 	pSprite_left( ResourceManager::GetSprite( "TankSprite_Left" )),
@@ -104,6 +104,11 @@ void Tank::SetOrientation( EOrientation eOrientation_in )
 
 void Tank::Update( double delta )
 {
+	if( pCurrentBullet->IsActive() )
+	{
+		pCurrentBullet->Update( delta );
+	}
+
 	if( isSpawning )
 	{
 		spriteAnimator_respawn.Update( delta );
