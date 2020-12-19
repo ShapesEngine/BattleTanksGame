@@ -26,6 +26,8 @@ Tank::Tank(	float maxVelocity, const glm::vec2& position, const glm::vec2& size,
 	} );
 	respawnTimer.Start( 1500.0 );
 	shieldTimer.SetCallback( [&]() { hasShield = false; } );
+
+	colliders.emplace_back( glm::vec2( 0 ), size );
 }
 
 void Tank::Render() const

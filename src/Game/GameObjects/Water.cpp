@@ -2,8 +2,8 @@
 
 #include "../../Resources/ResourceManager.h"
 
-Water::Water( const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer ) :
-	IGameObject( position, size, rotation, depthLayer ),
+Water::Water( const glm::vec2& position, const glm::vec2& size_in, float rotation, float depthLayer ) :
+	IGameObject( position, size_in, rotation, depthLayer ),
 	pSprite( ResourceManager::GetSprite( "water" ) ),
 	spriteAnim( pSprite ),
 	blockOffsets { glm::vec2( 0, size.y / 2.f ), 

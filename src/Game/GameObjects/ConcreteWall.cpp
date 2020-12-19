@@ -2,8 +2,8 @@
 
 #include "../../Resources/ResourceManager.h"
 
-ConcreteWall::ConcreteWall( EConcreteWallType eConcreteWallType, const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer ) :
-	IGameObject( position, size, rotation, depthLayer ),
+ConcreteWall::ConcreteWall( EConcreteWallType eConcreteWallType, const glm::vec2& position, const glm::vec2& size_in, float rotation, float depthLayer ) :
+	IGameObject( position, size_in, rotation, depthLayer ),
 	eCurrentBlockState{ EConcreteState::Destroyed,
 						EConcreteState::Destroyed,
 						EConcreteState::Destroyed,

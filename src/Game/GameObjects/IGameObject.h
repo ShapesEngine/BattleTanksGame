@@ -14,7 +14,10 @@ public:
 	virtual void Update( double delta ) = 0;	
 
 	const glm::vec2& GetCurrentPosition() const { return position; }
-	void SetCurrentPosition( const glm::vec2& position_in ) { position = position_in; }
+	void SetCurrentPosition( const glm::vec2& position_in ) 
+	{ 
+		position = position_in; 
+	}
 	const glm::vec2& GetCurrentDirection() const { return direction; }
 	const float GetCurrentVelocity() const { return velocity; }
 	virtual void SetVelocity( float velocity_in ) { velocity = velocity_in; }

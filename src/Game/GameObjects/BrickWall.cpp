@@ -2,8 +2,8 @@
 
 #include "../../Resources/ResourceManager.h"
 
-BrickWall::BrickWall( EBrickWallType eBrickWallType, const glm::vec2& position, const glm::vec2& size, float rotation, float depthLayer ) :
-	IGameObject( position, size, rotation, depthLayer ),
+BrickWall::BrickWall( EBrickWallType eBrickWallType, const glm::vec2& position, const glm::vec2& size_in, float rotation, float depthLayer ) :
+	IGameObject( position, size_in, rotation, depthLayer ),
 	eCurrentBrickState{ EBrickState::Destroyed,
 						EBrickState::Destroyed,
 						EBrickState::Destroyed,
