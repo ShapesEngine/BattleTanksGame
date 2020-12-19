@@ -31,6 +31,7 @@ Tank::Tank(	float maxVelocity, const glm::vec2& position, const glm::vec2& size,
 	shieldTimer.SetCallback( [&]() { hasShield = false; } );
 
 	colliders.emplace_back( glm::vec2( 0 ), size );
+	Physics::PhysicsEngine::AddDynamicGameObject( pCurrentBullet );
 }
 
 void Tank::Render() const
@@ -140,7 +141,9 @@ void Tank::Fire()
 {
 	if( !pCurrentBullet->IsActive() )
 	{
-		pCurrentBullet->Fire( position + size / 4.f, direction );
-		Physics::PhysicsEngine::AddDynamicGameObject( pCurrentBullet );
+		if( !isSpawning )
+		{
+			pCurrentBullet->Fire( position + size / 4.f + size * direction / 4.f, direction );
+		}		
 	}
 }
