@@ -11,7 +11,7 @@ Water::Water( const glm::vec2& position, const glm::vec2& size, float rotation, 
                        glm::vec2( 0, 0 ), 
                        glm::vec2( size.x / 2.f, 0 ) }
 {
-	
+	colliders.emplace_back( glm::vec2( 0 ), size );
 }
 
 void Water::Render() const

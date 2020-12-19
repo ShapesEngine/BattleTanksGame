@@ -6,7 +6,7 @@ Border::Border( const glm::vec2& position, const glm::vec2& size, float rotation
 	IGameObject( position, size, rotation, depthLayer ),
 	pSprite( ResourceManager::GetSprite( "border" ) )
 {
-	
+	colliders.emplace_back( glm::vec2( 0 ), size );
 }
 
 void Border::Render() const
