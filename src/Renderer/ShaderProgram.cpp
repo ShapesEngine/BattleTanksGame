@@ -58,7 +58,7 @@ namespace RenderEngine
 		if ( !success )
 		{
 			GLchar infoLog[1024];
-			glGetShaderInfoLog( shaderID, 1024, nullptr, infoLog );
+			glGetProgramInfoLog( shaderID, 1024, nullptr, infoLog );
 			std::string shaderTypeStr = ( shaderType == GL_VERTEX_SHADER ? "VERTEX SHADER" : 
 										( shaderType == GL_FRAGMENT_SHADER ? "FRAGMENT SHADER" : "GEOMETRY SHADER" ) );
 			std::cerr << shaderTypeStr << "::COMPILATION ERROR!\n";

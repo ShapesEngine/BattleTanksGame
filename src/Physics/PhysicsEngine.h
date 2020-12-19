@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <unordered_set>
+#include <vector>
 
 #include <glm/vec2.hpp>
 
