@@ -1,9 +1,12 @@
 #include "Tank.h"
+#include "Bullet.h"
 #include "../../Renderer/Sprite.h"
 #include "../../Resources/ResourceManager.h"
+#include "../../Physics/PhysicsEngine.h"
 
 Tank::Tank(	float maxVelocity, const glm::vec2& position, const glm::vec2& size, float depthLayer ) :
 	IGameObject( position, size, 0.f, depthLayer ),
+	pCurrentBullet( std::make_shared<Bullet>( 0.1f, position + size / 4.f, size / 2.f, depthLayer ) ),
 	pSprite_top( ResourceManager::GetSprite( "TankSprite_Top" ) ),
 	pSprite_bottom( ResourceManager::GetSprite( "TankSprite_Bottom" ) ),
 	pSprite_left( ResourceManager::GetSprite( "TankSprite_Left" )),
@@ -60,7 +63,10 @@ void Tank::Render() const
 			pSprite_shield->Render( position, size, rotation, depthLayer + 0.1f, spriteAnimator_shield.GetCurrentFrame() );
 		}
 	}
-
+	if( pCurrentBullet->IsActive() )
+	{
+		pCurrentBullet->Render();
+	}
 	
 }
 
@@ -91,9 +97,6 @@ void Tank::SetOrientation( EOrientation eOrientation_in )
 	case Tank::EOrientation::Right:
 		direction.x = 1.f;
 		direction.y = 0.f;
-		break;
-
-	default:
 		break;
 	}
 }
@@ -131,4 +134,13 @@ void Tank::Update( double delta )
 			}
 		}
 	}	
+}
+
+void Tank::Fire()
+{
+	if( !pCurrentBullet->IsActive() )
+	{
+		pCurrentBullet->Fire( position + size / 4.f, direction );
+		Physics::PhysicsEngine::AddDynamicGameObject( pCurrentBullet );
+	}
 }

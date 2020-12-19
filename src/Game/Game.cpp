@@ -61,6 +61,10 @@ void Game::Update( double delta )
 			pTank->SetOrientation( Tank::EOrientation::Right );
 			pTank->SetVelocity( pTank->GetMaxVelocity() );
 		}
+		if( pTank && keys[GLFW_KEY_SPACE] )
+		{
+			pTank->Fire();
+		}
 
 		pTank->Update( delta );
 	}

@@ -14,6 +14,8 @@ namespace RenderEngine
 	class SpriteAnimator;
 }
 
+class Bullet;
+
 class Tank : public IGameObject
 {
 public:
@@ -31,12 +33,14 @@ public:
 	void Render() const override;
 	void SetOrientation( EOrientation eOrientation_in );
 	void Update( double delta ) override;
+	void Fire();
 
 	float GetMaxVelocity() const { return maxVelocity; }
-	inline void SetVelocity( float velocity_in ) override { velocity = ( isSpawning ? 0.f : velocity_in ); }
+	inline void SetVelocity( float velocity_in ) override { velocity = ( isSpawning ? 0.f : velocity_in ); }	
 
 private:
 	EOrientation eOrientation = EOrientation::Top;
+	std::shared_ptr<Bullet> pCurrentBullet;
 	std::shared_ptr<RenderEngine::Sprite> pSprite_top;
 	std::shared_ptr<RenderEngine::Sprite> pSprite_bottom;
 	std::shared_ptr<RenderEngine::Sprite> pSprite_left;

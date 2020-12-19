@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "GameObjects/Tank.h"
+#include "GameObjects/Bullet.h"
 #include "Level.h"
 
 class Level;
