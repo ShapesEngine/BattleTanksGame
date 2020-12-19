@@ -594,11 +594,15 @@
       "frames": [
         {
           "subtexture": "explosion1",
-          "duration": 500.0
+          "duration": 150.0
         },
         {
           "subtexture": "explosion2",
-          "duration": 500.0
+          "duration": 150.0
+        },
+        {
+          "subtexture": "explosion3",
+          "duration": 150.0
         }
       ]
     },
