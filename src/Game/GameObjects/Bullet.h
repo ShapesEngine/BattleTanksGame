@@ -26,7 +26,6 @@ public:
 	Bullet( float velocity, const glm::vec2& position, const glm::vec2& size, const glm::vec2& explosionSize, float depthLayer );
 	void Render() const override;
 	void Fire( const glm::vec2& position_in, const glm::vec2& direction_in );
-	void OnCollision() override;
 	void Update( double delta ) override;
 
 	inline bool IsActive() const { return isActive; }

@@ -11,55 +11,77 @@ namespace Physics
 
 	void PhysicsEngine::Update( double delta )
 	{
-		for( auto& currentObject : dynamicObjects )
+		for( auto& currentDynamicObject : dynamicObjects )
 		{
-			if( currentObject->GetCurrentVelocity() > 0.f )
+			if( currentDynamicObject->GetCurrentVelocity() > 0.f )
 			{
 				// align position to multiple of 4 pixels 
-				if( currentObject->GetCurrentDirection().x != 0.f ) // right and left 
+				if( currentDynamicObject->GetCurrentDirection().x != 0.f ) // right and left 
 				{
-					currentObject->SetCurrentPosition( glm::vec2( currentObject->GetCurrentPosition().x, uint32_t( currentObject->GetCurrentPosition().y / 4.f + 0.5f ) * 4.f ) );
+					currentDynamicObject->SetCurrentPosition( glm::vec2( currentDynamicObject->GetCurrentPosition().x, uint32_t( currentDynamicObject->GetCurrentPosition().y / 4.f + 0.5f ) * 4.f ) );
 				}
-				else if( currentObject->GetCurrentDirection().y != 0.f ) // top and bottom 
+				else if( currentDynamicObject->GetCurrentDirection().y != 0.f ) // top and bottom 
 				{
-					currentObject->SetCurrentPosition( glm::vec2( uint32_t( currentObject->GetCurrentPosition().x / 4.f + 0.5f ) * 4.f, currentObject->GetCurrentPosition().y ) );
+					currentDynamicObject->SetCurrentPosition( glm::vec2( uint32_t( currentDynamicObject->GetCurrentPosition().x / 4.f + 0.5f ) * 4.f, currentDynamicObject->GetCurrentPosition().y ) );
 				}
 
-				const auto newPosition = currentObject->GetCurrentPosition() + currentObject->GetCurrentDirection() * float( currentObject->GetCurrentVelocity() * delta );
-				const auto& colliders = currentObject->GetColliders();
-				std::vector<std::shared_ptr<IGameObject>> objectsToCheck = pCurrentLevel->GetObjectsInArea( newPosition, newPosition + currentObject->GetSize() );
+				const auto newPosition = currentDynamicObject->GetCurrentPosition() + currentDynamicObject->GetCurrentDirection() * float( currentDynamicObject->GetCurrentVelocity() * delta );
+				std::vector<std::shared_ptr<IGameObject>> objectsToCheck = pCurrentLevel->GetObjectsInArea( newPosition, newPosition + currentDynamicObject->GetSize() );
 
+				const auto& colliders = currentDynamicObject->GetColliders();
 				bool hasCollision = false;
-				for( const auto& currentObjectToCheck : objectsToCheck )
+				ECollisionDirection dynamicObjectCollisionDirection = ECollisionDirection::Right;
+				if( currentDynamicObject->GetCurrentDirection().x < 0 ) dynamicObjectCollisionDirection = ECollisionDirection::Left;
+				else if( currentDynamicObject->GetCurrentDirection().y > 0 ) dynamicObjectCollisionDirection = ECollisionDirection::Top;
+				else if( currentDynamicObject->GetCurrentDirection().y < 0 ) dynamicObjectCollisionDirection = ECollisionDirection::Bottom;
+
+				ECollisionDirection objectCollisionDirection = ECollisionDirection::Left;
+				if( currentDynamicObject->GetCurrentDirection().x < 0 ) objectCollisionDirection = ECollisionDirection::Right;
+				else if( currentDynamicObject->GetCurrentDirection().y > 0 ) objectCollisionDirection = ECollisionDirection::Bottom;
+				else if( currentDynamicObject->GetCurrentDirection().y < 0 ) objectCollisionDirection = ECollisionDirection::Top;
+
+				for( const auto& currentDynamicObjectCollider : colliders )
 				{
-					const auto& collidersToCheck = currentObjectToCheck->GetColliders();
-					if( currentObjectToCheck->IsCollidableWithSecondObject( currentObject.get() ) && !collidersToCheck.empty() )
+					for( const auto& currentObjectToCheck : objectsToCheck )
 					{
-						if( HasIntersection( colliders, newPosition, collidersToCheck, currentObjectToCheck->GetCurrentPosition() ) )
+						const auto& collidersToCheck = currentObjectToCheck->GetColliders();
+						if( currentObjectToCheck->IsCollidableWithSecondObject( currentDynamicObject.get() ) && !collidersToCheck.empty() )
 						{
-							hasCollision = true;
-							currentObjectToCheck->OnCollision();
-							break;
+							for( const auto& currentObjectCollider : currentObjectToCheck->GetColliders() )
+							{
+								if( currentObjectCollider.isActive && HasIntersection( currentDynamicObjectCollider, newPosition, currentObjectCollider, currentObjectToCheck->GetCurrentPosition() ) )
+								{
+									hasCollision = true;
+									if( currentObjectCollider.onCollisionCallback )
+									{
+										currentObjectCollider.onCollisionCallback( *currentDynamicObject, objectCollisionDirection );
+									}
+									if( currentDynamicObjectCollider.onCollisionCallback )
+									{
+										currentDynamicObjectCollider.onCollisionCallback( *currentObjectToCheck, dynamicObjectCollisionDirection );
+									}
+								}
+							}
 						}
 					}
 				}
 
 				if( !hasCollision )
 				{
-					currentObject->SetCurrentPosition( newPosition );
+					currentDynamicObject->SetCurrentPosition( newPosition );
 				}
 				else
 				{
 					// align position to multiple of 8 pixels 
-					if( currentObject->GetCurrentDirection().x != 0.f ) // right and left 
+					if( currentDynamicObject->GetCurrentDirection().x != 0.f ) // right and left 
 					{
-						currentObject->SetCurrentPosition( glm::vec2( uint32_t( currentObject->GetCurrentPosition().x / 8.f + 0.5f ) * 8.f, currentObject->GetCurrentPosition().y ) );
+						currentDynamicObject->SetCurrentPosition( glm::vec2( uint32_t( currentDynamicObject->GetCurrentPosition().x / 8.f + 0.5f ) * 8.f, currentDynamicObject->GetCurrentPosition().y ) );
 					}
-					else if( currentObject->GetCurrentDirection().y != 0.f ) // top and bottom 
+					else if( currentDynamicObject->GetCurrentDirection().y != 0.f ) // top and bottom 
 					{
-						currentObject->SetCurrentPosition( glm::vec2( currentObject->GetCurrentPosition().x, uint32_t( currentObject->GetCurrentPosition().y / 8.f + 0.5f ) * 8.f ) );
+						currentDynamicObject->SetCurrentPosition( glm::vec2( currentDynamicObject->GetCurrentPosition().x, uint32_t( currentDynamicObject->GetCurrentPosition().y / 8.f + 0.5f ) * 8.f ) );
 					}
-					currentObject->OnCollision();
+					currentDynamicObject->OnCollision();
 				}
 			}
 		}
@@ -71,39 +93,33 @@ namespace Physics
 		pCurrentLevel.reset();
 	}
 
-	bool PhysicsEngine::HasIntersection( const std::vector<AABB>& colliders1, const glm::vec2& position1, const std::vector<AABB>& colliders2, const glm::vec2& position2 )
+	bool PhysicsEngine::HasIntersection( const Collider& collider1, const glm::vec2& position1,
+										 const Collider& collider2, const glm::vec2& position2 )
 	{
-		for( const auto& currentCollider1 : colliders1 )
+		const glm::vec2 collider1_bottomLeft_world = collider1.boundingBox.bottomLeft + position1;
+		const glm::vec2 collider1_topRight_world = collider1.boundingBox.topRight + position1;
+
+		const glm::vec2 collider2_bottomLeft_world = collider2.boundingBox.bottomLeft + position2;
+		const glm::vec2 collider2_topRight_world = collider2.boundingBox.topRight + position2;
+
+		if( collider1_bottomLeft_world.x >= collider2_topRight_world.x )
 		{
-			const glm::vec2 currentCollider1_bottomLeft_world = currentCollider1.bottomLeft + position1;
-			const glm::vec2 currentCollider1_topRight_world = currentCollider1.topRight + position1;
-			for( const auto& currentCollider2 : colliders2 )
-			{
-				const glm::vec2 currentCollider2_bottomLeft_world = currentCollider2.bottomLeft + position2;
-				const glm::vec2 currentCollider2_topRight_world = currentCollider2.topRight + position2;
-
-				if( currentCollider1_bottomLeft_world.x >= currentCollider2_topRight_world.x )
-				{
-					continue;
-				}
-				if( currentCollider1_topRight_world.x <= currentCollider2_bottomLeft_world.x )
-				{
-					continue;
-				}
-
-				if( currentCollider1_bottomLeft_world.y >= currentCollider2_topRight_world.y )
-				{
-					continue;
-				}
-				if( currentCollider1_topRight_world.y <= currentCollider2_bottomLeft_world.y )
-				{
-					continue;
-				}
-
-				return true;
-			}
+			return false;
+		}
+		if( collider1_topRight_world.x <= collider2_bottomLeft_world.x )
+		{
+			return false;
 		}
 
-		return false;
+		if( collider1_bottomLeft_world.y >= collider2_topRight_world.y )
+		{
+			return false;
+		}
+		if( collider1_topRight_world.y <= collider2_bottomLeft_world.y )
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

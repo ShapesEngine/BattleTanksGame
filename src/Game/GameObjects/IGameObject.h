@@ -22,7 +22,7 @@ public:
 	inline virtual bool IsCollidableWithSecondObject( IGameObject* obj = nullptr ) const { return collidable; }
 
 	const glm::vec2& GetSize() const { return size; }
-	const std::vector<Physics::AABB>& GetColliders() const { return colliders; }
+	const std::vector<Physics::Collider>& GetColliders() const { return colliders; }
 
 protected:
 	glm::vec2 position;
@@ -32,5 +32,5 @@ protected:
 	float depthLayer;
 	float velocity = 0.f;
 	bool collidable = true;
-	std::vector<Physics::AABB> colliders; 
+	std::vector<Physics::Collider> colliders; 
 };

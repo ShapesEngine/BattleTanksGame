@@ -14,8 +14,18 @@ Bullet::Bullet( float velocity, const glm::vec2& position, const glm::vec2& size
 	spriteAnimator_explosion( pSprite_explosion ),
 	maxVelocity( velocity )
 {
-	colliders.emplace_back( glm::vec2( 0 ), size );
-	explosionTimer.SetCallback( [&]() { isExplosion = isActive = false;	} );
+	auto onCollisionCallback = [&]( const IGameObject& object, const Physics::ECollisionDirection )
+	{
+		SetVelocity( 0.f );
+		isExplosion = true;
+		explosionTimer.Start( spriteAnimator_explosion.GetTotalDuration() );
+	};
+	colliders.emplace_back( glm::vec2( 0 ), size, onCollisionCallback );
+	explosionTimer.SetCallback( [&]() 
+	{ 
+		isExplosion = isActive = false;	
+		spriteAnimator_explosion.Reset();
+	} );
 }
 
 void Bullet::Render() const
@@ -72,14 +82,6 @@ void Bullet::Fire( const glm::vec2 & position_in, const glm::vec2 & direction_in
 	}
 	isActive = true;
 	SetVelocity( maxVelocity );
-}
-
-void Bullet::OnCollision()
-{
-	SetVelocity( 0.f );
-	isExplosion = true;
-	spriteAnimator_explosion.Reset();
-	explosionTimer.Start( spriteAnimator_explosion.GetTotalDuration() );
 }
 
 void Bullet::Update( double delta )

@@ -62,7 +62,11 @@ public:
 
 private:
 	void RenderBrick( const EBrickLocation eBrickLocation ) const;
+	static EBrickState GetBrickStateAfterCollision( EBrickState currentState, Physics::ECollisionDirection direction );
+	static Physics::AABB GetAABBForBrickState( EBrickLocation location, EBrickState eBrickState, const glm::vec2& size );
+	void OnCollisionCallback( EBrickLocation location, const IGameObject& object, Physics::ECollisionDirection direction );
 
+	std::array<Physics::Collider*, 4> brickLocationToColliderMap;
 	std::array<EBrickState, 4> eCurrentBrickState;
 	std::array<std::shared_ptr<RenderEngine::Sprite>, 15> sprites;
 	std::array<glm::vec2, 4> blockOffsets; 
