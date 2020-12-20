@@ -14,7 +14,7 @@ Bullet::Bullet( float velocity, const glm::vec2& position, const glm::vec2& size
 	spriteAnimator_explosion( pSprite_explosion ),
 	maxVelocity( velocity )
 {
-	auto onCollisionCallback = [&]( const IGameObject& object, const Physics::ECollisionDirection )
+	auto onCollisionCallback = [&]( const IGameObject* object, const Physics::ECollisionDirection )
 	{
 		SetVelocity( 0.f );
 		isExplosion = true;
@@ -48,7 +48,7 @@ void Bullet::Render() const
 			break;
 		}
 	}
-	else
+	else if( isActive )
 	{
 		switch( eOrientation )
 		{

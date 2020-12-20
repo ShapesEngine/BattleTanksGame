@@ -30,19 +30,19 @@ BrickWall::BrickWall( EBrickWallType eBrickWallType, const glm::vec2& position, 
 	sprites[(size_t)EBrickState::TopLeft_Bottom] = ResourceManager::GetSprite( "brickWall_TopLeft_Bottom" );
 	sprites[(size_t)EBrickState::TopRight_Bottom] = ResourceManager::GetSprite( "brickWall_TopRight_Bottom" );
 
-	auto onCollisionCallbackTopLeft = [&]( const IGameObject& object, const Physics::ECollisionDirection direction )
+	auto onCollisionCallbackTopLeft = [&]( const IGameObject* object, const Physics::ECollisionDirection direction )
 	{
 		OnCollisionCallback( EBrickLocation::TopLeft, object, direction );
 	};
-	auto onCollisionCallbackTopRight = [&]( const IGameObject& object, const Physics::ECollisionDirection direction )
+	auto onCollisionCallbackTopRight = [&]( const IGameObject* object, const Physics::ECollisionDirection direction )
 	{
 		OnCollisionCallback( EBrickLocation::TopRight, object, direction );
 	};
-	auto onCollisionCallbackBottomLeft = [&]( const IGameObject& object, const Physics::ECollisionDirection direction )
+	auto onCollisionCallbackBottomLeft = [&]( const IGameObject* object, const Physics::ECollisionDirection direction )
 	{
 		OnCollisionCallback( EBrickLocation::BottomLeft, object, direction );
 	};
-	auto onCollisionCallbackBottomRight = [&]( const IGameObject& object, const Physics::ECollisionDirection direction )
+	auto onCollisionCallbackBottomRight = [&]( const IGameObject* object, const Physics::ECollisionDirection direction )
 	{
 		OnCollisionCallback( EBrickLocation::BottomRight, object, direction );
 	};
@@ -271,9 +271,9 @@ Physics::AABB BrickWall::GetAABBForBrickState( EBrickLocation location, EBrickSt
 	return { bottomLeft + blockOffset, topRight + blockOffset };
 }
 
-void BrickWall::OnCollisionCallback( EBrickLocation location, const IGameObject& object, Physics::ECollisionDirection direction )
+void BrickWall::OnCollisionCallback( EBrickLocation location, const IGameObject* object, Physics::ECollisionDirection direction )
 {
-	Bullet* bullet = dynamic_cast<Bullet*>( const_cast<IGameObject*>( &object ) );
+	Bullet* bullet = dynamic_cast<Bullet*>( const_cast<IGameObject*>( object ) );
 	if( nullptr == bullet )
 	{
 		return;

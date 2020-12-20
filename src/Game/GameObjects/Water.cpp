@@ -24,9 +24,9 @@ void Water::Render() const
 	RenderBrick( EBlockLocation::BottomRight );
 }
 
-bool Water::IsCollidableWithSecondObject( IGameObject* obj ) const
+bool Water::IsCollidableWithSecondObject( const IGameObject* obj ) const
 {
-	Bullet* bullet = dynamic_cast<Bullet*>( obj );
+	Bullet* bullet = dynamic_cast<Bullet*>( const_cast<IGameObject*>( obj ) );
 	if( nullptr != bullet )
 	{
 		return false;

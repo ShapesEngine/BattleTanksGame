@@ -19,7 +19,7 @@ public:
 	inline const glm::vec2& GetCurrentDirection() const { return direction; }
 	inline const float GetCurrentVelocity() const { return velocity; }
 	inline virtual void SetVelocity( float velocity_in ) { velocity = velocity_in; }
-	inline virtual bool IsCollidableWithSecondObject( IGameObject* obj = nullptr ) const { return collidable; }
+	inline virtual bool IsCollidableWithSecondObject( const IGameObject* obj = nullptr ) const { return collidable; }
 
 	const glm::vec2& GetSize() const { return size; }
 	const std::vector<Physics::Collider>& GetColliders() const { return colliders; }

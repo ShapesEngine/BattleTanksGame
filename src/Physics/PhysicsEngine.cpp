@@ -31,14 +31,20 @@ namespace Physics
 				const auto& colliders = currentDynamicObject->GetColliders();
 				bool hasCollision = false;
 				ECollisionDirection dynamicObjectCollisionDirection = ECollisionDirection::Right;
-				if( currentDynamicObject->GetCurrentDirection().x < 0 ) dynamicObjectCollisionDirection = ECollisionDirection::Left;
-				else if( currentDynamicObject->GetCurrentDirection().y > 0 ) dynamicObjectCollisionDirection = ECollisionDirection::Top;
-				else if( currentDynamicObject->GetCurrentDirection().y < 0 ) dynamicObjectCollisionDirection = ECollisionDirection::Bottom;
+				if( currentDynamicObject->GetCurrentDirection().x < 0.f ) 
+					dynamicObjectCollisionDirection = ECollisionDirection::Left;
+				else if( currentDynamicObject->GetCurrentDirection().y > 0.f ) 
+					dynamicObjectCollisionDirection = ECollisionDirection::Top;
+				else if( currentDynamicObject->GetCurrentDirection().y < 0.f ) 
+					dynamicObjectCollisionDirection = ECollisionDirection::Bottom;
 
 				ECollisionDirection objectCollisionDirection = ECollisionDirection::Left;
-				if( currentDynamicObject->GetCurrentDirection().x < 0 ) objectCollisionDirection = ECollisionDirection::Right;
-				else if( currentDynamicObject->GetCurrentDirection().y > 0 ) objectCollisionDirection = ECollisionDirection::Bottom;
-				else if( currentDynamicObject->GetCurrentDirection().y < 0 ) objectCollisionDirection = ECollisionDirection::Top;
+				if( currentDynamicObject->GetCurrentDirection().x < 0.f ) 
+					objectCollisionDirection = ECollisionDirection::Right;
+				else if( currentDynamicObject->GetCurrentDirection().y > 0.f ) 
+					objectCollisionDirection = ECollisionDirection::Bottom;
+				else if( currentDynamicObject->GetCurrentDirection().y < 0.f ) 
+					objectCollisionDirection = ECollisionDirection::Top;
 
 				for( const auto& currentDynamicObjectCollider : colliders )
 				{
@@ -54,11 +60,11 @@ namespace Physics
 									hasCollision = true;
 									if( currentObjectCollider.onCollisionCallback )
 									{
-										currentObjectCollider.onCollisionCallback( *currentDynamicObject, objectCollisionDirection );
+										currentObjectCollider.onCollisionCallback( currentDynamicObject.get(), objectCollisionDirection );
 									}
 									if( currentDynamicObjectCollider.onCollisionCallback )
 									{
-										currentDynamicObjectCollider.onCollisionCallback( *currentObjectToCheck, dynamicObjectCollisionDirection );
+										currentDynamicObjectCollider.onCollisionCallback( currentObjectToCheck.get(), dynamicObjectCollisionDirection );
 									}
 								}
 							}
@@ -75,13 +81,12 @@ namespace Physics
 					// align position to multiple of 8 pixels 
 					if( currentDynamicObject->GetCurrentDirection().x != 0.f ) // right and left 
 					{
-						currentDynamicObject->SetCurrentPosition( glm::vec2( uint32_t( currentDynamicObject->GetCurrentPosition().x / 8.f + 0.5f ) * 8.f, currentDynamicObject->GetCurrentPosition().y ) );
+						currentDynamicObject->SetCurrentPosition( glm::vec2( uint32_t( currentDynamicObject->GetCurrentPosition().x / 4.f + 0.5f ) * 4.f, currentDynamicObject->GetCurrentPosition().y ) );
 					}
 					else if( currentDynamicObject->GetCurrentDirection().y != 0.f ) // top and bottom 
 					{
-						currentDynamicObject->SetCurrentPosition( glm::vec2( currentDynamicObject->GetCurrentPosition().x, uint32_t( currentDynamicObject->GetCurrentPosition().y / 8.f + 0.5f ) * 8.f ) );
+						currentDynamicObject->SetCurrentPosition( glm::vec2( currentDynamicObject->GetCurrentPosition().x, uint32_t( currentDynamicObject->GetCurrentPosition().y / 4.f + 0.5f ) * 4.f ) );
 					}
-					currentDynamicObject->OnCollision();
 				}
 			}
 		}

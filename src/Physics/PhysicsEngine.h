@@ -32,7 +32,7 @@ namespace Physics
 
 	struct Collider
 	{
-		using clCallbackFn = std::function<void( const IGameObject&, const ECollisionDirection )>;
+		using clCallbackFn = std::function<void( const IGameObject*, const ECollisionDirection )>;
 
 		Collider( const glm::vec2& bottomLeft, const glm::vec2& topRight, clCallbackFn onCollisionCallback = {} ) :
 			boundingBox( bottomLeft, topRight ),
@@ -46,7 +46,7 @@ namespace Physics
 
 		AABB boundingBox;
 		bool isActive = true;
-		std::function<void( const IGameObject&, const ECollisionDirection )> onCollisionCallback;
+		clCallbackFn onCollisionCallback;
 	};
 
 	class PhysicsEngine

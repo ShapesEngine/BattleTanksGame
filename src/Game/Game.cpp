@@ -103,7 +103,7 @@ bool Game::Init()
 	glm::mat4 modelMatrix_2 = glm::mat4( 1.f );
 	modelMatrix_2 = glm::translate( modelMatrix_2, glm::vec3( 590, 400.f, 0.f ) );
 
-	pLevel = std::make_shared<Level>( ResourceManager::GetLevels()[0] );
+	pLevel = std::make_shared<Level>( ResourceManager::GetLevels()[1] );
 	windowSize.x = (int)GetCurrentLevelWidth();
 	windowSize.y = (int)GetCurrentLevelHeight();
 	Physics::PhysicsEngine::SetCurrentLevel( pLevel );
