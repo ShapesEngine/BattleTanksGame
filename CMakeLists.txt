@@ -69,7 +69,8 @@ add_executable( ${PROJECT_NAME}
 				res/shaders/sprite.frag
 			  )
 
-set_property ( DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME} )
+set_property( DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME} )
+set_property( DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME} )
 				
 target_compile_features( ${PROJECT_NAME} PUBLIC cxx_std_17 ) 
 
