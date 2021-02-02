@@ -16,7 +16,6 @@ Remake of a 2D retro Battle Tanks game made with OpenGL
 You may enable or disable some build options by `-Dkey=value`.
 
 ### How to compile
-### Simple
     cmake --build .
 	
 ### Ubuntu Prerequisites
