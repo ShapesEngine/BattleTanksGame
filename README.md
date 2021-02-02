@@ -18,6 +18,8 @@ You may enable or disable some build options by `-Dkey=value`.
 ### How to compile
 ### Simple
     cmake --build .
-
-### Debug or Release(Windows)
-    cmake --build . --config Debug|Release
+	
+### Ubuntu Prerequisites
+```powershell
+sudo apt-get install xorg-dev libglu1-mesa-dev
+```
