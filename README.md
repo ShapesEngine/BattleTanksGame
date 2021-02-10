@@ -27,7 +27,7 @@ You may enable or disable some build options by `-Dkey=value`.
 
 # Editing game
 ### Editing or adding map
-1. Go to [resources.json](https://github.com/yernar/BattleTanksGame/blob/master/res/resources.json)
+1. Go to [resources.json](https://github.com/yernar/BattleTanksGame/blob/b8690431d58d44e3942207643deb439318d47ba0/res/resources.json#L806)
 
 2. Edit `levels/description` or add another `description` using the table:
 ![image](https://user-images.githubusercontent.com/46201281/107474973-9348ee80-6b9d-11eb-84fe-ada6f18e241b.png)
