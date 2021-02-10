@@ -1,4 +1,4 @@
-# BattleTanksGame
+# [BattleTanksGame](https://yernar.github.io/BattleTanksGame/)
 
 ## Summary
 Remake of a 2D retro Battle Tanks game made with OpenGL
