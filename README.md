@@ -1,31 +1,48 @@
 # BattleTanksGame
+
+## Summary
 Remake of a 2D retro Battle Tanks game made with OpenGL
 
-# How to build  
+## Getting Started 
 
-1. Make sure to install [CMake](https://cmake.org/download/)<br>
-1.1*. If you are using ***Ubuntu*** run:
-```powershell
+The project has a single dependency: [cmake](http://www.cmake.org/download/), which is used to generate platform-specific makefiles or project files. Start by cloning this repository, making sure to pass the `--recursive` flag to grab all the dependencies. If you forgot, then you can `git submodule update --init` instead.
+
+```bash
+git clone --recursive https://github.com/yernar/BattleTanksGame
+cd BattleTanksGame
+cd Build
+```
+
+If you are using Ubuntu you may need to do:
+```bash
 sudo apt-get install xorg-dev libglu1-mesa-dev
 ```
 
-### CMake as most universal way
+Now generate a project file or makefile for your platform. If you want to use a particular IDE, make sure it is installed.
 
-    mkdir build && cd build
-    cmake ../
+```bash
+# UNIX Makefile
+cmake ..
 
-### How to compile
-    cmake --build .
+# Mac OSX
+cmake -G "Xcode" ..
 
-### Crosscompiling using mingw:
+# Microsoft Windows
+cmake -G "Visual Studio 16" ..
+cmake -G "Visual Studio 16 Win64" ..
+...
+```
 
-    mkdir build-mingw && cd build-mingw
-    TOOLCHAIN_PREFIX=i686-w64-mingw32 # check up the actual mingw prefix of your mingw installation
-    cmake ../ -DCMAKE_SYSTEM_NAME=Windows -DCMAKE_C_COMPILER="$TOOLCHAIN_PREFIX-gcc" -DCMAKE_CXX_COMPILER="$TOOLCHAIN_PREFIX-g++"
+## Libraries used
+Functionality           | Library
+----------------------- | ------------------------------------------
+OpenGL Function Loader  | [glad](https://github.com/Dav1dde/glad)
+Windowing and Input     | [glfw](https://github.com/glfw/glfw)
+OpenGL Mathematics      | [glm](https://github.com/g-truc/glm)
+Texture Loading         | [stb](https://github.com/nothings/stb)
+RapidJSON               | [rapidjson](https://github.com/Tencent/rapidjson)
 
-You may enable or disable some build options by `-Dkey=value`.
-
-# Editing game
+## Editing game
 ### Editing or adding map
 1. Go to [resources.json](https://github.com/yernar/BattleTanksGame/blob/b8690431d58d44e3942207643deb439318d47ba0/res/resources.json#L806)
 
