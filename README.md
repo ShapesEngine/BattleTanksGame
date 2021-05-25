@@ -10,7 +10,7 @@ The project has a single dependency: [cmake](http://www.cmake.org/download/), wh
 ```bash
 git clone --recursive https://github.com/yernar/BattleTanksGame
 cd BattleTanksGame
-cd Build
+mkdir Build && cd Build
 ```
 
 If you are using <strong>Ubuntu</strong> you may need to do:
