@@ -13,7 +13,7 @@ cd BattleTanksGame
 cd Build
 ```
 
-If you are using Ubuntu you may need to do:
+If you are using <strong>Ubuntu</strong> you may need to do:
 ```bash
 sudo apt-get install xorg-dev libglu1-mesa-dev
 ```
